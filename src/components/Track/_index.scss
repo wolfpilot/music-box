@@ -1,0 +1,12 @@
+.track {
+    display: block;
+
+    &__title,
+    &__length {
+        display: inline-block;
+    }
+
+    &__title {
+        margin-right: 8px;
+    }
+}
