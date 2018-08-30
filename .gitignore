@@ -9,6 +9,9 @@
 # Testing
 /coverage
 
+# Auto-generated files
+src/**/*.css
+
 # Production
 /build
 
