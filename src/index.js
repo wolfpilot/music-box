@@ -1,11 +1,20 @@
+// Libs
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
-// Statics
-import './index.css';
-
+import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Assets
+import './index.css';
+
+// Components
+import App from './components/App';
+
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
+);
 
 registerServiceWorker();

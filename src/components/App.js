@@ -1,7 +1,8 @@
 // Modules
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 // Components
+import SiteHeader from './SiteHeader';
 import Stream from './Stream';
 
 const tracks = [
@@ -17,7 +18,14 @@ const tracks = [
 
 class App extends Component {
   render() {
-    return <Stream tracks={tracks} />;
+    return (
+      <Fragment>
+        <SiteHeader />
+        <main role="main">
+          <Stream tracks={tracks} />
+        </main>
+      </Fragment>
+    );
   }
 }
 
