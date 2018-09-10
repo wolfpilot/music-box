@@ -1,0 +1,22 @@
+// Positioning
+$z-index: (
+    site-header: 1000
+);
+
+// Colours
+$colors: (
+    black: #000,
+    white: #fff,
+    l-grey: #f6f6f6,
+    turquoise: #1ed394
+);
+
+// Fonts
+$base-font-size: 16px;
+
+$font-weight-light: 300;
+$font-weight-reg: 400;
+$font-weight-bold: 600;
+
+// Components
+$headerHeight: 50px;

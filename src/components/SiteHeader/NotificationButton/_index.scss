@@ -1,0 +1,30 @@
+$btnSize: rem(24px);
+$badgeSize: rem(12px);
+
+.site-header-notification-button {
+    position: relative;
+    appearance: none;
+    width: $btnSize;
+    height: $btnSize;
+    margin-right: rem(16px);
+    padding: 0;
+    border: none;
+
+    &__icon {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        background: url('static/img/icons/notification-bell.svg') center center;
+    }
+
+    &__badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: $badgeSize;
+        height: $badgeSize;
+        border: 2px solid color(white);
+        border-radius: 50%;
+        background-color: color(turquoise);
+    }
+}

@@ -1,10 +1,13 @@
+// Libs
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
-// Statics
+import registerServiceWorker from './registerServiceWorker';
+
+// Assets
 import './index.css';
 
-import registerServiceWorker from './registerServiceWorker';
+// Components
+import App from './components/App';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

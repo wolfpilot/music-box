@@ -1,23 +1,25 @@
-// Modules
-import React, { Component } from 'react';
+// Libs
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { Component, Fragment } from 'react';
+
+// Scenes
+import Home from '../scenes/Home';
 
 // Components
-import Stream from './Stream';
-
-const tracks = [
-  {
-    title: 'First track',
-    length: '03:48'
-  },
-  {
-    title: 'Second track',
-    length: '05:21'
-  }
-];
+import SiteHeader from './SiteHeader';
 
 class App extends Component {
   render() {
-    return <Stream tracks={tracks} />;
+    return (
+      <Router>
+        <Fragment>
+          <SiteHeader />
+          <Switch>
+            <Route exact path="/" component={Home} />
+          </Switch>
+        </Fragment>
+      </Router>
+    );
   }
 }
 
