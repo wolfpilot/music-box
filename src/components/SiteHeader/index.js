@@ -7,6 +7,18 @@ import NotificationButton from './NotificationButton';
 import AuthButton from './AuthButton';
 
 class SiteHeader extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      isLoggedIn: false
+    };
+  }
+
+  onAuth = () => {
+    this.setState({ isLoggedIn: !this.state.isLoggedIn });
+  };
+
   render() {
     return (
       <header className="site-header">
@@ -15,8 +27,8 @@ class SiteHeader extends Component {
         </div>
 
         <div className="site-header__actions">
-          <NotificationButton />
-          <AuthButton />
+          {this.state.isLoggedIn && <NotificationButton />}
+          <AuthButton isLoggedIn={this.state.isLoggedIn} onAuth={this.onAuth} />
         </div>
       </header>
     );
