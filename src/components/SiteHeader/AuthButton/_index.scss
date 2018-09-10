@@ -1,0 +1,23 @@
+$btnHeight: rem(36px);
+
+.site-header-auth-button {
+    height: $btnHeight;
+    padding: rem(8px) rem(20px);
+    outline: none;
+    background: none;
+    border: 1px solid color(turquoise);
+    border-radius: $btnHeight / 2;
+    @include fontSize(12px);
+    transition:
+        background-color 0.15s ease-in-out,
+        color 0.15s ease-in-out;
+
+    &:hover {
+        background-color: transparentize(color(turquoise), 0.8);
+    }
+
+    &:focus {
+        background-color: color(turquoise);
+        color: color(white);
+    }
+}

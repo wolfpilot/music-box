@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 
 // Components
 import Logo from '../Logo';
-import Notification from '../Notification';
+import NotificationButton from './NotificationButton';
+import AuthButton from './AuthButton';
 
 class SiteHeader extends Component {
   render() {
@@ -14,7 +15,8 @@ class SiteHeader extends Component {
         </div>
 
         <div className="site-header__actions">
-          <Notification />
+          <NotificationButton />
+          <AuthButton />
         </div>
       </header>
     );

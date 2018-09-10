@@ -1,11 +1,12 @@
 $btnSize: rem(24px);
 $badgeSize: rem(12px);
 
-.notification {
+.site-header-notification-button {
     position: relative;
     appearance: none;
     width: $btnSize;
     height: $btnSize;
+    margin-right: rem(16px);
     padding: 0;
     border: none;
 
