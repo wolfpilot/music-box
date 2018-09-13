@@ -7,6 +7,7 @@ import Home from '../scenes/Home';
 
 // Components
 import SiteHeader from './SiteHeader';
+import Authorize from '../scenes/Authorize/index';
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
           <SiteHeader />
           <Switch>
             <Route exact path="/" component={Home} />
+            <Route path="/authorize" component={Authorize} />
           </Switch>
         </Fragment>
       </Router>

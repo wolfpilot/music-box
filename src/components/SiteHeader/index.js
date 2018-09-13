@@ -1,6 +1,9 @@
 // Libs
 import React, { Component } from 'react';
 
+// Services
+import UserAPI from '../../services/api/user/index';
+
 // Components
 import Logo from '../Logo';
 import NotificationButton from './NotificationButton';
@@ -16,7 +19,13 @@ class SiteHeader extends Component {
   }
 
   onAuth = () => {
-    this.setState({ isLoggedIn: !this.state.isLoggedIn });
+    UserAPI.authorize()
+      .then(() => {
+        this.setState({ isLoggedIn: true });
+      })
+      .catch(error => {
+        console.error(`Error authenticating user. Reason: ${error}`);
+      });
   };
 
   render() {
