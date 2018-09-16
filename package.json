@@ -18,7 +18,9 @@
     "react-scripts": "1.1.5",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "sanitize.css": "^7.0.3"
+    "sanitize.css": "^7.0.3",
+    "spotify-web-api-js": "^1.1.0",
+    "url-search-params-polyfill": "^5.0.0"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
