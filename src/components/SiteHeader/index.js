@@ -18,7 +18,19 @@ class SiteHeader extends Component {
     };
   }
 
-  onAuth = () => {
+  /**
+   * @private
+   */
+  _logout() {
+    UserAPI.logout();
+
+    this.setState({ isLoggedIn: false });
+  }
+
+  /**
+   * @private
+   */
+  _login() {
     UserAPI.authorize()
       .then(() => {
         this.setState({ isLoggedIn: true });
@@ -26,6 +38,13 @@ class SiteHeader extends Component {
       .catch(error => {
         console.error(`Error authenticating user. Reason: ${error}`);
       });
+  }
+
+  /**
+   * @public
+   */
+  onAuth = () => {
+    this.state.isLoggedIn ? this._logout() : this._login();
   };
 
   render() {

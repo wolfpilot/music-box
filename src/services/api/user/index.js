@@ -2,18 +2,8 @@
 import SpotifyWebApi from 'spotify-web-api-js';
 
 // Config
-import {
-  MODAL_WIDTH,
-  MODAL_HEIGHT,
-  MSG_ACCESS_GRANTED,
-  MSG_ACCESS_DENIED
-} from './constants';
-import {
-  CLIENT_ID,
-  ALLOWED_ORIGIN_URI,
-  REDIRECT_URI,
-  SCOPES
-} from '../constants';
+import * as USER from './constants';
+import * as API from '../constants';
 
 class UserAPI {
   constructor() {
@@ -24,34 +14,36 @@ class UserAPI {
   }
 
   /**
-   * @returns {string} - The audio service login URL
+   * @returns {String} - The modal params
    */
-  static getLoginURL() {
+  static getModalFeatures() {
+    const posTop = window.screen.height / 2 - USER.MODAL_HEIGHT / 2;
+    const posLeft = window.screen.width / 2 - USER.MODAL_WIDTH / 2;
+
     return (
-      `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}` +
-      `&redirect_uri=${encodeURIComponent(REDIRECT_URI)}` +
-      `&scope=${encodeURIComponent(SCOPES.join(' '))}` +
-      `&show_dialog=true` +
-      `&response_type=token`
+      'menubar=no' +
+      'location=no,' +
+      'resizable=no,' +
+      'scrollbars=no,' +
+      'status=no,' +
+      `width=${USER.MODAL_WIDTH},` +
+      `height=${USER.MODAL_HEIGHT},` +
+      `top=${posTop},` +
+      `left=${posLeft}`
     );
   }
 
   /**
-   * @returns {Object} - The modal params
+   * @returns {string} - The audio service login URL
    */
-  static getModalOptions() {
-    const posTop = window.screen.height / 2 - MODAL_HEIGHT / 2;
-    const posLeft = window.screen.width / 2 - MODAL_WIDTH / 2;
-
-    const url = UserAPI.getLoginURL();
-    const name = 'Authorize - Spotify';
-    const features = `menubar=no,location=no,resizable=no,scrollbars=no,status=no,width=${MODAL_WIDTH},height=${MODAL_HEIGHT},top=${posTop},left=${posLeft}`;
-
-    return {
-      url,
-      name,
-      features
-    };
+  static getLoginURL() {
+    return (
+      `https://accounts.spotify.com/authorize?client_id=${API.CLIENT_ID}` +
+      `&redirect_uri=${encodeURIComponent(API.REDIRECT_URI)}` +
+      `&scope=${encodeURIComponent(API.SCOPES.join(' '))}` +
+      `&show_dialog=true` +
+      `&response_type=token`
+    );
   }
 
   /**
@@ -64,18 +56,21 @@ class UserAPI {
   }
 
   /**
+   * Open Spotify authorization modal
    * @public
    */
   authorize() {
-    const options = UserAPI.getModalOptions();
+    const url = UserAPI.getLoginURL();
+    const name = 'Authorize - Spotify';
+    const features = UserAPI.getModalFeatures();
 
-    window.open(options.url, options.name, options.features);
+    window.open(url, name, features);
 
     return new Promise((resolve, reject) => {
       window.addEventListener(
         'message',
         e => {
-          if (e.origin !== ALLOWED_ORIGIN_URI) {
+          if (e.origin !== API.ALLOWED_ORIGIN_URI) {
             return;
           }
 
@@ -87,17 +82,36 @@ class UserAPI {
 
             this._onLogin();
 
-            resolve(MSG_ACCESS_GRANTED);
+            resolve(USER.MSG_ACCESS_GRANTED);
           } else {
             this.state.accessGranted = false;
             this.state.accessToken = null;
 
-            reject(MSG_ACCESS_DENIED);
+            reject(USER.MSG_ACCESS_DENIED);
           }
         },
         false
       );
     });
+  }
+
+  /**
+   * Logout user without any further confirmations
+   * @NOTE: Spotify doesn't currently provide an API for revoking app access
+   * @NOTE: The only way to emulate this functionality is to log them out directly by redirecting to the logout page
+   * @public
+   */
+  logout() {
+    const url = 'https://www.spotify.com/logout/';
+    const name = 'Logging out - Spotify';
+    const features = UserAPI.getModalFeatures();
+
+    const modal = window.open(url, name, features);
+
+    this.state.accessGranted = false;
+    this.state.accessToken = null;
+
+    setTimeout(() => modal.close(), 2000);
   }
 }
 
