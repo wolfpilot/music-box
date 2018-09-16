@@ -8,6 +8,7 @@ import Home from '../scenes/Home';
 // Components
 import SiteHeader from './SiteHeader';
 import Authorize from '../scenes/Authorize/index';
+import NotFound from '../scenes/NotFound/index';
 
 class App extends Component {
   render() {
@@ -18,6 +19,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/authorize" component={Authorize} />
+            <Route component={NotFound} />
           </Switch>
         </Fragment>
       </Router>
