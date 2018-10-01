@@ -5,7 +5,8 @@ import { Provider } from 'react-redux';
 
 // Utils
 import registerServiceWorker from './registerServiceWorker';
-import configureStore from './store';
+import store from './store';
+import { history } from './history';
 import * as actions from './actions';
 
 // Assets
@@ -26,12 +27,11 @@ const tracks = [
   }
 ];
 
-const store = configureStore();
 store.dispatch(actions.setTracks(tracks));
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App history={history} />
   </Provider>,
   document.getElementById('root')
 );

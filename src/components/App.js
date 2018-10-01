@@ -1,12 +1,12 @@
 // Libs
-import { BrowserRouter as Router } from 'react-router-dom';
-import React  from 'react';
+import React from 'react';
+import { ConnectedRouter } from 'connected-react-router';
 
 // Utils
 import routes from '../routes';
 
-const App = () => (
-  <Router>{routes}</Router>
+const App = ({ history }) => (
+  <ConnectedRouter history={history}>{routes}</ConnectedRouter>
 );
 
 export default App;
