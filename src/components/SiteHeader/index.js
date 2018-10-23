@@ -1,30 +1,35 @@
 // Libs
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-// Services
+// Utils
 import UserAPI from '../../services/api/user/index';
 
 // Components
 import Logo from '../Logo';
 import NotificationButton from './NotificationButton';
 import AuthButton from './AuthButton';
+import { loginUser, logoutUser } from '../../services/user/actions';
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  onLogin: () => dispatch(loginUser()),
+  onLogout: () => dispatch(logoutUser())
+});
 
 class SiteHeader extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      isLoggedIn: false
-    };
-  }
-
   /**
    * @private
    */
   _logout() {
     UserAPI.logout();
 
-    this.setState({ isLoggedIn: false });
+    this.props.onLogout();
   }
 
   /**
@@ -33,7 +38,7 @@ class SiteHeader extends Component {
   _login() {
     UserAPI.authorize()
       .then(() => {
-        this.setState({ isLoggedIn: true });
+        this.props.onLogin();
       })
       .catch(error => {
         console.error(`Error authenticating user. Reason: ${error}`);
@@ -44,7 +49,7 @@ class SiteHeader extends Component {
    * @public
    */
   onAuth = () => {
-    this.state.isLoggedIn ? this._logout() : this._login();
+    this.props.user.isLoggedIn ? this._logout() : this._login();
   };
 
   render() {
@@ -55,12 +60,18 @@ class SiteHeader extends Component {
         </div>
 
         <div className="site-header__actions">
-          {this.state.isLoggedIn && <NotificationButton />}
-          <AuthButton isLoggedIn={this.state.isLoggedIn} onAuth={this.onAuth} />
+          {this.props.user.isLoggedIn && <NotificationButton />}
+          <AuthButton
+            isLoggedIn={this.props.user.isLoggedIn}
+            onAuth={this.onAuth}
+          />
         </div>
       </header>
     );
   }
 }
 
-export default SiteHeader;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SiteHeader);
