@@ -96,22 +96,12 @@ class UserAPI {
   }
 
   /**
-   * Logout user without any further confirmations
-   * @NOTE: Spotify doesn't currently provide an API for revoking app access
-   * @NOTE: The only way to emulate this functionality is to log them out directly by redirecting to the logout page
+   * Reset user credentials
    * @public
    */
   logout() {
-    const url = 'https://www.spotify.com/logout/';
-    const name = 'Logging out - Spotify';
-    const features = UserAPI.getModalFeatures();
-
-    const modal = window.open(url, name, features);
-
     this.state.accessGranted = false;
     this.state.accessToken = null;
-
-    setTimeout(() => modal.close(), 2000);
   }
 }
 
