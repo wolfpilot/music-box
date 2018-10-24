@@ -1,50 +1,30 @@
 // Libs
 import React, { Component } from 'react';
-
-// Services
-import UserAPI from '../../services/api/user/index';
+import { connect } from 'react-redux';
 
 // Components
 import Logo from '../Logo';
 import NotificationButton from './NotificationButton';
 import AuthButton from './AuthButton';
+import { loginUser, logoutUser } from '../../services/user/actions';
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  login: () => dispatch(loginUser()),
+  logout: () => dispatch(logoutUser())
+});
 
 class SiteHeader extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      isLoggedIn: false
-    };
-  }
-
-  /**
-   * @private
-   */
-  _logout() {
-    UserAPI.logout();
-
-    this.setState({ isLoggedIn: false });
-  }
-
-  /**
-   * @private
-   */
-  _login() {
-    UserAPI.authorize()
-      .then(() => {
-        this.setState({ isLoggedIn: true });
-      })
-      .catch(error => {
-        console.error(`Error authenticating user. Reason: ${error}`);
-      });
-  }
-
   /**
    * @public
    */
   onAuth = () => {
-    this.state.isLoggedIn ? this._logout() : this._login();
+    this.props.user.isLoggedIn ? this.props.logout() : this.props.login();
   };
 
   render() {
@@ -55,12 +35,18 @@ class SiteHeader extends Component {
         </div>
 
         <div className="site-header__actions">
-          {this.state.isLoggedIn && <NotificationButton />}
-          <AuthButton isLoggedIn={this.state.isLoggedIn} onAuth={this.onAuth} />
+          {this.props.user.isLoggedIn && <NotificationButton />}
+          <AuthButton
+            isLoggedIn={this.props.user.isLoggedIn}
+            onAuth={this.onAuth}
+          />
         </div>
       </header>
     );
   }
 }
 
-export default SiteHeader;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SiteHeader);
