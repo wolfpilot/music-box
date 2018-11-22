@@ -1,5 +1,7 @@
 // Libs
 import { applyMiddleware, compose, createStore } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
@@ -13,9 +15,17 @@ const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const logger = createLogger();
 const router = routerMiddleware(history);
 
-const store = createStore(
-  connectRouter(history)(rootReducer),
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['user']
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = createStore(
+  connectRouter(history)(persistedReducer),
   composeEnhancer(applyMiddleware(thunk, logger, router))
 );
 
-export default store;
+export const persistor = persistStore(store);
