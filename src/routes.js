@@ -7,8 +7,8 @@ import Home from './scenes/Home';
 
 // Components
 import SiteHeader from './components/SiteHeader';
-import Authorize from './scenes/Authorize/index';
-import NotFound from './scenes/NotFound/index';
+import Authorize from './scenes/Authorize';
+import NotFound from './scenes/NotFound';
 
 const routes = (
   <Fragment>
