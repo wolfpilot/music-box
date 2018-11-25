@@ -1,5 +1,6 @@
 // Libs
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // Components
 import Track from '../Track';
@@ -11,5 +12,9 @@ const Stream = ({ tracks = [] }) => (
     })}
   </div>
 );
+
+Stream.propTypes = {
+  tracks: PropTypes.array
+};
 
 export default Stream;

@@ -1,5 +1,6 @@
 // Libs
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // Components
@@ -51,6 +52,12 @@ class SiteHeader extends Component {
     );
   }
 }
+
+SiteHeader.propTypes = {
+  session: PropTypes.shape({
+    isLoggedIn: PropTypes.bool
+  })
+};
 
 export default connect(
   mapStateToProps,
