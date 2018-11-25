@@ -43,10 +43,7 @@ class SiteHeader extends Component {
               <ProfileButton />
             </Fragment>
           )}
-          <AuthButton
-            isLoggedIn={this.props.session.isLoggedIn}
-            onAuth={this.onAuth}
-          />
+          <AuthButton onAuth={this.onAuth} />
         </div>
       </header>
     );
