@@ -2,10 +2,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 // Utils
 import registerServiceWorker from './registerServiceWorker';
-import store from './store';
+import { store, persistor } from './store';
 import { history } from './history';
 
 // Assets
@@ -16,7 +17,9 @@ import App from './components/App';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App history={history} />
+    <PersistGate loading={null} persistor={persistor}>
+      <App history={history} />
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );

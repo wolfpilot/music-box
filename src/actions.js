@@ -1,4 +1,18 @@
-import { loginUser, logoutUser } from './services/user/actions';
+import { setSession, resetSession } from './services/session/actions';
+import {
+  loginUser,
+  logoutUser,
+  setUser,
+  resetUser
+} from './services/user/actions';
 import { setTracks } from './services/player/tracks/actions';
 
-export { loginUser, logoutUser, setTracks };
+export {
+  setSession,
+  resetSession,
+  loginUser,
+  logoutUser,
+  setUser,
+  resetUser,
+  setTracks
+};

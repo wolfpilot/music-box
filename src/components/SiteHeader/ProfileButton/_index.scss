@@ -1,0 +1,35 @@
+$iconRadius: 28px;
+
+.site-header-profile-button {
+    position: relative;
+    width: $iconRadius;
+    height: $iconRadius;
+    margin-right: rem(16px);
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    overflow: hidden;
+
+    &__image,
+    &__placeholder {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    &__placeholder {
+        background-color: color(black);
+
+        .svg {
+            width: $iconRadius / 2;
+            height: auto;
+            fill: color(white);
+        }
+    }
+
+    &__image {
+        background-size: cover;
+    }
+}
