@@ -18,7 +18,7 @@ const router = routerMiddleware(history);
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['user']
+  whitelist: ['session', 'user']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

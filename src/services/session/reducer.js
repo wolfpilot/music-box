@@ -2,23 +2,23 @@
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-  name: null,
-  image: null
+  isLoggedIn: false,
+  accessToken: null
 };
 
-const setUser = (state, action) => {
+const setSession = (state, action) => {
   return {
     ...state,
-    name: action.display_name,
-    image: action.images[0]
+    isLoggedIn: true,
+    accessToken: action.accessToken
   };
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.USER_SET:
-      return setUser(state, action);
-    case actionTypes.USER_RESET:
+    case actionTypes.SESSION_SET:
+      return setSession(state, action);
+    case actionTypes.SESSION_RESET:
       return initialState;
     default:
       return state;
