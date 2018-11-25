@@ -1,5 +1,6 @@
 // Libs
 import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // Components
@@ -42,15 +43,18 @@ class SiteHeader extends Component {
               <ProfileButton />
             </Fragment>
           )}
-          <AuthButton
-            isLoggedIn={this.props.session.isLoggedIn}
-            onAuth={this.onAuth}
-          />
+          <AuthButton onAuth={this.onAuth} />
         </div>
       </header>
     );
   }
 }
+
+SiteHeader.propTypes = {
+  session: PropTypes.shape({
+    isLoggedIn: PropTypes.bool
+  })
+};
 
 export default connect(
   mapStateToProps,

@@ -1,5 +1,6 @@
 // Modules
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Track extends Component {
   render() {
@@ -13,5 +14,12 @@ class Track extends Component {
     );
   }
 }
+
+Track.propTypes = {
+  track: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    length: PropTypes.string.isRequired
+  })
+};
 
 export default Track;
