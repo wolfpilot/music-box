@@ -8,7 +8,6 @@ const fetchMe = () => dispatch => {
   spotifyAPI.getMe().then(
     data => {
       const { display_name, images } = data;
-
       dispatch(setUser(display_name, images));
     },
     error => {
@@ -21,8 +20,6 @@ export const loginUser = () => dispatch => {
   userAPI
     .authorize()
     .then(accessToken => {
-      spotifyAPI.setAccessToken(accessToken);
-
       dispatch(setSession(accessToken));
       dispatch(fetchMe());
     })
@@ -32,8 +29,6 @@ export const loginUser = () => dispatch => {
 };
 
 export const logoutUser = () => dispatch => {
-  spotifyAPI.setAccessToken(null);
-
   dispatch(resetSession());
   dispatch(resetUser());
 };
