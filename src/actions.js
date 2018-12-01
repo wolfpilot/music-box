@@ -3,7 +3,8 @@ import {
   loginUser,
   logoutUser,
   setUser,
-  resetUser
+  resetUser,
+  fetchMe
 } from './services/user/actions';
 import { setTracks } from './services/player/tracks/actions';
 
@@ -14,5 +15,6 @@ export {
   logoutUser,
   setUser,
   resetUser,
+  fetchMe,
   setTracks
 };
