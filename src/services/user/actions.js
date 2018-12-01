@@ -2,7 +2,7 @@
 import * as actionTypes from './actionTypes';
 import * as userAPI from '../api/user';
 import { spotifyAPI } from '../api/player';
-import { resetSession, setSession } from '../session/actions';
+import { resetSession, setSession, setPlaylists } from '../../actions';
 
 export const fetchMe = () => dispatch => {
   spotifyAPI.getMe().then(
@@ -15,6 +15,17 @@ export const fetchMe = () => dispatch => {
       console.error(`Error retrieving user data. Reason: ${error}`);
     }
   );
+};
+
+export const fetchFeaturedPlaylists = () => dispatch => {
+  spotifyAPI
+    .getFeaturedPlaylists({ limit: 12 })
+    .then(data => {
+      dispatch(setPlaylists(data.playlists.items));
+    })
+    .catch(err => {
+      console.error(err);
+    });
 };
 
 export const loginUser = () => dispatch => {

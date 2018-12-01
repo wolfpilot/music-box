@@ -4,9 +4,10 @@ import {
   logoutUser,
   setUser,
   resetUser,
-  fetchMe
+  fetchMe,
+  fetchFeaturedPlaylists
 } from './services/user/actions';
-import { setTracks } from './services/player/tracks/actions';
+import { setPlaylists, setTracks } from './services/stream/actions';
 
 export {
   setSession,
@@ -16,5 +17,7 @@ export {
   setUser,
   resetUser,
   fetchMe,
+  fetchFeaturedPlaylists,
+  setPlaylists,
   setTracks
 };

@@ -3,17 +3,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import Track from '../Track';
+import PlaylistTile from './PlaylistTile';
 
-const Stream = ({ tracks = [] }) => (
+const Stream = ({ playlists, tracks }) => (
   <div className="stream">
-    {tracks.map((track, key) => {
-      return <Track track={track} key={key} />;
-    })}
+    <h1 className="stream__heading">Stream</h1>
+    <ul className="stream__featured-playlists">
+      {playlists.map((playlist, key) => {
+        return (
+          <li className="stream__playlist-item" key={key}>
+            <PlaylistTile playlist={playlist} />
+          </li>
+        );
+      })}
+    </ul>
   </div>
 );
 
 Stream.propTypes = {
+  playlists: PropTypes.array,
   tracks: PropTypes.array
 };
 

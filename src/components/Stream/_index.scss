@@ -1,0 +1,22 @@
+.stream {
+    &__featured-playlists {
+        display: grid;
+        grid-gap: 15px;
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        @include mq($mq-mob) {
+            grid-template-columns: repeat(3, minmax(120px, 1fr));
+        }
+
+        @include mq($mq-mob--lrg) {
+            grid-template-columns: repeat(4, minmax(120px, 1fr));
+        }
+
+        @include mq($mq-tab--lrg) {
+            grid-template-columns: repeat(6, minmax(120px, 1fr));
+        }
+    }
+}
