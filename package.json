@@ -21,6 +21,7 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
+    "redux-watch": "^1.1.1",
     "sanitize.css": "^7.0.3",
     "spotify-web-api-js": "^1.1.0",
     "url-search-params-polyfill": "^5.0.0"

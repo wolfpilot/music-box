@@ -4,10 +4,11 @@ import * as userAPI from '../api/user';
 import { spotifyAPI } from '../api/player';
 import { resetSession, setSession } from '../session/actions';
 
-const fetchMe = () => dispatch => {
+export const fetchMe = () => dispatch => {
   spotifyAPI.getMe().then(
     data => {
       const { display_name, images } = data;
+
       dispatch(setUser(display_name, images));
     },
     error => {
