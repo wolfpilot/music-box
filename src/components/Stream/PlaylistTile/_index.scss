@@ -1,0 +1,46 @@
+.playlist-tile {
+    position: relative;
+
+    &:hover {
+        &::before {
+            opacity: 1;
+        }
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        bottom: -8px;
+        left: -8px;
+        opacity: 0;
+        background-color: transparentize(color(turquoise), 0.85);
+        border-radius: $default-border-radius;
+        transition: opacity 0.15s ease-in-out;
+    }
+
+    &__content {
+        position: relative;
+    }
+
+    &__image-link {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    &__image {
+        max-width: 100%;
+        border-radius: $default-border-radius;
+    }
+
+    &__name {
+        margin: 0;
+    }
+
+    &__name-link {
+        color: color(black);
+        @include fontSize(14px);
+        text-decoration: none;
+    }
+}

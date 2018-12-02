@@ -2,7 +2,7 @@
 import watch from 'redux-watch';
 
 // Utils
-import { setSession, fetchMe } from './actions';
+import { setSession, fetchMe, fetchFeaturedPlaylists } from './actions';
 
 // Keep refs to the watchers so they can be unsubscribed when necessary
 let sessionWatcher;
@@ -14,6 +14,7 @@ export const watchSession = (store, accessToken) => {
 
   store.dispatch(setSession(accessToken));
   store.dispatch(fetchMe());
+  store.dispatch(fetchFeaturedPlaylists());
 
   sessionWatcher();
 };

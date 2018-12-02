@@ -7,3 +7,10 @@ export const setTracks = tracks => {
     tracks
   };
 };
+
+export const setPlaylists = playlists => {
+  return {
+    type: actionTypes.PLAYLISTS_SET,
+    playlists
+  };
+};
