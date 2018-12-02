@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 // Components
 import Stream from '../../components/Stream';
+import Welcome from '../../components/Welcome';
 
 const mapStateToProps = state => {
   return {
@@ -13,7 +14,7 @@ const mapStateToProps = state => {
 };
 
 const Home = ({ session }) => (
-  <main role="main">{session.isLoggedIn ? <Stream /> : null}</main>
+  <main role="main">{session.isLoggedIn ? <Stream /> : <Welcome />}</main>
 );
 
 Home.propTypes = {
