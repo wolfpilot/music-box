@@ -1,12 +1,61 @@
 .track {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
 
-    &__title,
-    &__length {
-        display: inline-block;
+    &:hover {
+        background-color: transparentize(color(turquoise), 0.8);
     }
 
-    &__title {
+    &__index {
+        width: 48px;
+        padding-right: 8px;
+        text-align: right;
+        @include fontSize(12px);
+        font-weight: bold;
+    }
+
+    &__artwork {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    &__artwork-image {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+    }
+
+    &__play-btn {
+        background: none;
+        border: none;
+        color: #d7dbda;
+
+        &[disabled] {
+            color: #ededed;
+        }
+
+        .track[data-is-playing="true"] & {
+            color: color(turquoise);
+        }
+    }
+
+    &__details {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    &__name {
         margin-right: 8px;
+        font-weight: bold;
+    }
+
+    &__length {
+        padding-right: 8px;
+        padding-left: 8px;
     }
 }

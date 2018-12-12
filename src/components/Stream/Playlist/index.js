@@ -26,7 +26,29 @@ const Playlist = ({ playlist }) => {
         </div>
       </div>
 
-      <ul className="playlist__track-list" />
+      <ul className="playlist__track-list">
+        {tracks.items.map((item, index) => {
+          const { track } = item;
+
+          if (!track) {
+            return null;
+          }
+
+          return (
+            <li key={track.id} className="playlist__track-list-item">
+              <Track
+                id={track.id}
+                index={tracks.offset + index + 1}
+                name={track.name}
+                artists={track.artists}
+                artwork={track.album.images[track.album.images.length - 1]}
+                duration_ms={track.duration_ms}
+                preview_url={track.preview_url}
+              />
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };
