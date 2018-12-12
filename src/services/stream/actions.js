@@ -14,3 +14,10 @@ export const setPlaylists = playlists => {
     playlists
   };
 };
+
+export const setCurrentPlaylist = playlist => {
+  return {
+    type: actionTypes.CURRENT_PLAYLIST_SET,
+    playlist
+  };
+};

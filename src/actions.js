@@ -5,9 +5,14 @@ import {
   setUser,
   resetUser,
   fetchMe,
-  fetchFeaturedPlaylists
+  fetchFeaturedPlaylists,
+  fetchPlaylist
 } from './services/user/actions';
-import { setPlaylists, setTracks } from './services/stream/actions';
+import {
+  setPlaylists,
+  setTracks,
+  setCurrentPlaylist
+} from './services/stream/actions';
 
 export {
   setSession,
@@ -18,6 +23,8 @@ export {
   resetUser,
   fetchMe,
   fetchFeaturedPlaylists,
+  fetchPlaylist,
   setPlaylists,
-  setTracks
+  setTracks,
+  setCurrentPlaylist
 };

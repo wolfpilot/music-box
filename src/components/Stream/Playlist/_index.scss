@@ -1,0 +1,9 @@
+.playlist {
+    &__header {
+        display: flex;
+    }
+
+    &__header-image-wrapper {
+        margin-right: 24px;
+    }
+}

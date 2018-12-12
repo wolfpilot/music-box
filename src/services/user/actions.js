@@ -2,7 +2,12 @@
 import * as actionTypes from './actionTypes';
 import * as userAPI from '../api/user';
 import { spotifyAPI } from '../api/player';
-import { resetSession, setSession, setPlaylists } from '../../actions';
+import {
+  resetSession,
+  setSession,
+  setPlaylists,
+  setCurrentPlaylist
+} from '../../actions';
 
 export const fetchMe = () => dispatch => {
   spotifyAPI.getMe().then(
@@ -22,6 +27,27 @@ export const fetchFeaturedPlaylists = () => dispatch => {
     .getFeaturedPlaylists({ limit: 12 })
     .then(data => {
       dispatch(setPlaylists(data.playlists.items));
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+export const fetchPlaylist = id => dispatch => {
+  const fields = [
+    'description',
+    'followers.total',
+    'id',
+    'images',
+    'name',
+    'owner',
+    'tracks'
+  ].join(',');
+
+  spotifyAPI
+    .getPlaylist(id, { fields })
+    .then(data => {
+      dispatch(setCurrentPlaylist(data));
     })
     .catch(err => {
       console.error(err);
