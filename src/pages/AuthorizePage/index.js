@@ -7,7 +7,7 @@ import { getUrlParamByKey } from '../../static/js/utils/urlHelpers';
 // Config
 import { ALLOWED_ORIGIN_URI } from '../../services/api/constants';
 
-class Authorize extends Component {
+class AuthorizePage extends Component {
   componentDidMount() {
     window.setTimeout(this._handleAuthCallback, 1);
   }
@@ -22,7 +22,7 @@ class Authorize extends Component {
    * @private
    */
   _handleAuthCallback = () => {
-    const accessToken = Authorize.getAccessToken();
+    const accessToken = AuthorizePage.getAccessToken();
 
     window.opener.postMessage({ accessToken }, ALLOWED_ORIGIN_URI);
 
@@ -38,4 +38,4 @@ class Authorize extends Component {
   }
 }
 
-export default Authorize;
+export default AuthorizePage;

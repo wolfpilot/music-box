@@ -13,14 +13,14 @@ const mapStateToProps = state => {
   };
 };
 
-const Home = ({ session }) => (
+const HomePage = ({ session }) => (
   <main role="main">{session.isLoggedIn ? <Stream /> : <Welcome />}</main>
 );
 
-Home.propTypes = {
+HomePage.propTypes = {
   session: PropTypes.shape({
     isLoggedIn: PropTypes.bool
   })
 };
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(HomePage);
