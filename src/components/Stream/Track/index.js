@@ -2,6 +2,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+// Utils
+import { formatMilliseconds } from '../../../static/js/utils/mathHelpers';
+
 class Track extends Component {
   // @TODO: Move state to store, dispatch play/pause action
   state = {
@@ -64,7 +67,9 @@ class Track extends Component {
           )}
         </div>
 
-        {duration_ms && <div className="track__length">{duration_ms}</div>}
+        {duration_ms && (
+          <div className="track__length">{formatMilliseconds(duration_ms)}</div>
+        )}
       </div>
     );
   }
