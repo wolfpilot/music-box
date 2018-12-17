@@ -13,7 +13,7 @@ const PlaylistTile = ({ playlist }) => {
           <img className="playlist-tile__image" src={image.url} alt="" />
         </Link>
 
-        <p className="playlist-tile__name text text--truncate">
+        <p className="playlist-tile__name">
           <Link to={`/playlist/${id}`} className="playlist-tile__name-link">
             {name}
           </Link>

@@ -1,10 +1,18 @@
 .playlist {
     &__header {
-        display: flex;
+        @include mq($mq-mob--lrg) {
+            display: flex;
+        }
     }
 
     &__header-image-wrapper {
-        margin-right: 24px;
+        @include mq($mq-mob--lrg) {
+            margin-right: 24px;
+        }
+    }
+
+    &__header-image {
+        max-width: 100%;
     }
 
     &__track-list {

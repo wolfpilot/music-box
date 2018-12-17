@@ -9,16 +9,25 @@
     }
 
     &__index {
-        width: 48px;
-        padding-right: 8px;
-        text-align: right;
-        @include fontSize(12px);
-        font-weight: bold;
+        display: none;
+
+        @include mq($mq-mob--lrg) {
+            display: block;
+            flex-shrink: 0;
+            width: 36px;
+            padding-right: 8px;
+            text-align: right;
+            @include fontSize(12px);
+            font-weight: bold;
+        }
     }
 
     &__artwork {
         padding-right: 8px;
-        padding-left: 8px;
+
+        @include mq($mq-mob--lrg) {
+            padding-left: 8px;
+        }
     }
 
     &__artwork-image {
@@ -28,9 +37,14 @@
     }
 
     &__play-btn {
-        background: none;
-        border: none;
-        color: #d7dbda;
+        display: none;
+
+        @include mq($mq-mob--lrg) {
+            display: block;
+            background: none;
+            border: none;
+            color: #d7dbda;
+        }
 
         &[disabled] {
             color: #ededed;
@@ -45,8 +59,14 @@
         display: flex;
         flex: 1 1 auto;
         flex-direction: column;
+        min-width: 0;
         padding-right: 8px;
         padding-left: 8px;
+    }
+
+    &__name,
+    &__artists {
+        @include text-truncate;
     }
 
     &__name {
@@ -55,7 +75,7 @@
     }
 
     &__length {
-        padding-right: 8px;
+        flex-shrink: 0;
         padding-left: 8px;
     }
 }

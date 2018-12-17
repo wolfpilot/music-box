@@ -30,6 +30,7 @@ class Track extends Component {
   }
 
   componentDidMount() {
+    // @TODO: Move to Stream? Somehow, initialize ONCE
     this.audio = new Audio(this.props.preview_url);
   }
 
