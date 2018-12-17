@@ -12,6 +12,10 @@ class Track extends Component {
   };
 
   togglePlayPause = () => {
+    if (!this.props.preview_url) {
+      return;
+    }
+
     this.audio.loop = false;
 
     if (this.state.isPlaying) {
@@ -45,21 +49,18 @@ class Track extends Component {
     } = this.props;
 
     return (
-      <div className="track" data-is-playing={this.state.isPlaying}>
+      <div
+        className="track"
+        role="button"
+        onClick={this.togglePlayPause}
+        disabled={!preview_url}
+        data-is-playing={this.state.isPlaying}
+      >
         {index && <div className="track__index">{index}</div>}
 
         <div className="track__artwork">
           <img className="track__artwork-image" src={artwork.url} alt="" />
         </div>
-
-        <button
-          className="track__play-btn btn"
-          type="button"
-          disabled={!preview_url}
-          onClick={this.togglePlayPause}
-        >
-          &#9658;
-        </button>
 
         <div className="track__details">
           {name && <div className="track__name">{name}</div>}
