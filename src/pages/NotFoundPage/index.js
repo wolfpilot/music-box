@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const NotFound = () => (
+const NotFoundPage = () => (
   <main>
     <h1 className="title">Oops, page not found!</h1>
     <Link to="/" className="link">
@@ -11,4 +11,4 @@ const NotFound = () => (
   </main>
 );
 
-export default NotFound;
+export default NotFoundPage;

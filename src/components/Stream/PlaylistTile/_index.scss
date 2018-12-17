@@ -35,6 +35,7 @@
     }
 
     &__name {
+        @include text-truncate;
         margin: 0;
     }
 

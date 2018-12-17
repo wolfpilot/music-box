@@ -37,12 +37,20 @@ const setTracks = (state, action) => {
   return { ...state, tracks };
 };
 
+const setCurrentPlaylist = (state, action) => {
+  const { playlist } = action;
+
+  return { ...state, playlist };
+};
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case actionTypes.PLAYLISTS_SET:
       return setPlaylists(state, action);
     case actionTypes.TRACKS_SET:
       return setTracks(state, action);
+    case actionTypes.CURRENT_PLAYLIST_SET:
+      return setCurrentPlaylist(state, action);
     default:
       return state;
   }

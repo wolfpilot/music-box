@@ -12,7 +12,6 @@
 @import "static/scss/common/btn";
 @import "static/scss/common/hyperlink";
 @import "static/scss/common/svg-container";
-@import "static/scss/common/text";
 @import "static/scss/layout/base";
 
 // Components
@@ -23,6 +22,7 @@
 
 @import "components/Logo/index";
 @import "components/Stream/index";
+@import "components/Stream/Playlist/index";
 @import "components/Stream/PlaylistTile/index";
-@import "components/Track/index";
+@import "components/Stream/Track/index";
 @import "components/Welcome/index";
