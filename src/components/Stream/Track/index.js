@@ -1,14 +1,26 @@
 // Libs
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // Utils
+import { playTrack, pauseTrack } from '../../../actions';
 import { formatMilliseconds } from '../../../static/js/utils/mathHelpers';
 
-class Track extends Component {
-  // @TODO: Move state to store, dispatch play/pause action
+const mapStateToProps = state => {
+  return {
+    player: state.player
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  playTrack: trackID => dispatch(playTrack(trackID)),
+  pauseTrack: () => dispatch(pauseTrack())
+});
+
+class Track extends PureComponent {
   state = {
-    isPlaying: false
+    isActive: false
   };
 
   togglePlayPause = () => {
@@ -16,26 +28,28 @@ class Track extends Component {
       return;
     }
 
-    this.audio.loop = false;
-
-    if (this.state.isPlaying) {
-      this.setState({ isPlaying: false });
-
-      this.audio.pause();
-    } else {
-      this.setState({ isPlaying: true });
-
-      this.audio.play();
-    }
+    this.state.isActive
+      ? this.props.pauseTrack()
+      : this.props.playTrack(this.props.preview_url);
   };
 
   getArtists() {
     return this.props.artists.map(artist => artist.name).join(', ');
   }
 
-  componentDidMount() {
-    // @TODO: Move to Stream? Somehow, initialize ONCE
-    this.audio = new Audio(this.props.preview_url);
+  componentDidUpdate() {
+    const { player } = this.props;
+
+    // @TODO: Optimise. Are previous props and state even relevant here?
+    if (player.isPlaying) {
+      if (player.activeTrackID === this.props.preview_url) {
+        this.setState({ isActive: true });
+      } else {
+        this.setState({ isActive: false });
+      }
+    } else {
+      this.setState({ isActive: false });
+    }
   }
 
   render() {
@@ -54,7 +68,7 @@ class Track extends Component {
         role="button"
         onClick={this.togglePlayPause}
         disabled={!preview_url}
-        data-is-playing={this.state.isPlaying}
+        data-is-active={this.state.isActive}
       >
         {index && <div className="track__index">{index}</div>}
 
@@ -81,7 +95,12 @@ Track.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   artists: PropTypes.array.isRequired,
-  duration_ms: PropTypes.number.isRequired
+  index: PropTypes.number.isRequired,
+  duration_ms: PropTypes.number.isRequired,
+  preview_url: PropTypes.string
 };
 
-export default Track;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Track);

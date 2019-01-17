@@ -10,6 +10,7 @@ import NotFoundPage from './pages/NotFoundPage';
 
 // Components
 import SiteHeader from './components/SiteHeader';
+import Player from './components/Player';
 
 const routes = (
   <Fragment>
@@ -20,6 +21,7 @@ const routes = (
       <Route path="/playlist/:id" component={PlaylistPage} />
       <Route component={NotFoundPage} />
     </Switch>
+    <Player />
   </Fragment>
 );
 

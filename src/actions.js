@@ -13,6 +13,12 @@ import {
   setTracks,
   setCurrentPlaylist
 } from './services/stream/actions';
+import {
+  setActiveTrack,
+  setIsPlaying,
+  playTrack,
+  pauseTrack
+} from './services/player/actions';
 
 export {
   setSession,
@@ -26,5 +32,9 @@ export {
   fetchPlaylist,
   setPlaylists,
   setTracks,
-  setCurrentPlaylist
+  setCurrentPlaylist,
+  setActiveTrack,
+  setIsPlaying,
+  playTrack,
+  pauseTrack
 };

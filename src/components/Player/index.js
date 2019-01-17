@@ -1,0 +1,38 @@
+// Libs
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => {
+  return {
+    player: state.player
+  };
+};
+
+class Player extends Component {
+  componentDidMount() {
+    this.audio = new Audio();
+
+    this.audio.loop = false;
+  }
+
+  componentDidUpdate(prevProps) {
+    const { isPlaying, activeTrackID } = this.props.player;
+
+    if (isPlaying) {
+      if (prevProps.player.activeTrackID !== activeTrackID) {
+        this.audio.src = activeTrackID;
+        this.audio.load();
+      }
+
+      this.audio.play();
+    } else {
+      this.audio.pause();
+    }
+  }
+
+  render() {
+    return <div className="player" />;
+  }
+}
+
+export default connect(mapStateToProps)(Player);

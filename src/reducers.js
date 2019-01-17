@@ -5,9 +5,11 @@ import { combineReducers } from 'redux';
 import session from './services/session/reducer';
 import user from './services/user/reducer';
 import stream from './services/stream/reducer';
+import player from './services/player/reducer';
 
 export default combineReducers({
   session,
   user,
-  stream
+  stream,
+  player
 });
