@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // Utils
-import { playTrack, pauseTrack } from '../../../actions';
+import { playTrack } from '../../../actions';
 import { formatMilliseconds } from '../../../static/js/utils/mathHelpers';
 
 const mapStateToProps = state => {
@@ -14,46 +14,25 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  playTrack: trackID => dispatch(playTrack(trackID)),
-  pauseTrack: () => dispatch(pauseTrack())
+  playTrack: trackID => dispatch(playTrack(trackID))
 });
 
 class Track extends PureComponent {
-  state = {
-    isActive: false
-  };
-
   togglePlayPause = () => {
     if (!this.props.preview_url) {
       return;
     }
 
-    this.state.isActive
-      ? this.props.pauseTrack()
-      : this.props.playTrack(this.props.preview_url);
+    this.props.playTrack(this.props.preview_url);
   };
 
   getArtists() {
     return this.props.artists.map(artist => artist.name).join(', ');
   }
 
-  componentDidUpdate() {
-    const { player } = this.props;
-
-    // @TODO: Optimise. Are previous props and state even relevant here?
-    if (player.isPlaying) {
-      if (player.activeTrackID === this.props.preview_url) {
-        this.setState({ isActive: true });
-      } else {
-        this.setState({ isActive: false });
-      }
-    } else {
-      this.setState({ isActive: false });
-    }
-  }
-
   render() {
     const {
+      player,
       name,
       artists,
       index,
@@ -62,13 +41,15 @@ class Track extends PureComponent {
       preview_url
     } = this.props;
 
+    const isActive = player.isPlaying && player.activeTrackID === preview_url;
+
     return (
       <div
         className="track"
         role="button"
         onClick={this.togglePlayPause}
         disabled={!preview_url}
-        data-is-active={this.state.isActive}
+        data-is-active={isActive}
       >
         {index && <div className="track__index">{index}</div>}
 
