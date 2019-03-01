@@ -1,9 +1,9 @@
 import * as actionTypes from './actionTypes';
 
-export function setActiveTrack(activeTrackID) {
+export function setActiveTrack(track) {
   return {
     type: actionTypes.SET_ACTIVE_TRACK,
-    activeTrackID
+    track
   };
 }
 
@@ -14,8 +14,8 @@ export function setIsPlaying(isPlaying) {
   };
 }
 
-export const playTrack = trackID => dispatch => {
-  dispatch(setActiveTrack(trackID));
+export const playTrack = track => dispatch => {
+  dispatch(setActiveTrack(track));
   dispatch(setIsPlaying(true));
 };
 

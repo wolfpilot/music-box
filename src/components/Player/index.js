@@ -16,11 +16,11 @@ class Player extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isPlaying, activeTrackID } = this.props.player;
+    const { isPlaying, track } = this.props.player;
 
     if (isPlaying) {
-      if (prevProps.player.activeTrackID !== activeTrackID) {
-        this.audio.src = activeTrackID;
+      if (prevProps.player.track !== track) {
+        this.audio.src = track.preview_url;
         this.audio.load();
       }
 

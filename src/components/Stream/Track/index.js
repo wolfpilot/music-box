@@ -14,7 +14,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  playTrack: trackID => dispatch(playTrack(trackID))
+  playTrack: track => dispatch(playTrack(track))
 });
 
 class Track extends PureComponent {
@@ -23,7 +23,17 @@ class Track extends PureComponent {
       return;
     }
 
-    this.props.playTrack(this.props.preview_url);
+    const {
+      name,
+      artists,
+      index,
+      artwork,
+      duration_ms,
+      preview_url
+    } = this.props;
+    const track = { name, artists, index, artwork, duration_ms, preview_url };
+
+    this.props.playTrack(track);
   };
 
   getArtists() {
@@ -41,7 +51,8 @@ class Track extends PureComponent {
       preview_url
     } = this.props;
 
-    const isActive = player.isPlaying && player.activeTrackID === preview_url;
+    const isActive =
+      player.isPlaying && player.track.preview_url === preview_url;
 
     return (
       <div
