@@ -4,16 +4,7 @@ import { pick } from '../../static/js/utils/objectHelpers';
 
 const initialState = {
   playlists: [],
-  tracks: [
-    {
-      title: 'First track',
-      length: '03:48'
-    },
-    {
-      title: 'Second track',
-      length: '05:21'
-    }
-  ]
+  tracks: []
 };
 
 const setPlaylists = (state, action) => {

@@ -1,0 +1,41 @@
+.player {
+    position: fixed;
+    z-index: 100;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    height: 60px;
+    padding: 1rem;
+    background-color: #f7f8f8;
+
+    &__artwork-wrapper {
+        flex: none;
+    }
+
+    &__artwork-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    &__active-track {
+        display: flex;
+        max-width: 33%;
+        max-height: 100%;
+    }
+
+    &__track-details {
+        max-width: 100%;
+    }
+
+    &__track-name,
+    &__artist-name {
+        @include text-truncate;
+    }
+
+    &__artist-name {
+        color: color(grey);
+        @include fontSize(12px);
+    }
+}
