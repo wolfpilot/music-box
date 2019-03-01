@@ -8,15 +8,17 @@ import PlaylistTile from './PlaylistTile';
 const Stream = ({ playlists, tracks }) => (
   <div className="stream">
     <h1 className="stream__heading">Stream</h1>
-    <ul className="stream__featured-playlists">
-      {playlists.map((playlist, key) => {
-        return (
-          <li className="stream__playlist-item" key={key}>
-            <PlaylistTile playlist={playlist} />
-          </li>
-        );
-      })}
-    </ul>
+    {playlists && (
+      <ul className="stream__featured-playlists">
+        {playlists.map((playlist, key) => {
+          return (
+            <li className="stream__playlist-item" key={key}>
+              <PlaylistTile playlist={playlist} />
+            </li>
+          );
+        })}
+      </ul>
+    )}
   </div>
 );
 

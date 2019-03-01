@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // Utils
-import { fetchPlaylist } from '../../actions';
+import { fetchPlaylist, setCurrentPlaylist } from '../../actions';
 
 // Components
 import Playlist from '../../components/Stream/Playlist';
@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchPlaylist: id => dispatch(fetchPlaylist(id))
+  fetchPlaylist: id => dispatch(fetchPlaylist(id)),
+  setCurrentPlaylist: playlist => dispatch(setCurrentPlaylist(playlist))
 });
 
 class PlaylistPage extends Component {
@@ -22,6 +23,11 @@ class PlaylistPage extends Component {
     const albumID = this.props.match.params.id;
 
     this.props.fetchPlaylist(albumID);
+  }
+
+  componentWillUnmount() {
+    // Reset playlist
+    this.props.setCurrentPlaylist({});
   }
 
   render() {
