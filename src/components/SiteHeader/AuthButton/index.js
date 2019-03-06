@@ -12,7 +12,7 @@ const mapStateToProps = state => {
 };
 
 const AuthButton = props => (
-  <button type="button" className={`${className} btn`} onClick={props.onAuth}>
+  <button type="button" className={className} onClick={props.onAuth}>
     {props.session.isLoggedIn ? 'Logout' : 'Login'}
   </button>
 );
