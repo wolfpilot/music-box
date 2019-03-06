@@ -5,28 +5,27 @@
     bottom: 0;
     left: 0;
     display: flex;
-    height: 60px;
+    height: 64px;
     padding: 1rem;
     background-color: #f7f8f8;
 
+    &__active-track {
+        display: flex;
+        width: 25%;
+        max-height: 100%;
+    }
+
     &__artwork-wrapper {
-        flex: none;
+        margin-right: 1rem;
     }
 
     &__artwork-image {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-    }
-
-    &__active-track {
-        display: flex;
-        max-width: 33%;
         max-height: 100%;
     }
 
-    &__track-details {
-        max-width: 100%;
+    &__track-meta {
+        //flex: auto;
+        overflow: hidden;
     }
 
     &__track-name,
@@ -37,5 +36,90 @@
     &__artist-name {
         color: color(grey);
         @include fontSize(12px);
+    }
+
+    &__controls {
+        display: flex;
+        flex: none;
+        width: 25%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__btn {
+        background-color: transparent;
+    }
+
+    &__btn-play,
+    &__btn-pause {
+        // @TODO: var 32px
+        width: 32px;
+        height: 32px;
+        margin-right: 0.8rem;
+        margin-left: 0.8rem;
+        background-color: color(white);
+        border-radius: 50%;
+    }
+
+    &__timeline {
+        display: flex;
+        flex: auto;
+        align-items: center;
+    }
+
+    &__elapsed-time,
+    &__total-time {
+        @include fontSize(10px);
+    }
+
+    &__progress {
+        position: relative;
+        flex: auto;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    &__progress-track,
+    &__progress-bar,
+    &__progress-thumb {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &__progress-track,
+    &__progress-bar {
+        left: 0;
+        height: 2px; // @TODO: Var
+    }
+
+    &__progress-track {
+        right: 0;
+        background-color: color(grey);
+    }
+
+    &__progress-bar {
+        width: 50%;
+        background-color: color(turquoise);
+    }
+
+    &__progress-thumb {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: color(white);
+        box-shadow: 0 0 5px transparentize(color(black), 0.75);
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background-color: color(turquoise);
+        }
     }
 }
