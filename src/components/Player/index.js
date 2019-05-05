@@ -5,7 +5,13 @@ import PropTypes from 'prop-types';
 
 // Utils
 import { playTrack, pauseTrack, playNextTrack } from '../../actions';
-import { formatMilliseconds } from '../../static/js/utils/mathHelpers';
+import {
+  formatMilliseconds,
+  numToDecimals
+} from '../../static/js/utils/mathHelpers';
+
+// Components
+import ProgressBar from './ProgressBar';
 
 const defaults = {
   previewDuration: 30
@@ -31,7 +37,8 @@ class Player extends Component {
   }
 
   state = {
-    currentTime: 0
+    currentTime: 0,
+    trackLoadPercentage: 0
   };
 
   getArtists(track) {
@@ -39,7 +46,13 @@ class Player extends Component {
   }
 
   _updateProgress() {
-    this.setState({ currentTime: this.audio.currentTime });
+    const { track } = this.props.player;
+
+    const percentage =
+      (this.audio.currentTime * 100) / (track.duration_ms / 1000);
+    const formattedPercentage = numToDecimals(percentage, 2);
+
+    this.setState({ trackLoadPercentage: formattedPercentage });
   }
 
   _onTimeUpdate() {
@@ -54,6 +67,8 @@ class Player extends Component {
     }
 
     this._updateProgress();
+
+    this.setState({ currentTime: this.audio.currentTime });
   }
 
   _renderPlaybackOptions() {
@@ -92,11 +107,7 @@ class Player extends Component {
           {formatMilliseconds(this.state.currentTime * 1000)}
         </div>
 
-        <div className="player__progress">
-          <div className="player__progress-track" role="presentation" />
-          <div className="player__progress-bar" role="presentation" />
-          <div className="player__progress-thumb" role="presentation" />
-        </div>
+        <ProgressBar percentage={this.state.trackLoadPercentage} />
 
         <div className="player__total-time">
           {formatMilliseconds(track.duration_ms)}
