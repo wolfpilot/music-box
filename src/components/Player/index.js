@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // Utils
-import { playTrack, pauseTrack } from '../../actions';
+import { playTrack, pauseTrack, playNextTrack } from '../../actions';
 import { formatMilliseconds } from '../../static/js/utils/mathHelpers';
 
 const defaults = {
@@ -19,7 +19,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   playTrack: track => dispatch(playTrack(track)),
-  pauseTrack: () => dispatch(pauseTrack())
+  pauseTrack: () => dispatch(pauseTrack()),
+  playNextTrack: () => dispatch(playNextTrack())
 });
 
 class Player extends Component {
@@ -42,10 +43,12 @@ class Player extends Component {
   }
 
   _onTimeUpdate() {
+    const { playNextTrack } = this.props;
+
     // Normally, the current play time should be compared to the total track duration
     // however that's not possible due to Spotify only providing 30s previews.
     if (this.audio.currentTime >= defaults.previewDuration) {
-      // @TODO: playNextTrack()
+      playNextTrack();
 
       return;
     }

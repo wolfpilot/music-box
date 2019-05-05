@@ -23,15 +23,8 @@ class Track extends PureComponent {
       return;
     }
 
-    const {
-      name,
-      artists,
-      index,
-      artwork,
-      duration_ms,
-      preview_url
-    } = this.props;
-    const track = { name, artists, index, artwork, duration_ms, preview_url };
+    const { id, name, artists, artwork, duration_ms, preview_url } = this.props;
+    const track = { id, name, artists, artwork, duration_ms, preview_url };
 
     this.props.playTrack(track);
   };
