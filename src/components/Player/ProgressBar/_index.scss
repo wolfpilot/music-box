@@ -1,3 +1,6 @@
+$trackHeight: 2px;
+$thumbRadius: 12px;
+
 .progress-bar {
     position: relative;
     flex: auto;
@@ -15,7 +18,7 @@
     &__track,
     &__load {
         left: 0;
-        height: 2px; // @TODO: Var
+        height: $trackHeight;
     }
 
     &__track {
@@ -30,8 +33,9 @@
     }
 
     &__thumb {
-        width: 12px;
-        height: 12px;
+        right: -$thumbRadius / 2;
+        width: $thumbRadius;
+        height: $thumbRadius;
         border-radius: 50%;
         background-color: color(white);
         box-shadow: 0 0 5px transparentize(color(black), 0.75);
@@ -41,8 +45,8 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 6px;
-            height: 6px;
+            width: $thumbRadius / 2;
+            height: $thumbRadius / 2;
             transform: translate(-50%, -50%);
             border-radius: 50%;
             background-color: color(turquoise);

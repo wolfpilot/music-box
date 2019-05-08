@@ -25,6 +25,9 @@ class ProgressBar extends PureComponent {
   }
 
   render() {
+    // !: Fix progress bar moving because of the current time UI constantly updating
+    // TODO: Make it draggable
+
     const { styles } = this.state;
 
     return (
@@ -34,8 +37,9 @@ class ProgressBar extends PureComponent {
           className="progress-bar__load"
           role="presentation"
           style={styles.load}
-        />
-        <div className="progress-bar__thumb" role="presentation" />
+        >
+          <div className="progress-bar__thumb" role="presentation" />
+        </div>
       </div>
     );
   }

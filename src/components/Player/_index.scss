@@ -1,3 +1,5 @@
+$btnLrgRadius: 32px;
+
 .player {
     position: fixed;
     z-index: 100;
@@ -24,7 +26,6 @@
     }
 
     &__track-meta {
-        //flex: auto;
         overflow: hidden;
     }
 
@@ -52,9 +53,8 @@
 
     &__btn-play,
     &__btn-pause {
-        // @TODO: var 32px
-        width: 32px;
-        height: 32px;
+        width: $btnLrgRadius;
+        height: $btnLrgRadius;
         margin-right: 0.8rem;
         margin-left: 0.8rem;
         background-color: color(white);
@@ -69,6 +69,12 @@
 
     &__elapsed-time,
     &__total-time {
+        flex-basis: 40px;
+        font-family: $font-family-monospaced;
         @include fontSize(10px);
+    }
+
+    &__elapsed-time {
+        text-align: right;
     }
 }
