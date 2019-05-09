@@ -9,13 +9,18 @@ const getNextTrack = (playlist, trackIndex) => {
   return playlist.tracks.items[trackIndex + 1].track;
 };
 
+const getPreviousTrack = (playlist, trackIndex) => {
+  return playlist.tracks.items[trackIndex - 1].track;
+};
+
+const getTrackIndex = (playlist, track) => {
+  return playlist.tracks.items.findIndex(item => item.track.id === track.id);
+};
+
 const getNextPlayableTrack = (playlist, track) => {
-  const trackIndex = playlist.tracks.items.findIndex(
-    item => item.track.id === track.id
-  );
+  const trackIndex = getTrackIndex(playlist, track);
 
   // If last item in playlist, exit early
-  // TODO: Check if there are other tracks in the next playlist paging object
   if (trackIndex === playlist.tracks.items.length - 1) {
     return;
   }
@@ -27,6 +32,23 @@ const getNextPlayableTrack = (playlist, track) => {
   }
 
   return nextTrack;
+};
+
+const getPreviousPlayableTrack = (playlist, track) => {
+  const trackIndex = getTrackIndex(playlist, track);
+
+  // If first item in playlist, exit early
+  if (trackIndex === 0) {
+    return;
+  }
+
+  const previousTrack = getPreviousTrack(playlist, trackIndex);
+
+  if (!isPlayable(previousTrack)) {
+    return getPreviousPlayableTrack(playlist, previousTrack);
+  }
+
+  return previousTrack;
 };
 
 // Actions
@@ -60,12 +82,39 @@ export const playNextTrack = () => (dispatch, getState) => {
   const nextTrack = getNextPlayableTrack(playlist, activeTrack);
 
   if (!nextTrack) {
+    // ?: Reached end of playlist. Stop?
     dispatch(pauseTrack());
 
     return;
   }
 
   const { id, name, artists, artwork, duration_ms, preview_url } = nextTrack;
+  const track = { id, name, artists, artwork, duration_ms, preview_url };
+
+  dispatch(playTrack(track));
+};
+
+export const playPreviousTrack = () => (dispatch, getState) => {
+  const playlist = getState().stream.playlist;
+  const activeTrack = getState().player.track;
+
+  const previousTrack = getPreviousPlayableTrack(playlist, activeTrack);
+
+  if (!previousTrack) {
+    // ?: Reached end of playlist. Stop?
+    dispatch(pauseTrack());
+
+    return;
+  }
+
+  const {
+    id,
+    name,
+    artists,
+    artwork,
+    duration_ms,
+    preview_url
+  } = previousTrack;
   const track = { id, name, artists, artwork, duration_ms, preview_url };
 
   dispatch(playTrack(track));

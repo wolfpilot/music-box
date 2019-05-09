@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // Utils
-import { playTrack, pauseTrack, playNextTrack } from '../../actions';
+import {
+  playTrack,
+  pauseTrack,
+  playNextTrack,
+  playPreviousTrack
+} from '../../actions';
 import {
   formatMilliseconds,
   numToDecimals
@@ -26,7 +31,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   playTrack: track => dispatch(playTrack(track)),
   pauseTrack: () => dispatch(pauseTrack()),
-  playNextTrack: () => dispatch(playNextTrack())
+  playNextTrack: () => dispatch(playNextTrack()),
+  playPreviousTrack: () => dispatch(playPreviousTrack())
 });
 
 class Player extends Component {
@@ -117,11 +123,16 @@ class Player extends Component {
   }
 
   _renderPlaybackControls() {
+    const { playNextTrack, playPreviousTrack } = this.props;
     const { isPlaying, track } = this.props.player;
 
     return (
       <div className="player__controls">
-        <button type="button" className="player__btn player__btn-prev">
+        <button
+          type="button"
+          className="player__btn player__btn-prev"
+          onClick={playPreviousTrack}
+        >
           &#124;&#60;<span className="sr-only">Go to previous track</span>
         </button>
         {isPlaying ? (
@@ -141,7 +152,11 @@ class Player extends Component {
             &#9655;<span className="sr-only">Play</span>
           </button>
         )}
-        <button type="button" className="player__btn player__btn-next">
+        <button
+          type="button"
+          className="player__btn player__btn-next"
+          onClick={playNextTrack}
+        >
           &#62;&#124;<span className="sr-only">Go to next track</span>
         </button>
       </div>
