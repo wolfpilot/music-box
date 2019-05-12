@@ -9,7 +9,8 @@
 // Static
 @import "static/scss/common/variables";
 @import "static/scss/common/mixins/index";
-@import "static/scss/common/btn";
+@import "static/scss/common/button";
+@import "static/scss/common/typography";
 @import "static/scss/common/hyperlink";
 @import "static/scss/common/svg-container";
 @import "static/scss/layout/base";
@@ -19,8 +20,9 @@
 @import "components/SiteHeader/NotificationButton/index";
 @import "components/SiteHeader/AuthButton/index";
 @import "components/SiteHeader/ProfileButton/index";
-
 @import "components/Logo/index";
+@import "components/Player/index";
+@import "components/Player/ProgressBar/index";
 @import "components/Stream/index";
 @import "components/Stream/Playlist/index";
 @import "components/Stream/PlaylistTile/index";

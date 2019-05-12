@@ -17,7 +17,9 @@ import {
   setActiveTrack,
   setIsPlaying,
   playTrack,
-  pauseTrack
+  pauseTrack,
+  playNextTrack,
+  playPreviousTrack
 } from './services/player/actions';
 
 export {
@@ -36,5 +38,7 @@ export {
   setActiveTrack,
   setIsPlaying,
   playTrack,
-  pauseTrack
+  pauseTrack,
+  playNextTrack,
+  playPreviousTrack
 };

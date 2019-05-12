@@ -1,0 +1,80 @@
+$btnLrgRadius: 32px;
+
+.player {
+    position: fixed;
+    z-index: 100;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    height: 64px;
+    padding: 1rem;
+    background-color: #f7f8f8;
+
+    &__active-track {
+        display: flex;
+        width: 25%;
+        max-height: 100%;
+    }
+
+    &__artwork-wrapper {
+        margin-right: 1rem;
+    }
+
+    &__artwork-image {
+        max-height: 100%;
+    }
+
+    &__track-meta {
+        overflow: hidden;
+    }
+
+    &__track-name,
+    &__artist-name {
+        @include text-truncate;
+    }
+
+    &__artist-name {
+        color: color(grey);
+        @include fontSize(12px);
+    }
+
+    &__controls {
+        display: flex;
+        flex: none;
+        width: 25%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__btn {
+        background-color: transparent;
+    }
+
+    &__btn-play,
+    &__btn-pause {
+        width: $btnLrgRadius;
+        height: $btnLrgRadius;
+        margin-right: 0.8rem;
+        margin-left: 0.8rem;
+        background-color: color(white);
+        border-radius: 50%;
+    }
+
+    &__timeline {
+        display: flex;
+        flex: auto;
+        align-items: center;
+    }
+
+    &__elapsed-time,
+    &__total-time {
+        flex-basis: 40px;
+        font-family: $font-family-monospaced;
+        @include fontSize(10px);
+    }
+
+    &__elapsed-time {
+        text-align: right;
+    }
+}
