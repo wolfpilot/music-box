@@ -1,7 +1,7 @@
 // Utils
 import * as actionTypes from './actionTypes';
-import * as userAPI from '../api/user';
-import { spotifyAPI } from '../api/player';
+import * as userAPI from '../api/user/user';
+import { spotifyAPI } from '../api/player/player';
 import {
   resetSession,
   setSession,

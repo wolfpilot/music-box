@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Components
-import PlaylistTile from './PlaylistTile';
+import PlaylistTile from './PlaylistTile/PlaylistTile';
 
 const Stream = ({ playlists, tracks }) => (
   <div className="stream">

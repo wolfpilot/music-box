@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { fetchPlaylist, setCurrentPlaylist } from '../../actions';
 
 // Components
-import Playlist from '../../components/Stream/Playlist';
+import Playlist from '../../components/Stream/Playlist/Playlist';
 
 const mapStateToProps = state => ({
   playlist: state.stream.playlist

@@ -16,7 +16,7 @@ import {
 } from '../../static/js/utils/mathHelpers';
 
 // Components
-import ProgressBar from './ProgressBar';
+import ProgressBar from './ProgressBar/ProgressBar';
 
 const defaults = {
   previewDuration: 30
@@ -79,7 +79,7 @@ class Player extends Component {
 
   _renderPlaybackOptions() {
     return (
-      <div className="player__controls">
+      <div className="player__controls player__controls--options">
         <div className="player__volume">
           <button
             type="button"
@@ -126,8 +126,10 @@ class Player extends Component {
     const { playNextTrack, playPreviousTrack } = this.props;
     const { isPlaying, track } = this.props.player;
 
+    // TODO: Prev & next buttons should be disabled at the start/end of playlist
+
     return (
-      <div className="player__controls">
+      <div className="player__controls player__controls--playback">
         <button
           type="button"
           className="player__btn player__btn-prev"
@@ -168,7 +170,7 @@ class Player extends Component {
 
     return (
       <div className="player__active-track">
-        <div className="player__artwork-wrapper">
+        <div className="player__artwork">
           {track.artwork && (
             <img
               className="player__artwork-image"

@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Components
-import Track from '../Track';
+import Track from '../Track/Track';
 
 const Playlist = ({ playlist }) => {
   const { images, name, description, tracks } = playlist;

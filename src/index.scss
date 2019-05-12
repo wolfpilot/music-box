@@ -16,15 +16,15 @@
 @import "static/scss/layout/base";
 
 // Components
-@import "components/SiteHeader/index";
-@import "components/SiteHeader/NotificationButton/index";
-@import "components/SiteHeader/AuthButton/index";
-@import "components/SiteHeader/ProfileButton/index";
-@import "components/Logo/index";
-@import "components/Player/index";
-@import "components/Player/ProgressBar/index";
-@import "components/Stream/index";
-@import "components/Stream/Playlist/index";
-@import "components/Stream/PlaylistTile/index";
-@import "components/Stream/Track/index";
-@import "components/Welcome/index";
+@import "components/SiteHeader/site-header";
+@import "components/SiteHeader/NotificationButton/notification-button";
+@import "components/SiteHeader/AuthButton/auth-button";
+@import "components/SiteHeader/ProfileButton/profile-button";
+@import "components/Logo/logo";
+@import "components/Player/player";
+@import "components/Player/ProgressBar/progress-bar";
+@import "components/Stream/stream";
+@import "components/Stream/Playlist/playlist";
+@import "components/Stream/PlaylistTile/playlist-tile";
+@import "components/Stream/Track/track";
+@import "components/Welcome/welcome";

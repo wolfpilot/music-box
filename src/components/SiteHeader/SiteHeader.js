@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // Components
-import Logo from '../Logo';
-import NotificationButton from './NotificationButton';
-import ProfileButton from './ProfileButton';
-import AuthButton from './AuthButton';
+import Logo from '../Logo/Logo';
+import NotificationButton from './NotificationButton/NotificationButton';
+import ProfileButton from './ProfileButton/ProfileButton';
+import AuthButton from './AuthButton/AuthButton';
 import { loginUser, logoutUser } from '../../services/user/actions';
 
 const mapStateToProps = state => {
