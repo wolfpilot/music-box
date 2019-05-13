@@ -7,7 +7,7 @@ import Stream from './presenter';
 const mapStateToProps = state => {
   return {
     playlists: state.stream.playlists,
-    tracks: state.stream.tracks
+    playlistEntities: state.entities.playlists
   };
 };
 

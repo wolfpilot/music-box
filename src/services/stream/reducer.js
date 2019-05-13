@@ -1,25 +1,18 @@
 // Utils
 import * as actionTypes from './actionTypes';
-import { pick } from '../../static/js/utils/objectHelpers';
 
 const initialState = {
-  playlists: [],
+  playlists: {},
   tracks: []
 };
 
-const setPlaylists = (state, action) => {
-  const playlists = action.playlists.map(playlist => {
-    const keys = ['id', 'images', 'name'];
-    const filteredPlaylist = pick(playlist, keys);
-
-    return {
-      id: filteredPlaylist.id,
-      image: filteredPlaylist.images[0],
-      name: filteredPlaylist.name
-    };
-  });
-
-  return { ...state, playlists };
+const mergePlaylists = (state, payload) => {
+  return {
+    ...state,
+    playlists: {
+      ...payload.playlists
+    }
+  };
 };
 
 const setTracks = (state, action) => {
@@ -36,8 +29,8 @@ const setCurrentPlaylist = (state, action) => {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.PLAYLISTS_SET:
-      return setPlaylists(state, action);
+    case actionTypes.PLAYLISTS_MERGE:
+      return mergePlaylists(state, action.playlists);
     case actionTypes.TRACKS_SET:
       return setTracks(state, action);
     case actionTypes.CURRENT_PLAYLIST_SET:
