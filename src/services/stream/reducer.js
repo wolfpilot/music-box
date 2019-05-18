@@ -2,14 +2,14 @@
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-  playlists: {},
+  featuredPlaylists: {},
   tracks: []
 };
 
-const mergePlaylists = (state, payload) => {
+const mergeFeaturedPlaylists = (state, payload) => {
   return {
     ...state,
-    playlists: {
+    featuredPlaylists: {
       ...payload.playlists
     }
   };
@@ -29,8 +29,8 @@ const setCurrentPlaylist = (state, action) => {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.PLAYLISTS_MERGE:
-      return mergePlaylists(state, action.playlists);
+    case actionTypes.FEATURED_PLAYLISTS_MERGE:
+      return mergeFeaturedPlaylists(state, action.featuredPlaylists);
     case actionTypes.TRACKS_SET:
       return setTracks(state, action);
     case actionTypes.CURRENT_PLAYLIST_SET:

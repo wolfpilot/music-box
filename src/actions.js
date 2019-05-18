@@ -10,7 +10,7 @@ import {
   fetchPlaylist
 } from './services/user/actions';
 import {
-  mergePlaylists,
+  mergeFeaturedPlaylists,
   setTracks,
   setCurrentPlaylist
 } from './services/stream/actions';
@@ -34,7 +34,7 @@ export {
   fetchMe,
   fetchFeaturedPlaylists,
   fetchPlaylist,
-  mergePlaylists,
+  mergeFeaturedPlaylists,
   setTracks,
   setCurrentPlaylist,
   setActiveTrack,

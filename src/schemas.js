@@ -1,3 +1,3 @@
-import playlistSchema from './static/js/schemas/playlist';
+import featuredPlaylistSchema from './static/js/schemas/featuredPlaylistSchema';
 
-export { playlistSchema };
+export { featuredPlaylistSchema };

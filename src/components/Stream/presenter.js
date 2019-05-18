@@ -5,17 +5,17 @@ import PropTypes from 'prop-types';
 // Components
 import PlaylistTile from './PlaylistTile/PlaylistTile';
 
-const Stream = ({ playlists, playlistEntities }) => (
+const Stream = ({ featuredPlaylists, featuredPlaylistEntities }) => (
   <div className="stream">
     <h1 className="stream__heading">Stream</h1>
-    {playlists && (
+    {featuredPlaylists && (
       <ul className="stream__featured-playlists">
-        {playlists.items &&
-          playlists.items.length > 0 &&
-          playlists.items.map(id => {
+        {featuredPlaylists.items &&
+          featuredPlaylists.items.length > 0 &&
+          featuredPlaylists.items.map(id => {
             return (
               <li className="stream__playlist-item" key={id}>
-                <PlaylistTile playlist={playlistEntities[id]} />
+                <PlaylistTile playlist={featuredPlaylistEntities[id]} />
               </li>
             );
           })}
@@ -25,7 +25,7 @@ const Stream = ({ playlists, playlistEntities }) => (
 );
 
 Stream.propTypes = {
-  playlists: PropTypes.object
+  featuredPlaylists: PropTypes.object
 };
 
 export default Stream;

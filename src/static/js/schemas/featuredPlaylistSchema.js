@@ -5,7 +5,7 @@ import { schema } from 'normalizr';
 import { pick } from '../utils/objectHelpers';
 
 const playlist = new schema.Entity(
-  'playlists',
+  'featuredPlaylists',
   {},
   {
     processStrategy: entity => {
@@ -21,10 +21,10 @@ const playlist = new schema.Entity(
   }
 );
 
-const playlistSchema = {
+const featuredPlaylistSchema = {
   playlists: {
     items: [playlist]
   }
 };
 
-export default playlistSchema;
+export default featuredPlaylistSchema;

@@ -7,12 +7,12 @@ import * as userAPI from '../api/user/user';
 import { spotifyAPI } from '../api/player/player';
 import {
   mergeEntities,
-  mergePlaylists,
+  mergeFeaturedPlaylists,
   resetSession,
   setSession,
   setCurrentPlaylist
 } from '../../actions';
-import { playlistSchema } from '../../schemas';
+import { featuredPlaylistSchema } from '../../schemas';
 
 export const fetchMe = () => dispatch => {
   spotifyAPI.getMe().then(
@@ -31,10 +31,10 @@ export const fetchFeaturedPlaylists = () => dispatch => {
   spotifyAPI
     .getFeaturedPlaylists({ limit: 12 })
     .then(data => {
-      const normalized = normalize(data, playlistSchema);
+      const normalized = normalize(data, featuredPlaylistSchema);
 
       dispatch(mergeEntities(normalized.entities));
-      dispatch(mergePlaylists(normalized.result));
+      dispatch(mergeFeaturedPlaylists(normalized.result));
     })
     .catch(err => {
       console.error(err);

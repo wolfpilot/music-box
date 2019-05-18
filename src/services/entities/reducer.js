@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-  playlists: {}
+  featuredPlaylists: {}
 };
 
 export default function(state = initialState, action) {

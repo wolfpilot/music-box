@@ -1,10 +1,10 @@
 // Utils
 import * as actionTypes from './actionTypes';
 
-export function mergePlaylists(playlists) {
+export function mergeFeaturedPlaylists(featuredPlaylists) {
   return {
-    type: actionTypes.PLAYLISTS_MERGE,
-    playlists
+    type: actionTypes.FEATURED_PLAYLISTS_MERGE,
+    featuredPlaylists
   };
 }
 
