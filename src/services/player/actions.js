@@ -51,52 +51,34 @@ export const pauseTrack = () => dispatch => {
   dispatch(setIsPlaying(false));
 };
 
-export const playNextTrack = () => (dispatch, getState) => {
+export const playIteratedTrack = offset => (dispatch, getState) => {
   const playlist = getState().stream.playlist;
   const activeTrackId = getState().player.activeTrackId;
   const trackEntities = getState().entities.tracks;
 
   const { items } = playlist.tracks;
-  const offset = 1;
 
-  const nextTrackId = getIteratedTrack(
+  const offsetTrackId = getIteratedTrack(
     items,
     activeTrackId,
     trackEntities,
     offset
   );
 
-  if (!nextTrackId) {
-    // ?: Reached end of playlist. Stop?
+  if (!offsetTrackId) {
+    // ?: Reached start/end of playlist. Stop?
     dispatch(pauseTrack());
 
     return;
   }
 
-  dispatch(playTrack(nextTrackId));
+  dispatch(playTrack(offsetTrackId));
 };
 
-export const playPreviousTrack = () => (dispatch, getState) => {
-  const playlist = getState().stream.playlist;
-  const activeTrackId = getState().player.activeTrackId;
-  const trackEntities = getState().entities.tracks;
+export const playNextTrack = () => dispatch => {
+  dispatch(playIteratedTrack(1));
+};
 
-  const { items } = playlist.tracks;
-  const offset = -1;
-
-  const previousTrackId = getIteratedTrack(
-    items,
-    activeTrackId,
-    trackEntities,
-    offset
-  );
-
-  if (!previousTrackId) {
-    // ?: Reached end of playlist. Stop?
-    dispatch(pauseTrack());
-
-    return;
-  }
-
-  dispatch(playTrack(previousTrackId));
+export const playPreviousTrack = () => dispatch => {
+  dispatch(playIteratedTrack(-1));
 };
