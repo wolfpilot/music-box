@@ -11,8 +11,7 @@ import {
 } from './services/user/actions';
 import {
   mergeFeaturedPlaylists,
-  mergePlaylist,
-  setTracks
+  mergePlaylist
 } from './services/stream/actions';
 import {
   setActiveTrack,
@@ -36,7 +35,6 @@ export {
   fetchPlaylist,
   mergeFeaturedPlaylists,
   mergePlaylist,
-  setTracks,
   setActiveTrack,
   setIsPlaying,
   playTrack,

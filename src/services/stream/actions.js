@@ -14,10 +14,3 @@ export const mergePlaylist = playlist => {
     playlist
   };
 };
-
-export const setTracks = tracks => {
-  return {
-    type: actionTypes.TRACKS_SET,
-    tracks
-  };
-};
