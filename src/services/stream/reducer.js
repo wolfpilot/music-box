@@ -15,26 +15,27 @@ const mergeFeaturedPlaylists = (state, payload) => {
   };
 };
 
+const mergePlaylist = (state, payload) => {
+  return {
+    ...state,
+    playlist: { ...payload }
+  };
+};
+
 const setTracks = (state, action) => {
   const { tracks } = action;
 
   return { ...state, tracks };
 };
 
-const setCurrentPlaylist = (state, action) => {
-  const { playlist } = action;
-
-  return { ...state, playlist };
-};
-
 export default function(state = initialState, action) {
   switch (action.type) {
     case actionTypes.FEATURED_PLAYLISTS_MERGE:
       return mergeFeaturedPlaylists(state, action.featuredPlaylists);
+    case actionTypes.PLAYLIST_MERGE:
+      return mergePlaylist(state, action.playlist);
     case actionTypes.TRACKS_SET:
       return setTracks(state, action);
-    case actionTypes.CURRENT_PLAYLIST_SET:
-      return setCurrentPlaylist(state, action);
     default:
       return state;
   }

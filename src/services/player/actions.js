@@ -5,57 +5,52 @@ const isPlayable = track => {
   return !!track.preview_url;
 };
 
-const getNextTrack = (playlist, trackIndex) => {
-  return playlist.tracks.items[trackIndex + 1].track;
+const getTrackIndex = (items, trackId) => {
+  return items.findIndex(item => item === trackId);
 };
 
-const getPreviousTrack = (playlist, trackIndex) => {
-  return playlist.tracks.items[trackIndex - 1].track;
-};
-
-const getTrackIndex = (playlist, track) => {
-  return playlist.tracks.items.findIndex(item => item.track.id === track.id);
-};
-
-const getNextPlayableTrack = (playlist, track) => {
-  const trackIndex = getTrackIndex(playlist, track);
+const getNextPlayableTrackId = (items, activeTrackId, trackEntities) => {
+  const activeTrackIndex = getTrackIndex(items, activeTrackId);
 
   // If last item in playlist, exit early
-  if (trackIndex === playlist.tracks.items.length - 1) {
+  // TODO: Check if there are other tracks in the next playlist paging object
+  if (activeTrackIndex === items.length - 1) {
     return;
   }
 
-  const nextTrack = getNextTrack(playlist, trackIndex);
+  const nextTrackId = items[activeTrackIndex + 1];
+  const nextTrack = trackEntities[nextTrackId];
 
   if (!isPlayable(nextTrack)) {
-    return getNextPlayableTrack(playlist, nextTrack);
+    return getNextPlayableTrackId(items, nextTrackId, trackEntities);
   }
 
-  return nextTrack;
+  return nextTrackId;
 };
 
-const getPreviousPlayableTrack = (playlist, track) => {
-  const trackIndex = getTrackIndex(playlist, track);
+const getPreviousPlayableTrackId = (items, activeTrackId, trackEntities) => {
+  const activeTrackIndex = getTrackIndex(items, activeTrackId);
 
   // If first item in playlist, exit early
-  if (trackIndex === 0) {
+  if (activeTrackIndex === 0) {
     return;
   }
 
-  const previousTrack = getPreviousTrack(playlist, trackIndex);
+  const previousTrackId = items[activeTrackIndex - 1];
+  const previousTrack = trackEntities[previousTrackId];
 
   if (!isPlayable(previousTrack)) {
-    return getPreviousPlayableTrack(playlist, previousTrack);
+    return getPreviousPlayableTrackId(items, previousTrackId, trackEntities);
   }
 
-  return previousTrack;
+  return previousTrackId;
 };
 
 // Actions
-export function setActiveTrack(track) {
+export function setActiveTrack(activeTrackId) {
   return {
     type: actionTypes.SET_ACTIVE_TRACK,
-    track
+    activeTrackId
   };
 }
 
@@ -66,8 +61,8 @@ export function setIsPlaying(isPlaying) {
   };
 }
 
-export const playTrack = track => dispatch => {
-  dispatch(setActiveTrack(track));
+export const playTrack = trackId => dispatch => {
+  dispatch(setActiveTrack(trackId));
   dispatch(setIsPlaying(true));
 };
 
@@ -77,45 +72,46 @@ export const pauseTrack = () => dispatch => {
 
 export const playNextTrack = () => (dispatch, getState) => {
   const playlist = getState().stream.playlist;
-  const activeTrack = getState().player.track;
+  const activeTrackId = getState().player.activeTrackId;
+  const trackEntities = getState().entities.tracks;
 
-  const nextTrack = getNextPlayableTrack(playlist, activeTrack);
+  const { items } = playlist.tracks;
 
-  if (!nextTrack) {
+  const nextTrackId = getNextPlayableTrackId(
+    items,
+    activeTrackId,
+    trackEntities
+  );
+
+  if (!nextTrackId) {
     // ?: Reached end of playlist. Stop?
     dispatch(pauseTrack());
 
     return;
   }
 
-  const { id, name, artists, artwork, duration_ms, preview_url } = nextTrack;
-  const track = { id, name, artists, artwork, duration_ms, preview_url };
-
-  dispatch(playTrack(track));
+  dispatch(playTrack(nextTrackId));
 };
 
 export const playPreviousTrack = () => (dispatch, getState) => {
   const playlist = getState().stream.playlist;
-  const activeTrack = getState().player.track;
+  const activeTrackId = getState().player.activeTrackId;
+  const trackEntities = getState().entities.tracks;
 
-  const previousTrack = getPreviousPlayableTrack(playlist, activeTrack);
+  const { items } = playlist.tracks;
 
-  if (!previousTrack) {
+  const previousTrackId = getPreviousPlayableTrackId(
+    items,
+    activeTrackId,
+    trackEntities
+  );
+
+  if (!previousTrackId) {
     // ?: Reached end of playlist. Stop?
     dispatch(pauseTrack());
 
     return;
   }
 
-  const {
-    id,
-    name,
-    artists,
-    artwork,
-    duration_ms,
-    preview_url
-  } = previousTrack;
-  const track = { id, name, artists, artwork, duration_ms, preview_url };
-
-  dispatch(playTrack(track));
+  dispatch(playTrack(previousTrackId));
 };

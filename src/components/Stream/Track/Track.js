@@ -14,38 +14,38 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  playTrack: track => dispatch(playTrack(track))
+  playTrack: activeTrackId => dispatch(playTrack(activeTrackId))
 });
 
 class Track extends PureComponent {
   togglePlayPause = () => {
-    if (!this.props.preview_url) {
+    const { track } = this.props;
+
+    if (!track.preview_url) {
       return;
     }
 
-    const { id, name, artists, artwork, duration_ms, preview_url } = this.props;
-    const track = { id, name, artists, artwork, duration_ms, preview_url };
-
-    this.props.playTrack(track);
+    this.props.playTrack(track.id);
   };
 
   getArtists() {
-    return this.props.artists.map(artist => artist.name).join(', ');
+    return this.props.track.artists.map(artist => artist.name).join(', ');
   }
 
   render() {
+    const { player, track } = this.props;
+
     const {
-      player,
+      id,
+      index,
       name,
       artists,
-      index,
       artwork,
       duration_ms,
       preview_url
-    } = this.props;
+    } = track;
 
-    const isActive =
-      player.isPlaying && player.track.preview_url === preview_url;
+    const isActive = player.isPlaying && player.activeTrackId === id;
 
     return (
       <div
@@ -76,13 +76,18 @@ class Track extends PureComponent {
   }
 }
 
+const { string, number, array, shape, object } = PropTypes;
+
 Track.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  artists: PropTypes.array.isRequired,
-  index: PropTypes.number.isRequired,
-  duration_ms: PropTypes.number.isRequired,
-  preview_url: PropTypes.string
+  track: shape({
+    id: string.isRequired,
+    index: number.isRequired,
+    name: string.isRequired,
+    artists: array.isRequired,
+    artwork: object.isRequired,
+    duration_ms: number.isRequired,
+    preview_url: string
+  })
 };
 
 export default connect(

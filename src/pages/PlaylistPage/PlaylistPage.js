@@ -4,18 +4,20 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // Utils
-import { fetchPlaylist, setCurrentPlaylist } from '../../actions';
+import { fetchPlaylist, mergePlaylist } from '../../actions';
 
 // Components
 import Playlist from '../../components/Stream/Playlist/Playlist';
 
-const mapStateToProps = state => ({
-  playlist: state.stream.playlist
-});
+const mapStateToProps = state => {
+  return {
+    playlist: state.stream.playlist
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   fetchPlaylist: id => dispatch(fetchPlaylist(id)),
-  setCurrentPlaylist: playlist => dispatch(setCurrentPlaylist(playlist))
+  mergePlaylist: playlist => dispatch(mergePlaylist(playlist))
 });
 
 class PlaylistPage extends Component {
@@ -27,15 +29,13 @@ class PlaylistPage extends Component {
 
   componentWillUnmount() {
     // Reset playlist
-    this.props.setCurrentPlaylist({});
+    this.props.mergePlaylist({});
   }
 
   render() {
     const { playlist } = this.props;
 
-    return (
-      <main role="main">{playlist && <Playlist playlist={playlist} />}</main>
-    );
+    return <main role="main">{playlist && <Playlist />}</main>;
   }
 }
 

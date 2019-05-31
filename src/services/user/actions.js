@@ -10,9 +10,9 @@ import {
   mergeFeaturedPlaylists,
   resetSession,
   setSession,
-  setCurrentPlaylist
+  mergePlaylist
 } from '../../actions';
-import { featuredPlaylistSchema } from '../../schemas';
+import { featuredPlaylistSchema, trackSchema } from '../../schemas';
 
 export const fetchMe = () => dispatch => {
   spotifyAPI.getMe().then(
@@ -55,7 +55,10 @@ export const fetchPlaylist = id => dispatch => {
   spotifyAPI
     .getPlaylist(id, { fields })
     .then(data => {
-      dispatch(setCurrentPlaylist(data));
+      const normalized = normalize(data, trackSchema);
+
+      dispatch(mergeEntities(normalized.entities));
+      dispatch(mergePlaylist(normalized.result));
     })
     .catch(err => {
       console.error(err);

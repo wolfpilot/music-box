@@ -24,7 +24,8 @@ const defaults = {
 
 const mapStateToProps = state => {
   return {
-    player: state.player
+    player: state.player,
+    trackEntities: state.entities.tracks
   };
 };
 
@@ -44,18 +45,19 @@ class Player extends Component {
 
   state = {
     currentTime: 0,
-    trackLoadPercentage: 0
+    trackLoadPercentage: 0,
+    activeTrack: null
   };
 
-  getArtists(track) {
+  _getArtists(track) {
     return track.artists.map(artist => artist.name).join(', ');
   }
 
   _updateProgress() {
-    const { track } = this.props.player;
+    const { activeTrack } = this.state;
 
     const percentage =
-      (this.audio.currentTime * 100) / (track.duration_ms / 1000);
+      (this.audio.currentTime * 100) / (activeTrack.duration_ms / 1000);
     const formattedPercentage = numToDecimals(percentage, 2);
 
     this.setState({ trackLoadPercentage: formattedPercentage });
@@ -105,26 +107,32 @@ class Player extends Component {
   }
 
   _renderTimeline() {
-    const { track } = this.props.player;
+    const { activeTrack, currentTime, trackLoadPercentage } = this.state;
 
     return (
       <div className="player__timeline">
         <div className="player__elapsed-time">
-          {formatMilliseconds(this.state.currentTime * 1000)}
+          {formatMilliseconds(currentTime * 1000)}
         </div>
 
-        <ProgressBar percentage={this.state.trackLoadPercentage} />
+        <ProgressBar percentage={trackLoadPercentage} />
 
         <div className="player__total-time">
-          {formatMilliseconds(track.duration_ms)}
+          {formatMilliseconds(activeTrack.duration_ms)}
         </div>
       </div>
     );
   }
 
   _renderPlaybackControls() {
-    const { playNextTrack, playPreviousTrack } = this.props;
-    const { isPlaying, track } = this.props.player;
+    const {
+      player,
+      playTrack,
+      pauseTrack,
+      playNextTrack,
+      playPreviousTrack
+    } = this.props;
+    const { activeTrack } = this.state;
 
     // TODO: Prev & next buttons should be disabled at the start/end of playlist
 
@@ -137,11 +145,11 @@ class Player extends Component {
         >
           &#124;&#60;<span className="sr-only">Go to previous track</span>
         </button>
-        {isPlaying ? (
+        {player.isPlaying ? (
           <button
             type="button"
             className="player__btn player__btn-pause"
-            onClick={this.props.pauseTrack}
+            onClick={pauseTrack}
           >
             &#9647;&#9647;<span className="sr-only">Pause</span>
           </button>
@@ -149,7 +157,7 @@ class Player extends Component {
           <button
             type="button"
             className="player__btn player__btn-play"
-            onClick={() => this.props.playTrack(track)}
+            onClick={() => playTrack(activeTrack.id)}
           >
             &#9655;<span className="sr-only">Play</span>
           </button>
@@ -166,15 +174,15 @@ class Player extends Component {
   }
 
   _renderTrackDetails() {
-    const { track } = this.props.player;
+    const { activeTrack } = this.state;
 
     return (
       <div className="player__active-track">
         <div className="player__artwork">
-          {track.artwork && (
+          {activeTrack.artwork && (
             <img
               className="player__artwork-image"
-              src={track.artwork.url}
+              src={activeTrack.artwork.url}
               alt=""
             />
           )}
@@ -182,9 +190,11 @@ class Player extends Component {
 
         <div className="player__track-meta">
           <div className="player__track-name">
-            {track.name ? track.name : ''}
+            {activeTrack.name ? activeTrack.name : ''}
           </div>
-          <div className="player__artist-name">{this.getArtists(track)}</div>
+          <div className="player__artist-name">
+            {this._getArtists(activeTrack)}
+          </div>
         </div>
       </div>
     );
@@ -203,10 +213,17 @@ class Player extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isPlaying, track } = this.props.player;
+    const { trackEntities } = this.props;
+    const { isPlaying, activeTrackId } = this.props.player;
 
-    if (prevProps.player.track !== track) {
-      this.audio.src = track.preview_url;
+    if (prevProps.player.activeTrackId !== activeTrackId) {
+      const activeTrack = trackEntities[activeTrackId];
+
+      // Use Redux to manage the global store, however locally
+      // it's easier to reference the track from the state.
+      this.setState({ activeTrack });
+
+      this.audio.src = activeTrack.preview_url;
       this.audio.load();
     }
 
@@ -218,11 +235,11 @@ class Player extends Component {
   }
 
   render() {
-    const { track } = this.props.player;
+    const { activeTrack } = this.state;
 
     return (
       <div className="player">
-        {track && (
+        {activeTrack && (
           <>
             {this._renderTrackDetails()}
             {this._renderPlaybackControls()}
@@ -236,7 +253,7 @@ class Player extends Component {
 }
 
 Player.propTypes = {
-  track: PropTypes.object
+  activeTrack: PropTypes.object
 };
 
 export default connect(
