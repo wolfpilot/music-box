@@ -1,12 +1,12 @@
 import * as actionTypes from './actionTypes';
 
 const initialState = {
-  track: null,
+  activeTrackId: null,
   isPlaying: false
 };
 
-const setActiveTrack = (state, track) => {
-  return { ...state, track };
+const setActiveTrack = (state, activeTrackId) => {
+  return { ...state, activeTrackId };
 };
 
 const setIsPlaying = (state, isPlaying) => {
@@ -16,7 +16,7 @@ const setIsPlaying = (state, isPlaying) => {
 export default function(state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_ACTIVE_TRACK:
-      return setActiveTrack(state, action.track);
+      return setActiveTrack(state, action.activeTrackId);
     case actionTypes.SET_IS_PLAYING:
       return setIsPlaying(state, action.isPlaying);
     default:

@@ -1,25 +1,25 @@
 // Utils
 import * as actionTypes from './actionTypes';
-import { pick } from '../../static/js/utils/objectHelpers';
 
 const initialState = {
-  playlists: [],
+  featuredPlaylists: {},
   tracks: []
 };
 
-const setPlaylists = (state, action) => {
-  const playlists = action.playlists.map(playlist => {
-    const keys = ['id', 'images', 'name'];
-    const filteredPlaylist = pick(playlist, keys);
+const mergeFeaturedPlaylists = (state, payload) => {
+  return {
+    ...state,
+    featuredPlaylists: {
+      ...payload.playlists
+    }
+  };
+};
 
-    return {
-      id: filteredPlaylist.id,
-      image: filteredPlaylist.images[0],
-      name: filteredPlaylist.name
-    };
-  });
-
-  return { ...state, playlists };
+const mergePlaylist = (state, payload) => {
+  return {
+    ...state,
+    playlist: { ...payload }
+  };
 };
 
 const setTracks = (state, action) => {
@@ -28,20 +28,14 @@ const setTracks = (state, action) => {
   return { ...state, tracks };
 };
 
-const setCurrentPlaylist = (state, action) => {
-  const { playlist } = action;
-
-  return { ...state, playlist };
-};
-
 export default function(state = initialState, action) {
   switch (action.type) {
-    case actionTypes.PLAYLISTS_SET:
-      return setPlaylists(state, action);
+    case actionTypes.FEATURED_PLAYLISTS_MERGE:
+      return mergeFeaturedPlaylists(state, action.featuredPlaylists);
+    case actionTypes.PLAYLIST_MERGE:
+      return mergePlaylist(state, action.playlist);
     case actionTypes.TRACKS_SET:
       return setTracks(state, action);
-    case actionTypes.CURRENT_PLAYLIST_SET:
-      return setCurrentPlaylist(state, action);
     default:
       return state;
   }
