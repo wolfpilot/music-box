@@ -9,41 +9,22 @@ const getTrackIndex = (items, trackId) => {
   return items.findIndex(item => item === trackId);
 };
 
-const getNextPlayableTrackId = (items, activeTrackId, trackEntities) => {
-  const activeTrackIndex = getTrackIndex(items, activeTrackId);
+const getIteratedTrack = (items, trackId, trackEntities, offset) => {
+  const trackIndex = getTrackIndex(items, trackId);
 
-  // If last item in playlist, exit early
-  // TODO: Check if there are other tracks in the next playlist paging object
-  if (activeTrackIndex === items.length - 1) {
+  // If first or last item in playlist, exit early
+  if (trackIndex === 0 || trackIndex === items.length - 1) {
     return;
   }
 
-  const nextTrackId = items[activeTrackIndex + 1];
-  const nextTrack = trackEntities[nextTrackId];
+  const iteratedTrackId = items[trackIndex + offset];
+  const iteratedTrack = trackEntities[iteratedTrackId];
 
-  if (!isPlayable(nextTrack)) {
-    return getNextPlayableTrackId(items, nextTrackId, trackEntities);
+  if (!isPlayable(iteratedTrack)) {
+    return getIteratedTrack(items, iteratedTrackId, trackEntities, offset);
   }
 
-  return nextTrackId;
-};
-
-const getPreviousPlayableTrackId = (items, activeTrackId, trackEntities) => {
-  const activeTrackIndex = getTrackIndex(items, activeTrackId);
-
-  // If first item in playlist, exit early
-  if (activeTrackIndex === 0) {
-    return;
-  }
-
-  const previousTrackId = items[activeTrackIndex - 1];
-  const previousTrack = trackEntities[previousTrackId];
-
-  if (!isPlayable(previousTrack)) {
-    return getPreviousPlayableTrackId(items, previousTrackId, trackEntities);
-  }
-
-  return previousTrackId;
+  return iteratedTrackId;
 };
 
 // Actions
@@ -76,11 +57,13 @@ export const playNextTrack = () => (dispatch, getState) => {
   const trackEntities = getState().entities.tracks;
 
   const { items } = playlist.tracks;
+  const offset = 1;
 
-  const nextTrackId = getNextPlayableTrackId(
+  const nextTrackId = getIteratedTrack(
     items,
     activeTrackId,
-    trackEntities
+    trackEntities,
+    offset
   );
 
   if (!nextTrackId) {
@@ -99,11 +82,13 @@ export const playPreviousTrack = () => (dispatch, getState) => {
   const trackEntities = getState().entities.tracks;
 
   const { items } = playlist.tracks;
+  const offset = -1;
 
-  const previousTrackId = getPreviousPlayableTrackId(
+  const previousTrackId = getIteratedTrack(
     items,
     activeTrackId,
-    trackEntities
+    trackEntities,
+    offset
   );
 
   if (!previousTrackId) {
