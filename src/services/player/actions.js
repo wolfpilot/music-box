@@ -42,7 +42,13 @@ export function setIsPlaying(isPlaying) {
   };
 }
 
-export const playTrack = trackId => dispatch => {
+export const playTrack = trackId => (dispatch, getState) => {
+  const { activeTrackId, isPlaying } = getState().player;
+
+  if (isPlaying && activeTrackId === trackId) {
+    console.log('REPLAY!')
+  }
+
   dispatch(setActiveTrack(trackId));
   dispatch(setIsPlaying(true));
 };

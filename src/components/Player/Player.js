@@ -18,6 +18,11 @@ import {
 // Components
 import ProgressBar from './ProgressBar/ProgressBar';
 
+// Assets
+import { ReactComponent as VolumeSVG } from './resources/volume.svg';
+import { ReactComponent as RepeatSVG } from './resources/repeat.svg';
+import { ReactComponent as ShuffleSVG } from './resources/shuffle.svg';
+
 const defaults = {
   previewDuration: 30
 };
@@ -87,7 +92,7 @@ class Player extends Component {
             type="button"
             className="player__btn player__volume-toggle-btn"
           >
-            V<span className="sr-only">Volume</span>
+            <VolumeSVG /><span className="sr-only">Volume</span>
           </button>
 
           <div className="player__volume-controls">
@@ -96,12 +101,6 @@ class Player extends Component {
             <div className="player__volume-thumb" role="presentation" />
           </div>
         </div>
-        <button type="button" className="player__btn player__btn-shuffle">
-          S<span className="sr-only">Shuffle</span>
-        </button>
-        <button type="button" className="player__btn player__btn-repeat">
-          R<span className="sr-only">Repeat</span>
-        </button>
       </div>
     );
   }
@@ -138,6 +137,10 @@ class Player extends Component {
 
     return (
       <div className="player__controls player__controls--playback">
+        <button type="button" className="player__btn player__btn-shuffle">
+          <ShuffleSVG /><span className="sr-only">Shuffle</span>
+        </button>
+
         <button
           type="button"
           className="player__btn player__btn-prev"
@@ -168,6 +171,10 @@ class Player extends Component {
           onClick={playNextTrack}
         >
           &#62;&#124;<span className="sr-only">Go to next track</span>
+        </button>
+
+        <button type="button" className="player__btn player__btn-repeat">
+          <RepeatSVG /><span className="sr-only">Repeat</span>
         </button>
       </div>
     );
@@ -215,6 +222,9 @@ class Player extends Component {
   componentDidUpdate(prevProps) {
     const { trackEntities } = this.props;
     const { isPlaying, activeTrackId } = this.props.player;
+
+    // console.log(prevProps);
+    // console.log(prevProps.player.activeTrackId, activeTrackId)
 
     if (prevProps.player.activeTrackId !== activeTrackId) {
       const activeTrack = trackEntities[activeTrackId];

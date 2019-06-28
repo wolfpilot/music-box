@@ -33,6 +33,8 @@ class PlaylistPage extends Component {
   }
 
   render() {
+    // TODO: This works for now, but do it the Redux way instead.
+    // TODO: Check request isLoading state instead. (SUCCESS, LOADING, FAILURE/ERROR)
     const { playlist } = this.props;
 
     return <main role="main">{playlist && <Playlist />}</main>;
