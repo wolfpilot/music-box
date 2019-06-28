@@ -49,14 +49,19 @@ $btnLrgRadius: 32px;
 
     &__btn {
         background-color: transparent;
+        &:not(.player__volume-toggle-btn) {
+            margin-right: 0.8rem;
+        }
+
+        svg {
+            height: 20px;
+        }
     }
 
     &__btn-play,
     &__btn-pause {
         width: $btnLrgRadius;
         height: $btnLrgRadius;
-        margin-right: 0.8rem;
-        margin-left: 0.8rem;
         background-color: color(white);
         border-radius: 50%;
     }
