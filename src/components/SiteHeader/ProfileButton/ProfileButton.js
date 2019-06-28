@@ -31,7 +31,7 @@ const ProfileButton = props => {
   );
 
   return (
-    <button className={`${className} btn`}>
+    <button className={className}>
       {image && image.url ? userImage() : placeholder()}
     </button>
   );

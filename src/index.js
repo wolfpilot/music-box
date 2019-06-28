@@ -14,7 +14,7 @@ import { createWatchers } from './watchers';
 import './index.css';
 
 // Components
-import App from './components/App';
+import App from './components/App/App';
 
 createWatchers(store);
 

@@ -9,7 +9,7 @@
         background-color: transparentize(color(turquoise), 0.8);
     }
 
-    &[data-is-playing="true"] {
+    &[data-is-active="true"] {
         background-color: transparentize(color(turquoise), 0.8);
     }
 

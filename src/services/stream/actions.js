@@ -1,23 +1,16 @@
 // Utils
 import * as actionTypes from './actionTypes';
 
-export const setTracks = tracks => {
+export const mergeFeaturedPlaylists = featuredPlaylists => {
   return {
-    type: actionTypes.TRACKS_SET,
-    tracks
+    type: actionTypes.FEATURED_PLAYLISTS_MERGE,
+    featuredPlaylists
   };
 };
 
-export const setPlaylists = playlists => {
+export const mergePlaylist = playlist => {
   return {
-    type: actionTypes.PLAYLISTS_SET,
-    playlists
-  };
-};
-
-export const setCurrentPlaylist = playlist => {
-  return {
-    type: actionTypes.CURRENT_PLAYLIST_SET,
+    type: actionTypes.PLAYLIST_MERGE,
     playlist
   };
 };

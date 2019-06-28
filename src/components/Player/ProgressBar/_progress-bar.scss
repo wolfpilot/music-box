@@ -1,0 +1,55 @@
+$trackHeight: 2px;
+$thumbRadius: 12px;
+
+.progress-bar {
+    position: relative;
+    flex: auto;
+    margin-right: 10px;
+    margin-left: 10px;
+
+    &__track,
+    &__load,
+    &__thumb {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &__track,
+    &__load {
+        left: 0;
+        height: $trackHeight;
+    }
+
+    &__track {
+        right: 0;
+        background-color: color(grey);
+    }
+
+    &__load {
+        width: 100%;
+        max-width: 0;
+        background-color: color(turquoise);
+    }
+
+    &__thumb {
+        right: -$thumbRadius / 2;
+        width: $thumbRadius;
+        height: $thumbRadius;
+        border-radius: 50%;
+        background-color: color(white);
+        box-shadow: 0 0 5px transparentize(color(black), 0.75);
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: $thumbRadius / 2;
+            height: $thumbRadius / 2;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            background-color: color(turquoise);
+        }
+    }
+}

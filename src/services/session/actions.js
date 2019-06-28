@@ -1,6 +1,6 @@
 // Utils
 import * as actionTypes from './actionTypes';
-import { spotifyAPI } from '../api/player';
+import { spotifyAPI } from '../api/player/player';
 
 export const setSession = accessToken => {
   spotifyAPI.setAccessToken(accessToken);
