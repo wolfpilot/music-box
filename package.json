@@ -23,7 +23,7 @@
     "redux-thunk": "^2.3.0",
     "redux-watch": "^1.1.1",
     "sanitize.css": "^8.0.0",
-    "sass": "^1.108.2",
+    "sass": "~1.77.8",
     "spotify-web-api-js": "^1.1.1",
     "url-search-params-polyfill": "^5.0.0"
   },
