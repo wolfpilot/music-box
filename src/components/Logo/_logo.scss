@@ -1,10 +1,10 @@
 .logo {
-    color: color(black);
-    text-decoration: none;
+  color: color(black);
+  text-decoration: none;
 
-    &__part {
-        &--last {
-            font-weight: $font-weight-bold;
-        }
+  &__part {
+    &--last {
+      font-weight: $font-weight-bold;
     }
+  }
 }

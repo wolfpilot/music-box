@@ -1,4 +1,4 @@
 // Utils
-import SpotifyWebApi from 'spotify-web-api-js';
+import SpotifyWebApi from 'spotify-web-api-js'
 
-export const spotifyAPI = new SpotifyWebApi();
+export const spotifyAPI = new SpotifyWebApi()

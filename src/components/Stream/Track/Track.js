@@ -1,51 +1,44 @@
 // Libs
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 // Utils
-import { playTrack } from '../../../actions';
-import { formatMilliseconds } from '../../../static/js/utils/mathHelpers';
+import { playTrack } from '../../../actions'
+import { formatMilliseconds } from '../../../static/js/utils/mathHelpers'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    player: state.player
-  };
-};
+    player: state.player,
+  }
+}
 
-const mapDispatchToProps = dispatch => ({
-  playTrack: activeTrackId => dispatch(playTrack(activeTrackId))
-});
+const mapDispatchToProps = (dispatch) => ({
+  playTrack: (activeTrackId) => dispatch(playTrack(activeTrackId)),
+})
 
 class Track extends PureComponent {
   togglePlayPause = () => {
-    const { track } = this.props;
+    const { track } = this.props
 
     if (!track.preview_url) {
-      return;
+      return
     }
 
-    this.props.playTrack(track.id);
-  };
+    this.props.playTrack(track.id)
+  }
 
   getArtists() {
-    return this.props.track.artists.map(artist => artist.name).join(', ');
+    return this.props.track.artists.map((artist) => artist.name).join(', ')
   }
 
   render() {
-    const { player, track } = this.props;
+    const { player, track } = this.props
 
-    const {
-      id,
-      index,
-      name,
-      artists,
-      artwork,
-      duration_ms,
-      preview_url
-    } = track;
+    const { id, index, name, artists, artwork, duration_ms, preview_url } =
+      track
 
-    const isActive = player.isPlaying && player.activeTrackId === id;
+    const isActive = player.isPlaying && player.activeTrackId === id
 
     return (
       <div
@@ -72,11 +65,11 @@ class Track extends PureComponent {
           <div className="track__length">{formatMilliseconds(duration_ms)}</div>
         )}
       </div>
-    );
+    )
   }
 }
 
-const { string, number, array, shape, object } = PropTypes;
+const { string, number, array, shape, object } = PropTypes
 
 Track.propTypes = {
   track: shape({
@@ -86,11 +79,8 @@ Track.propTypes = {
     artists: array.isRequired,
     artwork: object.isRequired,
     duration_ms: number.isRequired,
-    preview_url: string
-  })
-};
+    preview_url: string,
+  }),
+}
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Track);
+export default connect(mapStateToProps, mapDispatchToProps)(Track)

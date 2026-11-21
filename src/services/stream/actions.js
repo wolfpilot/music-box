@@ -1,16 +1,16 @@
 // Utils
-import * as actionTypes from './actionTypes';
+import * as actionTypes from './actionTypes'
 
-export const mergeFeaturedPlaylists = featuredPlaylists => {
+export const mergeFeaturedPlaylists = (featuredPlaylists) => {
   return {
     type: actionTypes.FEATURED_PLAYLISTS_MERGE,
-    featuredPlaylists
-  };
-};
+    featuredPlaylists,
+  }
+}
 
-export const mergePlaylist = playlist => {
+export const mergePlaylist = (playlist) => {
   return {
     type: actionTypes.PLAYLIST_MERGE,
-    playlist
-  };
-};
+    playlist,
+  }
+}

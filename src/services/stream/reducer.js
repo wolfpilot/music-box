@@ -1,33 +1,33 @@
 // Utils
-import * as actionTypes from './actionTypes';
+import * as actionTypes from './actionTypes'
 
 const initialState = {
-  featuredPlaylists: {}
-};
+  featuredPlaylists: {},
+}
 
 const mergeFeaturedPlaylists = (state, payload) => {
   return {
     ...state,
     featuredPlaylists: {
-      ...payload.playlists
-    }
-  };
-};
+      ...payload.playlists,
+    },
+  }
+}
 
 const mergePlaylist = (state, payload) => {
   return {
     ...state,
-    playlist: { ...payload }
-  };
-};
+    playlist: { ...payload },
+  }
+}
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case actionTypes.FEATURED_PLAYLISTS_MERGE:
-      return mergeFeaturedPlaylists(state, action.featuredPlaylists);
+      return mergeFeaturedPlaylists(state, action.featuredPlaylists)
     case actionTypes.PLAYLIST_MERGE:
-      return mergePlaylist(state, action.playlist);
+      return mergePlaylist(state, action.playlist)
     default:
-      return state;
+      return state
   }
 }

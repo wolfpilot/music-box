@@ -1,10 +1,10 @@
 // Libs
-import React from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 const PlaylistTile = ({ playlist }) => {
-  const { id, image, name } = playlist;
+  const { id, image, name } = playlist
 
   return (
     <div className="playlist-tile">
@@ -20,13 +20,13 @@ const PlaylistTile = ({ playlist }) => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
 PlaylistTile.propTypes = {
   id: PropTypes.string,
   image: PropTypes.object,
-  name: PropTypes.string
-};
+  name: PropTypes.string,
+}
 
-export default PlaylistTile;
+export default PlaylistTile

@@ -1,14 +1,14 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from './actionTypes'
 
 const initialState = {
-  featuredPlaylists: {}
-};
+  featuredPlaylists: {},
+}
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case actionTypes.MERGE_ENTITIES:
-      return { ...state, ...action.entities };
+      return { ...state, ...action.entities }
     default:
-      return state;
+      return state
   }
 }

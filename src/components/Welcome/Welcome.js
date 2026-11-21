@@ -1,5 +1,5 @@
 // Libs
-import React from 'react';
+import React from 'react'
 
 const Welcome = () => (
   <div className="welcome">
@@ -23,6 +23,6 @@ const Welcome = () => (
       at Spotify.
     </p>
   </div>
-);
+)
 
-export default Welcome;
+export default Welcome

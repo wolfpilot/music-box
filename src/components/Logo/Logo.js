@@ -1,6 +1,6 @@
 // Libs
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const logo = () => {
   return (
@@ -8,7 +8,7 @@ const logo = () => {
       <span className="logo__part logo__part--first">music</span>
       <span className="logo__part logo__part--last">B[]X</span>
     </Link>
-  );
-};
+  )
+}
 
-export default logo;
+export default logo

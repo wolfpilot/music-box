@@ -1,33 +1,33 @@
 // Libs
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 // Components
-import Logo from '../Logo/Logo';
-import NotificationButton from './NotificationButton/NotificationButton';
-import ProfileButton from './ProfileButton/ProfileButton';
-import AuthButton from './AuthButton/AuthButton';
-import { loginUser, logoutUser } from '../../services/user/actions';
+import Logo from '../Logo/Logo'
+import NotificationButton from './NotificationButton/NotificationButton'
+import ProfileButton from './ProfileButton/ProfileButton'
+import AuthButton from './AuthButton/AuthButton'
+import { loginUser, logoutUser } from '../../services/user/actions'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    session: state.session
-  };
-};
+    session: state.session,
+  }
+}
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   login: () => dispatch(loginUser()),
-  logout: () => dispatch(logoutUser())
-});
+  logout: () => dispatch(logoutUser()),
+})
 
 class SiteHeader extends Component {
   /**
    * @public
    */
   onAuth = () => {
-    this.props.session.isLoggedIn ? this.props.logout() : this.props.login();
-  };
+    this.props.session.isLoggedIn ? this.props.logout() : this.props.login()
+  }
 
   render() {
     return (
@@ -46,17 +46,14 @@ class SiteHeader extends Component {
           <AuthButton onAuth={this.onAuth} />
         </div>
       </header>
-    );
+    )
   }
 }
 
 SiteHeader.propTypes = {
   session: PropTypes.shape({
-    isLoggedIn: PropTypes.bool
-  })
-};
+    isLoggedIn: PropTypes.bool,
+  }),
+}
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SiteHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(SiteHeader)
