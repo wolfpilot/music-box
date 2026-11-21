@@ -24,4 +24,4 @@ Aside from the standard CRA dependencies, this project includes:
 2. CD into the newly created directory.
 3. Run `npm install` or `pnpm install` to install the dependencies.
 4. Run `npm start` or `pnpm start` to spin up a local server.
-5. Go to http://localhost:3000/ to see the app.
+5. Go to http://127.0.0.1:3000/ to see the app.
