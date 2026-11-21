@@ -4,24 +4,24 @@
  * @param {Number} ms - The time to be formatted in milliseconds
  * @returns {string} - The formatted time like "1:05" or "2:34:59" or "255:05:59"
  */
-export const formatMilliseconds = ms => {
-  const time = ms / 1000;
+export const formatMilliseconds = (ms) => {
+  const time = ms / 1000
 
-  const hours = Math.floor(time / 3600);
-  const minutes = Math.floor((time % 3600) / 60);
-  const seconds = Math.floor(time % 60);
+  const hours = Math.floor(time / 3600)
+  const minutes = Math.floor((time % 3600) / 60)
+  const seconds = Math.floor(time % 60)
 
-  let formattedTime = '';
+  let formattedTime = ''
 
   if (hours > 0) {
-    formattedTime += `${hours}:${minutes < 10 ? '0' : ''}`;
+    formattedTime += `${hours}:${minutes < 10 ? '0' : ''}`
   }
 
-  formattedTime += `${minutes}:${seconds < 10 ? '0' : ''}`;
-  formattedTime += `${seconds}`;
+  formattedTime += `${minutes}:${seconds < 10 ? '0' : ''}`
+  formattedTime += `${seconds}`
 
-  return formattedTime;
-};
+  return formattedTime
+}
 
 /**
  * Format number to decimal places
@@ -31,7 +31,7 @@ export const formatMilliseconds = ms => {
  * @returns {Number} - The formatted number
  */
 export const numToDecimals = (num, digits) => {
-  const pow = Math.pow(10, digits);
+  const pow = Math.pow(10, digits)
 
-  return Math.round(num * pow) / pow;
-};
+  return Math.round(num * pow) / pow
+}

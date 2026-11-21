@@ -1,6 +1,6 @@
 // Positioning
 $z-index: (
-    site-header: 1000
+  site-header: 1000,
 );
 
 // Display
@@ -8,15 +8,16 @@ $default-border-radius: 4px;
 
 // Colours
 $colors: (
-    black: #000,
-    white: #fff,
-    l-grey: #f6f6f6,
-    grey: #9c9c9c,
-    turquoise: #1ed394
+  black: #000,
+  white: #fff,
+  l-grey: #f6f6f6,
+  grey: #9c9c9c,
+  turquoise: #1ed394,
 );
 
 // Fonts
-$font-family-monospaced: "Lucida Console", "Lucida Sans", Monaco, Verdana, monospace;
+$font-family-monospaced:
+  "Lucida Console", "Lucida Sans", Monaco, Verdana, monospace;
 
 $base-font-size: 16px;
 

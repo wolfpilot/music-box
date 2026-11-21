@@ -1,6 +1,6 @@
 // Libs
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom'
 
 const NotFoundPage = () => (
   <main>
@@ -9,6 +9,6 @@ const NotFoundPage = () => (
       Go back home?
     </Link>
   </main>
-);
+)
 
-export default NotFoundPage;
+export default NotFoundPage

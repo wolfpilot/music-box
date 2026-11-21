@@ -1,26 +1,26 @@
 // Libs
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 // Components
-import Stream from '../../components/Stream/Stream';
-import Welcome from '../../components/Welcome/Welcome';
+import Stream from '../../components/Stream/Stream'
+import Welcome from '../../components/Welcome/Welcome'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    session: state.session
-  };
-};
+    session: state.session,
+  }
+}
 
 const HomePage = ({ session }) => (
   <main role="main">{session.isLoggedIn ? <Stream /> : <Welcome />}</main>
-);
+)
 
 HomePage.propTypes = {
   session: PropTypes.shape({
-    isLoggedIn: PropTypes.bool
-  })
-};
+    isLoggedIn: PropTypes.bool,
+  }),
+}
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps)(HomePage)

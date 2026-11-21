@@ -1,8 +1,8 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from './actionTypes'
 
-export const mergeEntities = entities => {
+export const mergeEntities = (entities) => {
   return {
     type: actionTypes.MERGE_ENTITIES,
-    entities
-  };
-};
+    entities,
+  }
+}

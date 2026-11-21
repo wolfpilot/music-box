@@ -1,8 +1,8 @@
-export const CLIENT_ID = '7c4b139308784771a7b9acc2c8f6df95';
-export const ALLOWED_ORIGIN_URI = 'http://localhost:3000';
+export const CLIENT_ID = '7c4b139308784771a7b9acc2c8f6df95'
+export const ALLOWED_ORIGIN_URI = 'http://localhost:3000'
 export const REDIRECT_URI = `${window.location.protocol}//${
   window.location.host
-}/authorize`;
+}/authorize`
 
 export const SCOPES = [
   'user-read-private',
@@ -10,5 +10,5 @@ export const SCOPES = [
   'user-library-read',
   'user-read-recently-played',
   'user-read-currently-playing',
-  'playlist-read-private'
-];
+  'playlist-read-private',
+]

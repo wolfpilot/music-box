@@ -3,16 +3,16 @@
  * @param {String} url - The URL to be parsed
  * @returns {Object} - An object containing key/value pairs of all the supplied URL params
  */
-export const parseUrlParams = url => {
+export const parseUrlParams = (url) => {
   return url
     .split('&')
-    .map(pair => pair.split('='))
+    .map((pair) => pair.split('='))
     .reduce((param, [key, value]) => {
-      param[key] = value;
+      param[key] = value
 
-      return param;
-    }, {});
-};
+      return param
+    }, {})
+}
 
 /**
  * Get URL param value based on specified key
@@ -21,7 +21,7 @@ export const parseUrlParams = url => {
  * @returns {String} - Resulting key value
  */
 export const getUrlParamByKey = (url, key) => {
-  const params = parseUrlParams(url);
+  const params = parseUrlParams(url)
 
-  return params[key];
-};
+  return params[key]
+}

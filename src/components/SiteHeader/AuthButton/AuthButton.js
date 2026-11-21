@@ -1,26 +1,26 @@
 // Libs
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-const className = 'site-header-auth-button';
+const className = 'site-header-auth-button'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    session: state.session
-  };
-};
+    session: state.session,
+  }
+}
 
-const AuthButton = props => (
+const AuthButton = (props) => (
   <button type="button" className={className} onClick={props.onAuth}>
     {props.session.isLoggedIn ? 'Logout' : 'Login'}
   </button>
-);
+)
 
 AuthButton.propTypes = {
   session: PropTypes.shape({
-    isLoggedIn: PropTypes.bool
-  })
-};
+    isLoggedIn: PropTypes.bool,
+  }),
+}
 
-export default connect(mapStateToProps)(AuthButton);
+export default connect(mapStateToProps)(AuthButton)

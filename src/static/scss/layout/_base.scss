@@ -1,14 +1,14 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: color(white);
+  background-color: color(white);
 }
 
 main {
-    margin-top: $headerHeight;
-    padding: rem(24px) rem(16px);
+  margin-top: $headerHeight;
+  padding: rem(24px) rem(16px);
 }

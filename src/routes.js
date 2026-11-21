@@ -1,16 +1,16 @@
 // Libs
-import { Switch, Route } from 'react-router-dom';
-import React, { Fragment } from 'react';
+import { Switch, Route } from 'react-router-dom'
+import React, { Fragment } from 'react'
 
 // Pages
-import HomePage from './pages/HomePage/HomePage';
-import AuthorizePage from './pages/AuthorizePage/AuthorizePage';
-import PlaylistPage from './pages/PlaylistPage/PlaylistPage';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import HomePage from './pages/HomePage/HomePage'
+import AuthorizePage from './pages/AuthorizePage/AuthorizePage'
+import PlaylistPage from './pages/PlaylistPage/PlaylistPage'
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
 
 // Components
-import SiteHeader from './components/SiteHeader/SiteHeader';
-import Player from './components/Player/Player';
+import SiteHeader from './components/SiteHeader/SiteHeader'
+import Player from './components/Player/Player'
 
 const routes = (
   <Fragment>
@@ -23,6 +23,6 @@ const routes = (
     </Switch>
     <Player />
   </Fragment>
-);
+)
 
-export default routes;
+export default routes

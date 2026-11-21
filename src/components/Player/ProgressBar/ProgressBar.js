@@ -1,26 +1,26 @@
 // Libs
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from 'react'
 
 class ProgressBar extends PureComponent {
   state = {
-    styles: {}
-  };
+    styles: {},
+  }
 
   _updateStyles(percentage) {
     this.setState({
       styles: {
         load: {
-          maxWidth: `${percentage}%`
-        }
-      }
-    });
+          maxWidth: `${percentage}%`,
+        },
+      },
+    })
   }
 
   componentDidUpdate(prevProps) {
-    const { percentage } = this.props;
+    const { percentage } = this.props
 
     if (percentage !== prevProps.percentage) {
-      this._updateStyles(percentage);
+      this._updateStyles(percentage)
     }
   }
 
@@ -28,7 +28,7 @@ class ProgressBar extends PureComponent {
     // !: Fix progress bar moving because of the current time UI constantly updating
     // TODO: Make it draggable
 
-    const { styles } = this.state;
+    const { styles } = this.state
 
     return (
       <div className="progress-bar">
@@ -41,8 +41,8 @@ class ProgressBar extends PureComponent {
           <div className="progress-bar__thumb" role="presentation" />
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default ProgressBar;
+export default ProgressBar

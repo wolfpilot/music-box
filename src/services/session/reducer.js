@@ -1,26 +1,26 @@
 // Utils
-import * as actionTypes from './actionTypes';
+import * as actionTypes from './actionTypes'
 
 const initialState = {
   isLoggedIn: false,
-  accessToken: null
-};
+  accessToken: null,
+}
 
 const setSession = (state, action) => {
   return {
     ...state,
     isLoggedIn: true,
-    accessToken: action.accessToken
-  };
-};
+    accessToken: action.accessToken,
+  }
+}
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case actionTypes.SESSION_SET:
-      return setSession(state, action);
+      return setSession(state, action)
     case actionTypes.SESSION_RESET:
-      return initialState;
+      return initialState
     default:
-      return state;
+      return state
   }
 }
