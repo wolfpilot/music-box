@@ -24,7 +24,7 @@
     "redux-watch": "^1.1.1",
     "sanitize.css": "^8.0.0",
     "sass": "~1.77.8",
-    "spotify-web-api-js": "^1.1.1",
+    "spotify-web-api-js": "^1.5.2",
     "url-search-params-polyfill": "^5.0.0"
   },
   "lint-staged": {

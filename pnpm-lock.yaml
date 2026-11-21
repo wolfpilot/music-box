@@ -69,8 +69,8 @@ importers:
         specifier: ~1.77.8
         version: 1.77.8
       spotify-web-api-js:
-        specifier: ^1.1.1
-        version: 1.1.1
+        specifier: ^1.5.2
+        version: 1.5.2
       url-search-params-polyfill:
         specifier: ^5.0.0
         version: 5.0.0
@@ -4655,8 +4655,8 @@ packages:
     resolution: {integrity: sha512-NzNVhJDYpwceVVii8/Hu6DKfD2G+NrQHlS/V/qgv763EYudVwEcMQNxd2lh+0VrUByXN/oJkl5grOhYWvQUYiw==}
     engines: {node: '>=0.10.0'}
 
-  spotify-web-api-js@1.1.1:
-    resolution: {integrity: sha512-1via0GvAIxExxtQr30bQSwifxwN2i5nJsJGsn26DTtFmaPIzn0jYiI2eJAuBIdxejphE/ijHHcJNtf2HClS8QA==}
+  spotify-web-api-js@1.5.2:
+    resolution: {integrity: sha512-ie1gbg1wCabfobIkXTIBLUMyULS/hMCpF44Cdx2pAO0/+FrjhNSDjlDzcwCEDy+ZIo3Fscs+Gkg/GTeQ/ijo+Q==}
 
   sprintf-js@1.0.3:
     resolution: {integrity: sha512-D9cPgkvLlV3t3IzL0D0YLvGA9Ahk4PcvVwUbN0dSGr1aP0Nrt4AEnTUbuGvquEC0mA64Gqt1fzirlRs5ibXx8g==}
@@ -11284,7 +11284,7 @@ snapshots:
     dependencies:
       extend-shallow: 3.0.2
 
-  spotify-web-api-js@1.1.1: {}
+  spotify-web-api-js@1.5.2: {}
 
   sprintf-js@1.0.3: {}
 
