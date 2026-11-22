@@ -16,6 +16,15 @@ $colors: (
 );
 
 // Fonts
+$font-family-base:
+  "Inter",
+  system-ui,
+  -apple-system,
+  "Segoe UI",
+  Roboto,
+  "Helvetica Neue",
+  Arial,
+  sans-serif;
 $font-family-monospaced:
   "Lucida Console", "Lucida Sans", Monaco, Verdana, monospace;
 
