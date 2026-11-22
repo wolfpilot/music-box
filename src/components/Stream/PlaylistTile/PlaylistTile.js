@@ -1,11 +1,11 @@
 // Libs
-import React from 'react'
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
+import React from "react"
+import { Link } from "react-router-dom"
+import PropTypes from "prop-types"
 
 const PlaylistTile = ({ playlist }) => {
   const { id, image, name, type } = playlist
-  const url = `/${type === 'album' ? 'album' : 'playlist'}/${id}`
+  const url = `/${type === "album" ? "album" : "playlist"}/${id}`
 
   return (
     <div className="playlist-tile">

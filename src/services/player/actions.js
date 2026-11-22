@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes'
+import * as actionTypes from "./actionTypes"
 
 // Helpers
 const isPlayable = (track) => {
@@ -46,7 +46,7 @@ export const playTrack = (trackId) => (dispatch, getState) => {
   const { activeTrackId, isPlaying } = getState().player
 
   if (isPlaying && activeTrackId === trackId) {
-    console.log('REPLAY!')
+    console.log("REPLAY!")
   }
 
   dispatch(setActiveTrack(trackId))

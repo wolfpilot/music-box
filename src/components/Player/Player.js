@@ -1,7 +1,7 @@
 // Libs
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 // Utils
 import {
@@ -9,25 +9,25 @@ import {
   pauseTrack,
   playNextTrack,
   playPreviousTrack,
-} from '../../actions'
+} from "../../actions"
 import {
   onPlayerStateChange,
   playUri,
   pausePlayback,
   resumePlayback,
-} from '../../services/api/player/webPlayback'
+} from "../../services/api/player/webPlayback"
 import {
   formatMilliseconds,
   numToDecimals,
-} from '../../static/js/utils/mathHelpers'
+} from "../../static/js/utils/mathHelpers"
 
 // Components
-import ProgressBar from './ProgressBar/ProgressBar'
+import ProgressBar from "./ProgressBar/ProgressBar"
 
 // Assets
-import { ReactComponent as VolumeSVG } from './resources/volume.svg'
-import { ReactComponent as RepeatSVG } from './resources/repeat.svg'
-import { ReactComponent as ShuffleSVG } from './resources/shuffle.svg'
+import { ReactComponent as VolumeSVG } from "./resources/volume.svg"
+import { ReactComponent as RepeatSVG } from "./resources/repeat.svg"
+import { ReactComponent as ShuffleSVG } from "./resources/shuffle.svg"
 
 const mapStateToProps = (state) => {
   return {
@@ -57,7 +57,7 @@ class Player extends Component {
   _loadedUri = null
 
   _getArtists(track) {
-    return track.artists.map((artist) => artist.name).join(', ')
+    return track.artists.map((artist) => artist.name).join(", ")
   }
 
   // The SDK only reports changes, so work out the current position locally
@@ -239,7 +239,7 @@ class Player extends Component {
 
         <div className="player__track-meta">
           <div className="player__track-name">
-            {activeTrack.name ? activeTrack.name : ''}
+            {activeTrack.name ? activeTrack.name : ""}
           </div>
           <div className="player__artist-name">
             {this._getArtists(activeTrack)}

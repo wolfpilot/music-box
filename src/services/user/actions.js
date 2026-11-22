@@ -1,18 +1,18 @@
 // Libs
-import { normalize } from 'normalizr'
+import { normalize } from "normalizr"
 
 // Utils
-import * as actionTypes from './actionTypes'
-import * as userAPI from '../api/user/user'
-import { spotifyAPI } from '../api/player/player'
+import * as actionTypes from "./actionTypes"
+import * as userAPI from "../api/user/user"
+import { spotifyAPI } from "../api/player/player"
 import {
   mergeEntities,
   mergeFeaturedPlaylists,
   resetSession,
   setSession,
   mergePlaylist,
-} from '../../actions'
-import { featuredPlaylistSchema, trackSchema } from '../../schemas'
+} from "../../actions"
+import { featuredPlaylistSchema, trackSchema } from "../../schemas"
 
 export const fetchMe = () => (dispatch) => {
   spotifyAPI.getMe().then(
@@ -60,14 +60,14 @@ export const fetchFeaturedPlaylists = () => (dispatch) => {
 
 export const fetchPlaylist = (id) => (dispatch) => {
   const fields = [
-    'description',
-    'followers.total',
-    'id',
-    'images',
-    'name',
-    'owner',
-    'tracks',
-  ].join(',')
+    "description",
+    "followers.total",
+    "id",
+    "images",
+    "name",
+    "owner",
+    "tracks",
+  ].join(",")
 
   spotifyAPI
     .getPlaylist(id, { fields })
@@ -86,15 +86,15 @@ export const fetchAlbum = (id) => (dispatch) => {
   spotifyAPI
     .getAlbum(id)
     .then((album) => {
-      const artists = album.artists.map((artist) => artist.name).join(', ')
-      const year = (album.release_date || '').slice(0, 4)
+      const artists = album.artists.map((artist) => artist.name).join(", ")
+      const year = (album.release_date || "").slice(0, 4)
 
       // Shape the album like a playlist, so the playlist page can render it
       const data = {
         id: album.id,
         name: album.name,
         images: album.images,
-        description: [artists, year].filter(Boolean).join(' · '),
+        description: [artists, year].filter(Boolean).join(" · "),
         tracks: {
           offset: 0,
           items: album.tracks.items.map((track) => ({

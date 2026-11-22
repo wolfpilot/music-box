@@ -1,15 +1,15 @@
 // Libs
-import { schema } from 'normalizr'
+import { schema } from "normalizr"
 
 // Utils
-import { pick } from '../utils/objectHelpers'
+import { pick } from "../utils/objectHelpers"
 
 const playlist = new schema.Entity(
-  'featuredPlaylists',
+  "featuredPlaylists",
   {},
   {
     processStrategy: (entity) => {
-      const keys = ['id', 'images', 'name', 'type']
+      const keys = ["id", "images", "name", "type"]
       const filteredPlaylist = pick(entity, keys)
 
       return {

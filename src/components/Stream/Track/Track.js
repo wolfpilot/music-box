@@ -1,11 +1,11 @@
 // Libs
-import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import React, { PureComponent } from "react"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 // Utils
-import { playTrack } from '../../../actions'
-import { formatMilliseconds } from '../../../static/js/utils/mathHelpers'
+import { playTrack } from "../../../actions"
+import { formatMilliseconds } from "../../../static/js/utils/mathHelpers"
 
 const mapStateToProps = (state) => {
   return {
@@ -29,7 +29,7 @@ class Track extends PureComponent {
   }
 
   getArtists() {
-    return this.props.track.artists.map((artist) => artist.name).join(', ')
+    return this.props.track.artists.map((artist) => artist.name).join(", ")
   }
 
   render() {

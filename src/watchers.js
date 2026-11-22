@@ -1,8 +1,8 @@
 // Lib
-import watch from 'redux-watch'
+import watch from "redux-watch"
 
 // Utils
-import { setSession, fetchMe, fetchFeaturedPlaylists } from './actions'
+import { setSession, fetchMe, fetchFeaturedPlaylists } from "./actions"
 
 // Keep refs to the watchers so they can be unsubscribed when necessary
 let sessionWatcher
@@ -27,5 +27,5 @@ export const watcher = (store, selector, action) => {
 }
 
 export const createWatchers = (store) => {
-  sessionWatcher = watcher(store, 'session.accessToken', watchSession)
+  sessionWatcher = watcher(store, "session.accessToken", watchSession)
 }

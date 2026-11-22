@@ -1,9 +1,9 @@
 // Libs
-import React from 'react'
-import { connect } from 'react-redux'
+import React from "react"
+import { connect } from "react-redux"
 
 // Components
-import Track from '../Track/Track'
+import Track from "../Track/Track"
 
 const mapStateToProps = (state) => {
   return {

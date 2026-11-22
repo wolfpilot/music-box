@@ -1,12 +1,12 @@
 // Libs
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 
 // Resources
-import * as icons from './resources/icons'
+import * as icons from "./resources/icons"
 
-const className = 'site-header-profile-button'
+const className = "site-header-profile-button"
 
 const mapStateToProps = (state) => {
   return {

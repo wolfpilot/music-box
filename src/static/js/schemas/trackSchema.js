@@ -1,20 +1,20 @@
 // Libs
-import { schema } from 'normalizr'
+import { schema } from "normalizr"
 
 // Utils
-import { pick } from '../utils/objectHelpers'
+import { pick } from "../utils/objectHelpers"
 
 let index = 1
 
 const track = new schema.Entity(
-  'tracks',
+  "tracks",
   {},
   {
     idAttribute: (value) => value.track.id,
     processStrategy: (entity, parent) => {
       const { track } = entity
 
-      const keys = ['id', 'name', 'album', 'artists', 'duration_ms', 'uri']
+      const keys = ["id", "name", "album", "artists", "duration_ms", "uri"]
       const filteredTrack = pick(track, keys)
 
       // Manually assign an index to each track

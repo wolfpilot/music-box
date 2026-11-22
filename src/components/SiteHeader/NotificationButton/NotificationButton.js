@@ -1,7 +1,7 @@
 // Libs
-import React from 'react'
+import React from "react"
 
-const className = 'site-header-notification-button'
+const className = "site-header-notification-button"
 
 const NotificationButton = () => (
   <button type="button" className={className}>

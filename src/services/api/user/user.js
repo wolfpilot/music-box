@@ -1,6 +1,6 @@
 // Config
-import * as USER from './constants'
-import * as API from '../constants'
+import * as USER from "./constants"
+import * as API from "../constants"
 
 /**
  * @returns {String} - The modal params
@@ -10,11 +10,11 @@ const _getModalFeatures = () => {
   const posLeft = window.screen.width / 2 - USER.MODAL_WIDTH / 2
 
   return (
-    'menubar=no' +
-    'location=no,' +
-    'resizable=no,' +
-    'scrollbars=no,' +
-    'status=no,' +
+    "menubar=no" +
+    "location=no," +
+    "resizable=no," +
+    "scrollbars=no," +
+    "status=no," +
     `width=${USER.MODAL_WIDTH},` +
     `height=${USER.MODAL_HEIGHT},` +
     `top=${posTop},` +
@@ -22,8 +22,8 @@ const _getModalFeatures = () => {
   )
 }
 
-const TOKEN_URL = 'https://accounts.spotify.com/api/token'
-const MESSAGE_TYPE = 'spotify-auth'
+const TOKEN_URL = "https://accounts.spotify.com/api/token"
+const MESSAGE_TYPE = "spotify-auth"
 
 /**
  * @param {Uint8Array} bytes
@@ -32,9 +32,9 @@ const MESSAGE_TYPE = 'spotify-auth'
 const _base64UrlEncode = (bytes) => {
   return window
     .btoa(String.fromCharCode(...bytes))
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '')
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "")
 }
 
 /**
@@ -53,7 +53,7 @@ const _getRandomString = (length) => {
  */
 const _getCodeChallenge = (verifier) => {
   return window.crypto.subtle
-    .digest('SHA-256', new TextEncoder().encode(verifier))
+    .digest("SHA-256", new TextEncoder().encode(verifier))
     .then((digest) => _base64UrlEncode(new Uint8Array(digest)))
 }
 
@@ -66,7 +66,7 @@ const _getLoginURL = (state, codeChallenge) => {
   return (
     `https://accounts.spotify.com/authorize?client_id=${API.CLIENT_ID}` +
     `&redirect_uri=${encodeURIComponent(API.REDIRECT_URI)}` +
-    `&scope=${encodeURIComponent(API.SCOPES.join(' '))}` +
+    `&scope=${encodeURIComponent(API.SCOPES.join(" "))}` +
     `&show_dialog=true` +
     `&response_type=code` +
     `&state=${state}` +
@@ -83,15 +83,15 @@ const _getLoginURL = (state, codeChallenge) => {
 const _exchangeCode = (code, verifier) => {
   const body = new URLSearchParams({
     client_id: API.CLIENT_ID,
-    grant_type: 'authorization_code',
+    grant_type: "authorization_code",
     code,
     redirect_uri: API.REDIRECT_URI,
     code_verifier: verifier,
   })
 
   return fetch(TOKEN_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body,
   })
     .then((res) => (res.ok ? res.json() : Promise.reject()))
@@ -105,7 +105,7 @@ const _exchangeCode = (code, verifier) => {
 export const authorize = () => {
   // Open synchronously so the browser doesn't block it as a popup,
   // then point it to Spotify once the code challenge is ready
-  const modal = window.open('', USER.MODAL_NAME, _getModalFeatures())
+  const modal = window.open("", USER.MODAL_NAME, _getModalFeatures())
 
   if (!modal) {
     return Promise.reject(USER.MSG_ACCESS_DENIED)
@@ -127,7 +127,7 @@ export const authorize = () => {
           return
         }
 
-        window.removeEventListener('message', onMessage, false)
+        window.removeEventListener("message", onMessage, false)
 
         const { code, error, state: returnedState } = e.data
 
@@ -142,7 +142,7 @@ export const authorize = () => {
           .catch(() => reject(USER.MSG_ACCESS_DENIED))
       }
 
-      window.addEventListener('message', onMessage, false)
+      window.addEventListener("message", onMessage, false)
     })
   })
 }

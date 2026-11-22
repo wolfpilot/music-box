@@ -1,13 +1,13 @@
 // Libs
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 
 // Utils
-import { fetchPlaylist, fetchAlbum, mergePlaylist } from '../../actions'
+import { fetchPlaylist, fetchAlbum, mergePlaylist } from "../../actions"
 
 // Components
-import Playlist from '../../components/Stream/Playlist/Playlist'
+import Playlist from "../../components/Stream/Playlist/Playlist"
 
 const mapStateToProps = (state) => {
   return {

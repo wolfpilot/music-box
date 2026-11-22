@@ -11,13 +11,13 @@ export const formatMilliseconds = (ms) => {
   const minutes = Math.floor((time % 3600) / 60)
   const seconds = Math.floor(time % 60)
 
-  let formattedTime = ''
+  let formattedTime = ""
 
   if (hours > 0) {
-    formattedTime += `${hours}:${minutes < 10 ? '0' : ''}`
+    formattedTime += `${hours}:${minutes < 10 ? "0" : ""}`
   }
 
-  formattedTime += `${minutes}:${seconds < 10 ? '0' : ''}`
+  formattedTime += `${minutes}:${seconds < 10 ? "0" : ""}`
   formattedTime += `${seconds}`
 
   return formattedTime

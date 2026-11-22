@@ -1,9 +1,9 @@
 // Libs
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 
-const className = 'site-header-auth-button'
+const className = "site-header-auth-button"
 
 const mapStateToProps = (state) => {
   return {
@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
 
 const AuthButton = (props) => (
   <button type="button" className={className} onClick={props.onAuth}>
-    {props.session.isLoggedIn ? 'Logout' : 'Login'}
+    {props.session.isLoggedIn ? "Logout" : "Login"}
   </button>
 )
 

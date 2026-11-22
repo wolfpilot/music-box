@@ -1,7 +1,7 @@
-import { spotifyAPI } from './player'
+import { spotifyAPI } from "./player"
 
-const SDK_URL = 'https://sdk.scdn.co/spotify-player.js'
-const PLAYER_NAME = 'Music Box'
+const SDK_URL = "https://sdk.scdn.co/spotify-player.js"
+const PLAYER_NAME = "Music Box"
 
 let accessToken = null
 let player = null
@@ -26,7 +26,7 @@ export const onPlayerStateChange = (callback) => {
  */
 export const playUri = (uri) => {
   if (!deviceId) {
-    return Promise.reject(new Error('Web Playback device is not ready yet'))
+    return Promise.reject(new Error("Web Playback device is not ready yet"))
   }
 
   return spotifyAPI.play({ device_id: deviceId, uris: [uri] })
@@ -46,7 +46,7 @@ export const initWebPlayback = (token) => {
   // Always keep the latest token, the SDK asks for it whenever it needs one
   accessToken = token
 
-  if (!token || player || document.getElementById('spotify-sdk')) {
+  if (!token || player || document.getElementById("spotify-sdk")) {
     return
   }
 
@@ -57,27 +57,27 @@ export const initWebPlayback = (token) => {
       volume: 0.5,
     })
 
-    player.addListener('ready', ({ device_id }) => {
+    player.addListener("ready", ({ device_id }) => {
       deviceId = device_id
 
-      console.log('[Web Playback] Ready, device id:', device_id)
+      console.log("[Web Playback] Ready, device id:", device_id)
     })
 
-    player.addListener('not_ready', ({ device_id }) => {
+    player.addListener("not_ready", ({ device_id }) => {
       deviceId = null
 
-      console.warn('[Web Playback] Device went offline:', device_id)
+      console.warn("[Web Playback] Device went offline:", device_id)
     })
 
-    player.addListener('player_state_changed', (state) => {
+    player.addListener("player_state_changed", (state) => {
       stateListeners.forEach((callback) => callback(state))
     })
 
     ;[
-      'initialization_error',
-      'authentication_error',
-      'account_error',
-      'playback_error',
+      "initialization_error",
+      "authentication_error",
+      "account_error",
+      "playback_error",
     ].forEach((type) => {
       player.addListener(type, ({ message }) => {
         console.error(`[Web Playback] ${type}:`, message)
@@ -85,13 +85,13 @@ export const initWebPlayback = (token) => {
     })
 
     player.connect().then((success) => {
-      console.log('[Web Playback] Connected:', success)
+      console.log("[Web Playback] Connected:", success)
     })
   }
 
-  const script = document.createElement('script')
+  const script = document.createElement("script")
 
-  script.id = 'spotify-sdk'
+  script.id = "spotify-sdk"
   script.src = SDK_URL
   script.async = true
 

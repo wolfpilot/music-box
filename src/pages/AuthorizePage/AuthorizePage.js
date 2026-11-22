@@ -1,8 +1,8 @@
 // Libs
-import React, { Component } from 'react'
+import React, { Component } from "react"
 
 // Config
-import { ALLOWED_ORIGIN_URI } from '../../services/api/constants'
+import { ALLOWED_ORIGIN_URI } from "../../services/api/constants"
 
 class AuthorizePage extends Component {
   componentDidMount() {
@@ -17,10 +17,10 @@ class AuthorizePage extends Component {
 
     window.opener.postMessage(
       {
-        type: 'spotify-auth',
-        code: params.get('code'),
-        error: params.get('error'),
-        state: params.get('state'),
+        type: "spotify-auth",
+        code: params.get("code"),
+        error: params.get("error"),
+        state: params.get("state"),
       },
       ALLOWED_ORIGIN_URI
     )
