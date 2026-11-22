@@ -1,18 +1,26 @@
 .playlist {
   &__header {
-    @include mq($mq-mob--lrg) {
+    text-align: center;
+
+    @include mq($mq-tab--sml) {
       display: flex;
+      text-align: initial;
     }
   }
 
   &__header-image-wrapper {
-    @include mq($mq-mob--lrg) {
+    @include mq($mq-tab--sml) {
       margin-right: 24px;
     }
   }
 
   &__header-image {
     max-width: 100%;
+    border-radius: 10px;
+
+    @include mq($mq-mob) {
+      max-width: 450px;
+    }
   }
 
   &__track-list {
