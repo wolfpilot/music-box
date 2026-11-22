@@ -5,6 +5,7 @@ import PropTypes from "prop-types"
 
 // Utils
 import {
+  setActiveTrack,
   playTrack,
   pauseTrack,
   playNextTrack,
@@ -32,11 +33,13 @@ import { ReactComponent as ShuffleSVG } from "./resources/shuffle.svg"
 const mapStateToProps = (state) => {
   return {
     player: state.player,
+    playlist: state.stream.playlist,
     trackEntities: state.entities.tracks,
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
+  setActiveTrack: (trackId) => dispatch(setActiveTrack(trackId)),
   playTrack: (track) => dispatch(playTrack(track)),
   pauseTrack: () => dispatch(pauseTrack()),
   playNextTrack: () => dispatch(playNextTrack()),
@@ -107,6 +110,25 @@ class Player extends Component {
     }
 
     this._updateProgress()
+  }
+
+  // Show the first playable track's info, without playing it,
+  // so the player isn't empty until the user picks a track
+  _showFirstTrack() {
+    const { player, playlist, trackEntities, setActiveTrack } = this.props
+    const items = playlist && playlist.tracks && playlist.tracks.items
+
+    if (player.activeTrackId || !items) {
+      return
+    }
+
+    const firstTrackId = items.find(
+      (id) => trackEntities[id] && trackEntities[id].uri
+    )
+
+    if (firstTrackId) {
+      setActiveTrack(firstTrackId)
+    }
   }
 
   _startPlayback(track) {
@@ -252,11 +274,17 @@ class Player extends Component {
   componentDidMount() {
     this._unsubscribe = onPlayerStateChange(this._onPlayerStateChange)
     this._timer = window.setInterval(this._updateProgress, 500)
+
+    this._showFirstTrack()
   }
 
   componentDidUpdate(prevProps) {
     const { trackEntities } = this.props
     const { isPlaying, activeTrackId } = this.props.player
+
+    if (!activeTrackId && prevProps.playlist !== this.props.playlist) {
+      this._showFirstTrack()
+    }
 
     if (prevProps.player.activeTrackId !== activeTrackId) {
       const activeTrack = trackEntities[activeTrackId]
