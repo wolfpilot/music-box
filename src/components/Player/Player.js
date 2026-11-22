@@ -1,7 +1,7 @@
 // Libs
-import React, { Component } from "react"
-import { connect } from "react-redux"
-import PropTypes from "prop-types"
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 // Utils
 import {
@@ -10,25 +10,29 @@ import {
   pauseTrack,
   playNextTrack,
   playPreviousTrack,
-} from "../../actions"
+} from '../../actions'
 import {
   onPlayerStateChange,
   playUri,
   pausePlayback,
   resumePlayback,
-} from "../../services/api/player/webPlayback"
+} from '../../services/api/player/webPlayback'
 import {
   formatMilliseconds,
   numToDecimals,
-} from "../../static/js/utils/mathHelpers"
+} from '../../static/js/utils/mathHelpers'
 
 // Components
-import ProgressBar from "./ProgressBar/ProgressBar"
+import ProgressBar from './ProgressBar/ProgressBar'
 
 // Assets
-import { ReactComponent as VolumeSVG } from "./resources/volume.svg"
-import { ReactComponent as RepeatSVG } from "./resources/repeat.svg"
-import { ReactComponent as ShuffleSVG } from "./resources/shuffle.svg"
+import { ReactComponent as VolumeIcon } from '@tabler/icons/icons/outline/volume.svg'
+import { ReactComponent as RepeatIcon } from '@tabler/icons/icons/outline/repeat.svg'
+import { ReactComponent as ShuffleIcon } from '@tabler/icons/icons/outline/arrows-shuffle.svg'
+import { ReactComponent as PreviousIcon } from '@tabler/icons/icons/outline/player-skip-back.svg'
+import { ReactComponent as NextIcon } from '@tabler/icons/icons/outline/player-skip-forward.svg'
+import { ReactComponent as PlayIcon } from '@tabler/icons/icons/filled/player-play.svg'
+import { ReactComponent as PauseIcon } from '@tabler/icons/icons/filled/player-pause.svg'
 
 const mapStateToProps = (state) => {
   return {
@@ -60,7 +64,7 @@ class Player extends Component {
   _loadedUri = null
 
   _getArtists(track) {
-    return track.artists.map((artist) => artist.name).join(", ")
+    return track.artists.map((artist) => artist.name).join(', ')
   }
 
   // The SDK only reports changes, so work out the current position locally
@@ -158,7 +162,7 @@ class Player extends Component {
             type="button"
             className="player__btn player__volume-toggle-btn"
           >
-            <VolumeSVG />
+            <VolumeIcon />
             <span className="sr-only">Volume</span>
           </button>
 
@@ -200,7 +204,7 @@ class Player extends Component {
     return (
       <div className="player__controls player__controls--playback">
         <button type="button" className="player__btn player__btn-shuffle">
-          <ShuffleSVG />
+          <ShuffleIcon />
           <span className="sr-only">Shuffle</span>
         </button>
 
@@ -209,7 +213,8 @@ class Player extends Component {
           className="player__btn player__btn-prev"
           onClick={playPreviousTrack}
         >
-          &#124;&#60;<span className="sr-only">Go to previous track</span>
+          <PreviousIcon />
+          <span className="sr-only">Go to previous track</span>
         </button>
         {player.isPlaying ? (
           <button
@@ -217,7 +222,8 @@ class Player extends Component {
             className="player__btn player__btn-pause"
             onClick={pauseTrack}
           >
-            &#9647;&#9647;<span className="sr-only">Pause</span>
+            <PauseIcon />
+            <span className="sr-only">Pause</span>
           </button>
         ) : (
           <button
@@ -225,7 +231,8 @@ class Player extends Component {
             className="player__btn player__btn-play"
             onClick={() => playTrack(activeTrack.id)}
           >
-            &#9655;<span className="sr-only">Play</span>
+            <PlayIcon />
+            <span className="sr-only">Play</span>
           </button>
         )}
         <button
@@ -233,11 +240,12 @@ class Player extends Component {
           className="player__btn player__btn-next"
           onClick={playNextTrack}
         >
-          &#62;&#124;<span className="sr-only">Go to next track</span>
+          <NextIcon />
+          <span className="sr-only">Go to next track</span>
         </button>
 
         <button type="button" className="player__btn player__btn-repeat">
-          <RepeatSVG />
+          <RepeatIcon />
           <span className="sr-only">Repeat</span>
         </button>
       </div>
@@ -261,7 +269,7 @@ class Player extends Component {
 
         <div className="player__track-meta">
           <div className="player__track-name">
-            {activeTrack.name ? activeTrack.name : ""}
+            {activeTrack.name ? activeTrack.name : ''}
           </div>
           <div className="player__artist-name">
             {this._getArtists(activeTrack)}
@@ -318,7 +326,7 @@ class Player extends Component {
     const { activeTrack } = this.state
 
     return (
-      <div className="player">
+      <aside className="player">
         {activeTrack && (
           <>
             {this._renderTrackDetails()}
@@ -327,7 +335,7 @@ class Player extends Component {
             {this._renderPlaybackOptions()}
           </>
         )}
-      </div>
+      </aside>
     )
   }
 }
