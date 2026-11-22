@@ -35,9 +35,12 @@ const Playlist = ({ playlist, trackEntities }) => {
       </div>
 
       <ul className="playlist__track-list">
-        {tracks.items.map((id) => (
+        {tracks.items.map((id, position) => (
           <li key={id} className="playlist__track-list-item">
-            <Track track={trackEntities[id]} />
+            <Track
+              track={trackEntities[id]}
+              index={(tracks.offset || 0) + position + 1}
+            />
           </li>
         ))}
       </ul>

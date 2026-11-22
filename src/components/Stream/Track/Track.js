@@ -33,9 +33,9 @@ class Track extends PureComponent {
   }
 
   render() {
-    const { player, track } = this.props
+    const { player, track, index } = this.props
 
-    const { id, index, name, artists, artwork, duration_ms, uri } = track
+    const { id, name, artists, artwork, duration_ms, uri } = track
 
     const isActive = player.isPlaying && player.activeTrackId === id
 
@@ -71,9 +71,10 @@ class Track extends PureComponent {
 const { string, number, array, shape, object } = PropTypes
 
 Track.propTypes = {
+  // The track's position in the current album or playlist
+  index: number,
   track: shape({
     id: string.isRequired,
-    index: number.isRequired,
     name: string.isRequired,
     artists: array.isRequired,
     artwork: object.isRequired,
