@@ -6,6 +6,10 @@ A small Spotify player built with React + Redux based on the now deprecated Face
 >
 > In other words, be curious, just don't expect too much.
 
+<center>
+    <img src="./docs/demo-intro.jpg" width="960" height="640" />
+</center>
+
 ## Table of contents
 
 - [How it works](#how-it-works)
