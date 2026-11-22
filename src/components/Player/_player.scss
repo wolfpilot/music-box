@@ -9,8 +9,9 @@ $btnLrgRadius: 32px;
   display: flex;
   height: 64px;
   padding: 1rem;
-  background-color: color(white);
-  box-shadow: 0px 5px 30px 5px rgba(0, 0, 0, 0.075);
+  background-color: color(black);
+  color: color(white);
+  box-shadow: 0px 5px 30px 5px rgba(0, 0, 0, 0.05);
 
   &__active-track {
     display: none;
@@ -66,6 +67,7 @@ $btnLrgRadius: 32px;
 
     svg {
       height: 20px;
+      color: color(white);
     }
   }
 
@@ -74,11 +76,11 @@ $btnLrgRadius: 32px;
     width: $btnLrgRadius;
     height: $btnLrgRadius;
     flex-shrink: 0;
-    background-color: color(black);
+    background-color: color(white);
     border-radius: 50%;
 
     svg {
-      fill: color(white);
+      fill: color(black);
     }
   }
 
