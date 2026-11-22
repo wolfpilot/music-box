@@ -36,6 +36,8 @@ export const pausePlayback = () => player && player.pause()
 
 export const resumePlayback = () => player && player.resume()
 
+export const seekPlayback = (positionMs) => player && player.seek(positionMs)
+
 /**
  * Load the Spotify Web Playback SDK and connect a player, so the browser
  * becomes a Spotify Connect device. Needs a Premium account and the

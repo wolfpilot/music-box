@@ -16,6 +16,7 @@ import {
 } from "./services/stream/actions"
 import {
   setActiveTrack,
+  setQueue,
   setIsPlaying,
   playTrack,
   pauseTrack,
@@ -38,6 +39,7 @@ export {
   mergeFeaturedPlaylists,
   mergePlaylist,
   setActiveTrack,
+  setQueue,
   setIsPlaying,
   playTrack,
   pauseTrack,

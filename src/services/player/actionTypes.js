@@ -1,2 +1,3 @@
 export const SET_ACTIVE_TRACK = "SET_ACTIVE_TRACK"
 export const SET_IS_PLAYING = "SET_IS_PLAYING"
+export const SET_QUEUE = "SET_QUEUE"

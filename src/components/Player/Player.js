@@ -6,6 +6,7 @@ import PropTypes from "prop-types"
 // Utils
 import {
   setActiveTrack,
+  setQueue,
   playTrack,
   pauseTrack,
   playNextTrack,
@@ -44,9 +45,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   setActiveTrack: (trackId) => dispatch(setActiveTrack(trackId)),
+  setQueue: (queue) => dispatch(setQueue(queue)),
   playTrack: (track) => dispatch(playTrack(track)),
   pauseTrack: () => dispatch(pauseTrack()),
-  playNextTrack: () => dispatch(playNextTrack()),
+  playNextTrack: (wrap) => dispatch(playNextTrack(wrap)),
   playPreviousTrack: () => dispatch(playPreviousTrack()),
 })
 
@@ -119,7 +121,8 @@ class Player extends Component {
   // Show the first playable track's info, without playing it,
   // so the player isn't empty until the user picks a track
   _showFirstTrack() {
-    const { player, playlist, trackEntities, setActiveTrack } = this.props
+    const { player, playlist, trackEntities, setActiveTrack, setQueue } =
+      this.props
     const items = playlist && playlist.tracks && playlist.tracks.items
 
     if (player.activeTrackId || !items) {
@@ -131,6 +134,7 @@ class Player extends Component {
     )
 
     if (firstTrackId) {
+      setQueue(items)
       setActiveTrack(firstTrackId)
     }
   }
@@ -238,7 +242,7 @@ class Player extends Component {
         <button
           type="button"
           className="player__btn player__btn-next"
-          onClick={playNextTrack}
+          onClick={() => playNextTrack(true)}
         >
           <NextIcon />
           <span className="sr-only">Go to next track</span>
