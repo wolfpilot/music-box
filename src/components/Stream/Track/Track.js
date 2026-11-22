@@ -21,7 +21,7 @@ class Track extends PureComponent {
   togglePlayPause = () => {
     const { track } = this.props
 
-    if (!track.preview_url) {
+    if (!track.uri) {
       return
     }
 
@@ -35,8 +35,7 @@ class Track extends PureComponent {
   render() {
     const { player, track } = this.props
 
-    const { id, index, name, artists, artwork, duration_ms, preview_url } =
-      track
+    const { id, index, name, artists, artwork, duration_ms, uri } = track
 
     const isActive = player.isPlaying && player.activeTrackId === id
 
@@ -45,7 +44,7 @@ class Track extends PureComponent {
         className="track"
         role="button"
         onClick={this.togglePlayPause}
-        disabled={!preview_url}
+        disabled={!uri}
         data-is-active={isActive}
       >
         {index && <div className="track__index">{index}</div>}
@@ -79,7 +78,7 @@ Track.propTypes = {
     artists: array.isRequired,
     artwork: object.isRequired,
     duration_ms: number.isRequired,
-    preview_url: string,
+    uri: string,
   }),
 }
 

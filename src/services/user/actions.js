@@ -28,17 +28,34 @@ export const fetchMe = () => (dispatch) => {
 }
 
 export const fetchFeaturedPlaylists = () => (dispatch) => {
-  spotifyAPI
-    .getFeaturedPlaylists({ limit: 12 })
-    .then((data) => {
-      const normalized = normalize(data, featuredPlaylistSchema)
+  // Spotify removed the featured playlists endpoint, so show the user's own
+  // playlists and saved albums instead. A failing request shouldn't hide the other.
+  const emptyList = { items: [] }
 
-      dispatch(mergeEntities(normalized.entities))
-      dispatch(mergeFeaturedPlaylists(normalized.result))
-    })
-    .catch((err) => {
+  Promise.all([
+    spotifyAPI.getUserPlaylists({ limit: 12 }).catch((err) => {
       console.error(err)
-    })
+
+      return emptyList
+    }),
+    spotifyAPI.getMySavedAlbums({ limit: 50 }).catch((err) => {
+      console.error(err)
+
+      return emptyList
+    }),
+  ]).then(([playlists, savedAlbums]) => {
+    const items = [
+      ...playlists.items,
+      ...savedAlbums.items.map(({ album }) => album),
+    ]
+    const normalized = normalize(
+      { playlists: { items } },
+      featuredPlaylistSchema
+    )
+
+    dispatch(mergeEntities(normalized.entities))
+    dispatch(mergeFeaturedPlaylists(normalized.result))
+  })
 }
 
 export const fetchPlaylist = (id) => (dispatch) => {
@@ -55,6 +72,36 @@ export const fetchPlaylist = (id) => (dispatch) => {
   spotifyAPI
     .getPlaylist(id, { fields })
     .then((data) => {
+      const normalized = normalize(data, trackSchema)
+
+      dispatch(mergeEntities(normalized.entities))
+      dispatch(mergePlaylist(normalized.result))
+    })
+    .catch((err) => {
+      console.error(err)
+    })
+}
+
+export const fetchAlbum = (id) => (dispatch) => {
+  spotifyAPI
+    .getAlbum(id)
+    .then((album) => {
+      const artists = album.artists.map((artist) => artist.name).join(', ')
+      const year = (album.release_date || '').slice(0, 4)
+
+      // Shape the album like a playlist, so the playlist page can render it
+      const data = {
+        id: album.id,
+        name: album.name,
+        images: album.images,
+        description: [artists, year].filter(Boolean).join(' · '),
+        tracks: {
+          offset: 0,
+          items: album.tracks.items.map((track) => ({
+            track: { ...track, album: { images: album.images } },
+          })),
+        },
+      }
       const normalized = normalize(data, trackSchema)
 
       dispatch(mergeEntities(normalized.entities))

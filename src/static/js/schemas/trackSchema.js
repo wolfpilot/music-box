@@ -14,14 +14,7 @@ const track = new schema.Entity(
     processStrategy: (entity, parent) => {
       const { track } = entity
 
-      const keys = [
-        'id',
-        'name',
-        'album',
-        'artists',
-        'duration_ms',
-        'preview_url',
-      ]
+      const keys = ['id', 'name', 'album', 'artists', 'duration_ms', 'uri']
       const filteredTrack = pick(track, keys)
 
       // Manually assign an index to each track

@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes'
 
 // Helpers
 const isPlayable = (track) => {
-  return !!track.preview_url
+  return !!track.uri
 }
 
 const getTrackIndex = (items, trackId) => {

@@ -19,6 +19,10 @@ const routes = (
       <Route exact path="/" component={HomePage} />
       <Route path="/authorize" component={AuthorizePage} />
       <Route path="/playlist/:id" component={PlaylistPage} />
+      <Route
+        path="/album/:id"
+        render={(props) => <PlaylistPage {...props} isAlbum />}
+      />
       <Route component={NotFoundPage} />
     </Switch>
     <Player />

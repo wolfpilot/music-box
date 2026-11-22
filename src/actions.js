@@ -8,6 +8,7 @@ import {
   fetchMe,
   fetchFeaturedPlaylists,
   fetchPlaylist,
+  fetchAlbum,
 } from './services/user/actions'
 import {
   mergeFeaturedPlaylists,
@@ -33,6 +34,7 @@ export {
   fetchMe,
   fetchFeaturedPlaylists,
   fetchPlaylist,
+  fetchAlbum,
   mergeFeaturedPlaylists,
   mergePlaylist,
   setActiveTrack,

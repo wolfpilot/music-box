@@ -9,13 +9,14 @@ const playlist = new schema.Entity(
   {},
   {
     processStrategy: (entity) => {
-      const keys = ['id', 'images', 'name']
+      const keys = ['id', 'images', 'name', 'type']
       const filteredPlaylist = pick(entity, keys)
 
       return {
         id: filteredPlaylist.id,
-        image: filteredPlaylist.images[0],
+        image: (filteredPlaylist.images && filteredPlaylist.images[0]) || null,
         name: filteredPlaylist.name,
+        type: filteredPlaylist.type,
       }
     },
   }

@@ -11,6 +11,12 @@ import {
   playPreviousTrack,
 } from '../../actions'
 import {
+  onPlayerStateChange,
+  playUri,
+  pausePlayback,
+  resumePlayback,
+} from '../../services/api/player/webPlayback'
+import {
   formatMilliseconds,
   numToDecimals,
 } from '../../static/js/utils/mathHelpers'
@@ -22,10 +28,6 @@ import ProgressBar from './ProgressBar/ProgressBar'
 import { ReactComponent as VolumeSVG } from './resources/volume.svg'
 import { ReactComponent as RepeatSVG } from './resources/repeat.svg'
 import { ReactComponent as ShuffleSVG } from './resources/shuffle.svg'
-
-const defaults = {
-  previewDuration: 30,
-}
 
 const mapStateToProps = (state) => {
   return {
@@ -42,46 +44,88 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 class Player extends Component {
-  constructor() {
-    super()
-
-    this._onTimeUpdate = this._onTimeUpdate.bind(this)
-  }
-
   state = {
     currentTime: 0,
     trackLoadPercentage: 0,
     activeTrack: null,
   }
 
+  // Last known playback position reported by the Spotify SDK
+  _position = 0
+  _positionAt = 0
+  _paused = true
+  _loadedUri = null
+
   _getArtists(track) {
     return track.artists.map((artist) => artist.name).join(', ')
   }
 
-  _updateProgress() {
+  // The SDK only reports changes, so work out the current position locally
+  _updateProgress = () => {
     const { activeTrack } = this.state
 
-    const percentage =
-      (this.audio.currentTime * 100) / (activeTrack.duration_ms / 1000)
-    const formattedPercentage = numToDecimals(percentage, 2)
+    if (!activeTrack) {
+      return
+    }
 
-    this.setState({ trackLoadPercentage: formattedPercentage })
+    const elapsed = this._paused
+      ? this._position
+      : this._position + (Date.now() - this._positionAt)
+    const ms = Math.min(elapsed, activeTrack.duration_ms)
+
+    this.setState({
+      currentTime: ms / 1000,
+      trackLoadPercentage: numToDecimals(
+        (ms * 100) / activeTrack.duration_ms,
+        2
+      ),
+    })
   }
 
-  _onTimeUpdate() {
-    const { playNextTrack } = this.props
+  _onPlayerStateChange = (sdkState) => {
+    if (!sdkState) {
+      return
+    }
 
-    // Normally, the current play time should be compared to the total track duration
-    // however that's not possible due to Spotify only providing 30s previews.
-    if (this.audio.currentTime >= defaults.previewDuration) {
-      playNextTrack()
+    const { position, paused, track_window } = sdkState
+    const { current_track, previous_tracks } = track_window
+
+    this._position = position
+    this._positionAt = Date.now()
+    this._paused = paused
+
+    // When a track ends, the SDK pauses it at 0 and lists it as already played
+    const hasEnded =
+      paused &&
+      position === 0 &&
+      previous_tracks.some((track) => track.id === current_track.id)
+
+    if (hasEnded && this.props.player.isPlaying) {
+      this.props.playNextTrack()
 
       return
     }
 
     this._updateProgress()
+  }
 
-    this.setState({ currentTime: this.audio.currentTime })
+  _startPlayback(track) {
+    if (this._loadedUri === track.uri) {
+      resumePlayback()
+
+      return
+    }
+
+    this._loadedUri = track.uri
+    this._position = 0
+    this._paused = false
+    this._positionAt = Date.now()
+
+    playUri(track.uri).catch((error) => {
+      this._loadedUri = null
+
+      console.error(`Error starting playback. Reason: ${error}`)
+    })
   }
 
   _renderPlaybackOptions() {
@@ -205,16 +249,9 @@ class Player extends Component {
     )
   }
 
-  _setupAudio() {
-    this.audio = new Audio()
-
-    this.audio.loop = false
-
-    this.audio.addEventListener('timeupdate', this._onTimeUpdate)
-  }
-
   componentDidMount() {
-    this._setupAudio()
+    this._unsubscribe = onPlayerStateChange(this._onPlayerStateChange)
+    this._timer = window.setInterval(this._updateProgress, 500)
   }
 
   componentDidUpdate(prevProps) {
@@ -226,17 +263,27 @@ class Player extends Component {
 
       // Use Redux to manage the global store, however locally
       // it's easier to reference the track from the state.
-      this.setState({ activeTrack })
+      this.setState({ activeTrack, currentTime: 0, trackLoadPercentage: 0 })
 
-      this.audio.src = activeTrack.preview_url
-      this.audio.load()
+      if (isPlaying) {
+        this._startPlayback(activeTrack)
+      }
+
+      return
     }
 
-    isPlaying ? this.audio.play() : this.audio.pause()
+    if (prevProps.player.isPlaying !== isPlaying) {
+      if (isPlaying) {
+        this._startPlayback(this.state.activeTrack)
+      } else {
+        pausePlayback()
+      }
+    }
   }
 
   componentWillUnmount() {
-    this.audio.removeEventListener('timeupdate', this._onTimeUpdate)
+    this._unsubscribe()
+    window.clearInterval(this._timer)
   }
 
   render() {
