@@ -1,7 +1,7 @@
 // Libs
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import React, { Component } from "react"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 // Utils
 import {
@@ -10,29 +10,29 @@ import {
   pauseTrack,
   playNextTrack,
   playPreviousTrack,
-} from '../../actions'
+} from "../../actions"
 import {
   onPlayerStateChange,
   playUri,
   pausePlayback,
   resumePlayback,
-} from '../../services/api/player/webPlayback'
+} from "../../services/api/player/webPlayback"
 import {
   formatMilliseconds,
   numToDecimals,
-} from '../../static/js/utils/mathHelpers'
+} from "../../static/js/utils/mathHelpers"
 
 // Components
-import ProgressBar from './ProgressBar/ProgressBar'
+import ProgressBar from "./ProgressBar/ProgressBar"
 
 // Assets
-import { ReactComponent as VolumeIcon } from '@tabler/icons/icons/outline/volume.svg'
-import { ReactComponent as RepeatIcon } from '@tabler/icons/icons/outline/repeat.svg'
-import { ReactComponent as ShuffleIcon } from '@tabler/icons/icons/outline/arrows-shuffle.svg'
-import { ReactComponent as PreviousIcon } from '@tabler/icons/icons/outline/player-skip-back.svg'
-import { ReactComponent as NextIcon } from '@tabler/icons/icons/outline/player-skip-forward.svg'
-import { ReactComponent as PlayIcon } from '@tabler/icons/icons/filled/player-play.svg'
-import { ReactComponent as PauseIcon } from '@tabler/icons/icons/filled/player-pause.svg'
+import { ReactComponent as VolumeIcon } from "@tabler/icons/icons/outline/volume.svg"
+import { ReactComponent as RepeatIcon } from "@tabler/icons/icons/outline/repeat.svg"
+import { ReactComponent as ShuffleIcon } from "@tabler/icons/icons/outline/arrows-shuffle.svg"
+import { ReactComponent as PreviousIcon } from "@tabler/icons/icons/outline/player-skip-back.svg"
+import { ReactComponent as NextIcon } from "@tabler/icons/icons/outline/player-skip-forward.svg"
+import { ReactComponent as PlayIcon } from "@tabler/icons/icons/filled/player-play.svg"
+import { ReactComponent as PauseIcon } from "@tabler/icons/icons/filled/player-pause.svg"
 
 const mapStateToProps = (state) => {
   return {
@@ -64,7 +64,7 @@ class Player extends Component {
   _loadedUri = null
 
   _getArtists(track) {
-    return track.artists.map((artist) => artist.name).join(', ')
+    return track.artists.map((artist) => artist.name).join(", ")
   }
 
   // The SDK only reports changes, so work out the current position locally
@@ -269,7 +269,7 @@ class Player extends Component {
 
         <div className="player__track-meta">
           <div className="player__track-name">
-            {activeTrack.name ? activeTrack.name : ''}
+            {activeTrack.name ? activeTrack.name : ""}
           </div>
           <div className="player__artist-name">
             {this._getArtists(activeTrack)}
