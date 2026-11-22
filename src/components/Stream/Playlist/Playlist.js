@@ -19,7 +19,7 @@ const Playlist = ({ playlist, trackEntities }) => {
     <div className="playlist">
       <div className="playlist__header">
         <div className="playlist__header-image-wrapper">
-          {images.length && (
+          {images && images.length > 0 && (
             <img
               src={images[0].url}
               alt=""
