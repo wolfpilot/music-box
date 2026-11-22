@@ -14,7 +14,9 @@ const mapStateToProps = (state) => {
 }
 
 const HomePage = ({ session }) => (
-  <main role="main">{session.isLoggedIn ? <Stream /> : <Welcome />}</main>
+  <main className="page-wrapper page-wrapper--spaced" role="main">
+    {session.isLoggedIn ? <Stream /> : <Welcome />}
+  </main>
 )
 
 HomePage.propTypes = {

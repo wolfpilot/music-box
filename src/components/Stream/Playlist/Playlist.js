@@ -20,11 +20,19 @@ const Playlist = ({ playlist, trackEntities }) => {
       <div className="playlist__header">
         <div className="playlist__header-image-wrapper">
           {images && images.length > 0 && (
-            <img
-              src={images[0].url}
-              alt=""
-              className="playlist__header-image"
-            />
+            <>
+              <img
+                src={images[0].url}
+                alt=""
+                className="playlist__header-backdrop-image"
+              />
+
+              <img
+                src={images[0].url}
+                alt=""
+                className="playlist__header-image"
+              />
+            </>
           )}
         </div>
 

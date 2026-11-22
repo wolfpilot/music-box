@@ -11,5 +11,11 @@ body {
 
 main {
   margin-top: $headerHeight;
-  padding: rem(24px) rem(16px) rem(64px);
+  padding: 0 rem(16px) rem(64px);
+}
+
+.page-wrapper {
+  &--spaced {
+    padding-top: rem(24px);
+  }
 }

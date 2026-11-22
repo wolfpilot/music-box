@@ -3,7 +3,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 const NotFoundPage = () => (
-  <main>
+  <main className="page-wrapper" role="main">
     <h1 className="title">Oops, page not found!</h1>
     <Link to="/" className="link">
       Go back home?

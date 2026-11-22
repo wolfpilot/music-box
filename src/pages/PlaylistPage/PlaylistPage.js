@@ -42,7 +42,11 @@ class PlaylistPage extends Component {
     const { playlist } = this.props
 
     // The playlist is reset to an empty object when leaving the page, so check for its id
-    return <main role="main">{playlist && playlist.id && <Playlist />}</main>
+    return (
+      <main className="page-wrapper" role="main">
+        {playlist && playlist.id && <Playlist />}
+      </main>
+    )
   }
 }
 
