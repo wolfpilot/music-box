@@ -3,6 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "author": "Razvan Negrea <howl@wolfpilot.co> (http://www.wolfpilot.co/)",
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --single-quote --write",
+      "git add"
+    ]
+  },
+  "scripts": {
+    "build-css": "sass --no-source-map --load-path=node_modules src/:src/",
+    "watch-css": "pnpm run build-css && sass --no-source-map --load-path=node_modules --watch src/:src/",
+    "start-js": "react-scripts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build-js": "react-scripts build",
+    "build": "npm-run-all build-css build-js",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "precommit": "lint-staged && prettier . --write"
+  },
   "dependencies": {
     "@tabler/icons": "^3.52.0",
     "connected-react-router": "^4.5.0",
@@ -27,30 +44,14 @@
     "spotify-web-api-js": "^1.5.2",
     "url-search-params-polyfill": "^5.0.0"
   },
-  "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": [
-      "prettier --single-quote --write",
-      "git add"
-    ]
-  },
-  "scripts": {
-    "build-css": "sass --no-source-map --load-path=node_modules src/:src/",
-    "watch-css": "pnpm run build-css && sass --no-source-map --load-path=node_modules --watch src/:src/",
-    "start-js": "react-scripts start",
-    "start": "npm-run-all -p watch-css start-js",
-    "build-js": "react-scripts build",
-    "build": "npm-run-all build-css build-js",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "precommit": "lint-staged && prettier . --write"
+  "devDependencies": {
+    "@svgr/webpack": "2.4.1",
+    "prettier": "^3.10.1"
   },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "prettier": "^3.10.1"
-  }
+  ]
 }
