@@ -71,6 +71,7 @@ $btnLrgRadius: 32px;
     }
   }
 
+  &__btn-shuffle[data-is-active="true"],
   &__btn-repeat[data-is-active="true"] {
     svg {
       color: color(turquoise);

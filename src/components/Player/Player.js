@@ -8,6 +8,7 @@ import {
   setActiveTrack,
   setQueue,
   toggleRepeat,
+  toggleShuffle,
   playTrack,
   pauseTrack,
   playNextTrack,
@@ -46,8 +47,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   setActiveTrack: (trackId) => dispatch(setActiveTrack(trackId)),
-  setQueue: (queue) => dispatch(setQueue(queue)),
+  setQueue: (queue, firstTrackId) => dispatch(setQueue(queue, firstTrackId)),
   toggleRepeat: () => dispatch(toggleRepeat()),
+  toggleShuffle: () => dispatch(toggleShuffle()),
   playTrack: (track) => dispatch(playTrack(track)),
   pauseTrack: () => dispatch(pauseTrack()),
   playNextTrack: (wrap) => dispatch(playNextTrack(wrap)),
@@ -144,7 +146,7 @@ class Player extends Component {
     )
 
     if (firstTrackId) {
-      setQueue(items)
+      setQueue(items, firstTrackId)
       setActiveTrack(firstTrackId)
     }
   }
@@ -216,6 +218,7 @@ class Player extends Component {
       playNextTrack,
       playPreviousTrack,
       toggleRepeat,
+      toggleShuffle,
     } = this.props
     const { activeTrack } = this.state
 
@@ -223,7 +226,13 @@ class Player extends Component {
 
     return (
       <div className="player__controls player__controls--playback">
-        <button type="button" className="player__btn player__btn-shuffle">
+        <button
+          type="button"
+          className="player__btn player__btn-shuffle"
+          onClick={toggleShuffle}
+          aria-pressed={player.isShuffling}
+          data-is-active={player.isShuffling}
+        >
           <ShuffleIcon />
           <span className="sr-only">Shuffle</span>
         </button>
