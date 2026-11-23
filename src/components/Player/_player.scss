@@ -61,6 +61,13 @@ $btnLrgRadius: 32px;
 
   &__btn {
     background-color: transparent;
+
+    &:hover {
+      svg {
+        color: color(turquoise);
+      }
+    }
+
     &:not(.player__volume-toggle-btn) {
       margin-right: 0.8rem;
     }
@@ -86,8 +93,16 @@ $btnLrgRadius: 32px;
     background-color: color(white);
     border-radius: 50%;
 
+    &:hover {
+      background-color: color(turquoise);
+
+      svg {
+        color: color(black);
+      }
+    }
+
     svg {
-      fill: color(black);
+      color: color(black);
     }
   }
 
