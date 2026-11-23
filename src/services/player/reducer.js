@@ -4,6 +4,9 @@ const initialState = {
   activeTrackId: null,
   isPlaying: false,
   queue: [],
+  isRepeating: false,
+  isShuffling: false,
+  shuffledQueue: [],
 }
 
 const setActiveTrack = (state, activeTrackId) => {
@@ -18,6 +21,14 @@ const setQueue = (state, queue) => {
   return { ...state, queue }
 }
 
+const toggleRepeat = (state) => {
+  return { ...state, isRepeating: !state.isRepeating }
+}
+
+const setShuffle = (state, isShuffling, shuffledQueue) => {
+  return { ...state, isShuffling, shuffledQueue }
+}
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_ACTIVE_TRACK:
@@ -26,6 +37,10 @@ export default function (state = initialState, action) {
       return setIsPlaying(state, action.isPlaying)
     case actionTypes.SET_QUEUE:
       return setQueue(state, action.queue)
+    case actionTypes.TOGGLE_REPEAT:
+      return toggleRepeat(state)
+    case actionTypes.SET_SHUFFLE:
+      return setShuffle(state, action.isShuffling, action.shuffledQueue)
     default:
       return state
   }

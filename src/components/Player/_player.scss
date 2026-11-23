@@ -61,6 +61,13 @@ $btnLrgRadius: 32px;
 
   &__btn {
     background-color: transparent;
+
+    &:hover {
+      svg {
+        color: color(turquoise);
+      }
+    }
+
     &:not(.player__volume-toggle-btn) {
       margin-right: 0.8rem;
     }
@@ -68,6 +75,13 @@ $btnLrgRadius: 32px;
     svg {
       height: 20px;
       color: color(white);
+    }
+  }
+
+  &__btn-shuffle[data-is-active="true"],
+  &__btn-repeat[data-is-active="true"] {
+    svg {
+      color: color(turquoise);
     }
   }
 
@@ -79,8 +93,24 @@ $btnLrgRadius: 32px;
     background-color: color(white);
     border-radius: 50%;
 
+    &:hover {
+      background-color: color(turquoise);
+
+      svg {
+        color: color(black);
+      }
+    }
+
     svg {
-      fill: color(black);
+      color: color(black);
+    }
+  }
+
+  &__btn-volume-toggle {
+    &[aria-pressed="true"] {
+      svg {
+        color: color(turquoise);
+      }
     }
   }
 

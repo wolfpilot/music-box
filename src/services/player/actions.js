@@ -6,6 +6,20 @@ const isPlayable = (track) => {
   return !!track && !!track.uri
 }
 
+// Fisher-Yates shuffle, so every track is played once. The given first
+// track is kept at the start, so shuffling doesn't interrupt what's playing.
+const shuffleQueue = (queue, firstTrackId) => {
+  const rest = queue.filter((id) => id !== firstTrackId)
+
+  for (let i = rest.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+
+    ;[rest[i], rest[j]] = [rest[j], rest[i]]
+  }
+
+  return queue.includes(firstTrackId) ? [firstTrackId, ...rest] : rest
+}
+
 // Find the closest playable track in the given direction (1 = next, -1 = previous)
 const getIteratedTrack = (queue, trackId, trackEntities, offset) => {
   let index = queue.indexOf(trackId)
@@ -33,10 +47,41 @@ export function setActiveTrack(activeTrackId) {
   }
 }
 
-export function setQueue(queue) {
+export function setShuffle(isShuffling, shuffledQueue = []) {
   return {
+    type: actionTypes.SET_SHUFFLE,
+    isShuffling,
+    shuffledQueue,
+  }
+}
+
+// `firstTrackId` is the track that is about to play, it leads the shuffled order
+export const setQueue = (queue, firstTrackId) => (dispatch, getState) => {
+  dispatch({
     type: actionTypes.SET_QUEUE,
     queue,
+  })
+
+  if (getState().player.isShuffling) {
+    dispatch(setShuffle(true, shuffleQueue(queue, firstTrackId)))
+  }
+}
+
+export const toggleShuffle = () => (dispatch, getState) => {
+  const { isShuffling, queue, activeTrackId } = getState().player
+
+  if (isShuffling) {
+    dispatch(setShuffle(false))
+
+    return
+  }
+
+  dispatch(setShuffle(true, shuffleQueue(queue, activeTrackId)))
+}
+
+export function toggleRepeat() {
+  return {
+    type: actionTypes.TOGGLE_REPEAT,
   }
 }
 
@@ -58,8 +103,8 @@ export const playTrack = (trackId) => (dispatch, getState) => {
 
   // Remember the list the track is played from, so the next and previous
   // buttons keep working after leaving the album or playlist page
-  if (items && items.includes(trackId)) {
-    dispatch(setQueue(items))
+  if (items && items.includes(trackId) && items !== getState().player.queue) {
+    dispatch(setQueue(items, trackId))
   }
 
   dispatch(setActiveTrack(trackId))
@@ -73,8 +118,11 @@ export const pauseTrack = () => (dispatch) => {
 export const playIteratedTrack =
   (offset, wrap = false) =>
   (dispatch, getState) => {
-    const { activeTrackId, queue } = getState().player
+    const { activeTrackId, isShuffling, shuffledQueue } = getState().player
     const trackEntities = getState().entities.tracks
+
+    // Follow the shuffled order while shuffling
+    const queue = isShuffling ? shuffledQueue : getState().player.queue
 
     const offsetTrackId = getIteratedTrack(
       queue,

@@ -38,6 +38,9 @@ export const resumePlayback = () => player && player.resume()
 
 export const seekPlayback = (positionMs) => player && player.seek(positionMs)
 
+// Volume goes from 0 (muted) to 1 (full)
+export const setPlaybackVolume = (volume) => player && player.setVolume(volume)
+
 /**
  * Load the Spotify Web Playback SDK and connect a player, so the browser
  * becomes a Spotify Connect device. Needs a Premium account and the
@@ -56,7 +59,7 @@ export const initWebPlayback = (token) => {
     player = new window.Spotify.Player({
       name: PLAYER_NAME,
       getOAuthToken: (callback) => callback(accessToken),
-      volume: 0.5,
+      volume: 1,
     })
 
     player.addListener("ready", ({ device_id }) => {

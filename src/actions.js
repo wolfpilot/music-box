@@ -17,6 +17,8 @@ import {
 import {
   setActiveTrack,
   setQueue,
+  toggleRepeat,
+  toggleShuffle,
   setIsPlaying,
   playTrack,
   pauseTrack,
@@ -40,6 +42,8 @@ export {
   mergePlaylist,
   setActiveTrack,
   setQueue,
+  toggleRepeat,
+  toggleShuffle,
   setIsPlaying,
   playTrack,
   pauseTrack,
