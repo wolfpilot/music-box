@@ -19,6 +19,7 @@ import {
   playUri,
   pausePlayback,
   resumePlayback,
+  setPlaybackVolume,
 } from "../../services/api/player/webPlayback"
 import {
   formatMilliseconds,
@@ -30,6 +31,7 @@ import ProgressBar from "./ProgressBar/ProgressBar"
 
 // Assets
 import { ReactComponent as VolumeIcon } from "@tabler/icons/icons/outline/volume.svg"
+import { ReactComponent as VolumeOffIcon } from "@tabler/icons/icons/outline/volume-off.svg"
 import { ReactComponent as RepeatIcon } from "@tabler/icons/icons/outline/repeat.svg"
 import { ReactComponent as ShuffleIcon } from "@tabler/icons/icons/outline/arrows-shuffle.svg"
 import { ReactComponent as PreviousIcon } from "@tabler/icons/icons/outline/player-skip-back.svg"
@@ -61,6 +63,7 @@ class Player extends Component {
     currentTime: 0,
     trackLoadPercentage: 0,
     activeTrack: null,
+    isMuted: false,
   }
 
   // Last known playback position reported by the Spotify SDK
@@ -170,16 +173,29 @@ class Player extends Component {
     })
   }
 
+  // Keep it simple: the volume is either full or muted
+  _toggleMute = () => {
+    const isMuted = !this.state.isMuted
+
+    setPlaybackVolume(isMuted ? 0 : 1)
+
+    this.setState({ isMuted })
+  }
+
   _renderPlaybackOptions() {
+    const { isMuted } = this.state
+
     return (
       <div className="player__controls player__controls--options">
         <div className="player__volume">
           <button
             type="button"
-            className="player__btn player__volume-toggle-btn"
+            className="player__btn player__btn-volume-toggle"
+            onClick={this._toggleMute}
+            aria-pressed={isMuted}
           >
-            <VolumeIcon />
-            <span className="sr-only">Volume</span>
+            {isMuted ? <VolumeOffIcon /> : <VolumeIcon />}
+            <span className="sr-only">{isMuted ? "Unmute" : "Mute"}</span>
           </button>
 
           <div className="player__volume-controls">
@@ -245,6 +261,7 @@ class Player extends Component {
           <PreviousIcon />
           <span className="sr-only">Go to previous track</span>
         </button>
+
         {player.isPlaying ? (
           <button
             type="button"
@@ -264,6 +281,7 @@ class Player extends Component {
             <span className="sr-only">Play</span>
           </button>
         )}
+
         <button
           type="button"
           className="player__btn player__btn-next"

@@ -106,6 +106,14 @@ $btnLrgRadius: 32px;
     }
   }
 
+  &__btn-volume-toggle {
+    &[aria-pressed="true"] {
+      svg {
+        color: color(turquoise);
+      }
+    }
+  }
+
   &__timeline {
     display: flex;
     flex: auto;
