@@ -40,6 +40,12 @@ export function setQueue(queue) {
   }
 }
 
+export function toggleRepeat() {
+  return {
+    type: actionTypes.TOGGLE_REPEAT,
+  }
+}
+
 export function setIsPlaying(isPlaying) {
   return {
     type: actionTypes.SET_IS_PLAYING,

@@ -7,6 +7,7 @@ import PropTypes from "prop-types"
 import {
   setActiveTrack,
   setQueue,
+  toggleRepeat,
   playTrack,
   pauseTrack,
   playNextTrack,
@@ -46,6 +47,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   setActiveTrack: (trackId) => dispatch(setActiveTrack(trackId)),
   setQueue: (queue) => dispatch(setQueue(queue)),
+  toggleRepeat: () => dispatch(toggleRepeat()),
   playTrack: (track) => dispatch(playTrack(track)),
   pauseTrack: () => dispatch(pauseTrack()),
   playNextTrack: (wrap) => dispatch(playNextTrack(wrap)),
@@ -110,6 +112,14 @@ class Player extends Component {
       previous_tracks.some((track) => track.id === current_track.id)
 
     if (hasEnded && this.props.player.isPlaying) {
+      // Repeat the active track instead of moving on to the next one
+      if (this.props.player.isRepeating && this.state.activeTrack) {
+        this._loadedUri = null
+        this._startPlayback(this.state.activeTrack)
+
+        return
+      }
+
       this.props.playNextTrack()
 
       return
@@ -199,8 +209,14 @@ class Player extends Component {
   }
 
   _renderPlaybackControls() {
-    const { player, playTrack, pauseTrack, playNextTrack, playPreviousTrack } =
-      this.props
+    const {
+      player,
+      playTrack,
+      pauseTrack,
+      playNextTrack,
+      playPreviousTrack,
+      toggleRepeat,
+    } = this.props
     const { activeTrack } = this.state
 
     // TODO: Prev & next buttons should be disabled at the start/end of playlist
@@ -248,7 +264,13 @@ class Player extends Component {
           <span className="sr-only">Go to next track</span>
         </button>
 
-        <button type="button" className="player__btn player__btn-repeat">
+        <button
+          type="button"
+          className="player__btn player__btn-repeat"
+          onClick={toggleRepeat}
+          aria-pressed={player.isRepeating}
+          data-is-active={player.isRepeating}
+        >
           <RepeatIcon />
           <span className="sr-only">Repeat</span>
         </button>

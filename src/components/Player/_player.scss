@@ -71,6 +71,12 @@ $btnLrgRadius: 32px;
     }
   }
 
+  &__btn-repeat[data-is-active="true"] {
+    svg {
+      color: color(turquoise);
+    }
+  }
+
   &__btn-play,
   &__btn-pause {
     width: $btnLrgRadius;
