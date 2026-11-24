@@ -1,10 +1,10 @@
 // Libs
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 
 // Components
-import PlaylistTile from './PlaylistTile/PlaylistTile'
+import PlaylistTile from "./PlaylistTile/PlaylistTile"
 
 const mapStateToProps = (state) => {
   return {

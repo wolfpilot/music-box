@@ -1,18 +1,18 @@
 // Libs
-import { normalize } from 'normalizr'
+import { normalize } from "normalizr"
 
 // Utils
-import * as actionTypes from './actionTypes'
-import * as userAPI from '../api/user/user'
-import { spotifyAPI } from '../api/player/player'
+import * as actionTypes from "./actionTypes"
+import * as userAPI from "../api/user/user"
+import { spotifyAPI } from "../api/player/player"
 import {
   mergeEntities,
   mergeFeaturedPlaylists,
   resetSession,
   setSession,
   mergePlaylist,
-} from '../../actions'
-import { featuredPlaylistSchema, trackSchema } from '../../schemas'
+} from "../../actions"
+import { featuredPlaylistSchema, trackSchema } from "../../schemas"
 
 export const fetchMe = () => (dispatch) => {
   spotifyAPI.getMe().then(
@@ -28,33 +28,80 @@ export const fetchMe = () => (dispatch) => {
 }
 
 export const fetchFeaturedPlaylists = () => (dispatch) => {
+  // Spotify removed the featured playlists endpoint, so show the user's own
+  // playlists and saved albums instead. A failing request shouldn't hide the other.
+  const emptyList = { items: [] }
+
+  Promise.all([
+    spotifyAPI.getUserPlaylists({ limit: 12 }).catch((err) => {
+      console.error(err)
+
+      return emptyList
+    }),
+    spotifyAPI.getMySavedAlbums({ limit: 50 }).catch((err) => {
+      console.error(err)
+
+      return emptyList
+    }),
+  ]).then(([playlists, savedAlbums]) => {
+    const items = [
+      ...playlists.items,
+      ...savedAlbums.items.map(({ album }) => album),
+    ]
+    const normalized = normalize(
+      { playlists: { items } },
+      featuredPlaylistSchema
+    )
+
+    dispatch(mergeEntities(normalized.entities))
+    dispatch(mergeFeaturedPlaylists(normalized.result))
+  })
+}
+
+export const fetchPlaylist = (id) => (dispatch) => {
+  const fields = [
+    "description",
+    "followers.total",
+    "id",
+    "images",
+    "name",
+    "owner",
+    "tracks",
+  ].join(",")
+
   spotifyAPI
-    .getFeaturedPlaylists({ limit: 12 })
+    .getPlaylist(id, { fields })
     .then((data) => {
-      const normalized = normalize(data, featuredPlaylistSchema)
+      const normalized = normalize(data, trackSchema)
 
       dispatch(mergeEntities(normalized.entities))
-      dispatch(mergeFeaturedPlaylists(normalized.result))
+      dispatch(mergePlaylist(normalized.result))
     })
     .catch((err) => {
       console.error(err)
     })
 }
 
-export const fetchPlaylist = (id) => (dispatch) => {
-  const fields = [
-    'description',
-    'followers.total',
-    'id',
-    'images',
-    'name',
-    'owner',
-    'tracks',
-  ].join(',')
-
+export const fetchAlbum = (id) => (dispatch) => {
   spotifyAPI
-    .getPlaylist(id, { fields })
-    .then((data) => {
+    .getAlbum(id)
+    .then((album) => {
+      const artists = album.artists.map((artist) => artist.name).join(", ")
+      const year = (album.release_date || "").slice(0, 4)
+
+      // Shape the album like a playlist, so the playlist page can render it
+      const data = {
+        id: album.id,
+        name: album.name,
+        images: album.images,
+        description: [artists, year].filter(Boolean).join(" · "),
+        tracks: {
+          offset: 0,
+          items: album.tracks.items.map((track) => ({
+            track: { ...track, album: { images: album.images } },
+          })),
+        },
+      }
       const normalized = normalize(data, trackSchema)
 
       dispatch(mergeEntities(normalized.entities))

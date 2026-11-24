@@ -1,20 +1,20 @@
 // Libs
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
+import React from "react"
+import ReactDOM from "react-dom"
+import { Provider } from "react-redux"
+import { PersistGate } from "redux-persist/integration/react"
 
 // Utils
-import registerServiceWorker from './registerServiceWorker'
-import { store, persistor } from './store'
-import { history } from './history'
-import { createWatchers } from './watchers'
+import registerServiceWorker from "./registerServiceWorker"
+import { store, persistor } from "./store"
+import { history } from "./history"
+import { createWatchers } from "./watchers"
 
 // Assets
-import './index.css'
+import "./index.css"
 
 // Components
-import App from './components/App/App'
+import App from "./components/App/App"
 
 createWatchers(store)
 
@@ -24,7 +24,7 @@ ReactDOM.render(
       <App history={history} />
     </PersistGate>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 )
 
 registerServiceWorker()

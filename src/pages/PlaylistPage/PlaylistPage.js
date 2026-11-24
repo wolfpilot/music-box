@@ -1,13 +1,13 @@
 // Libs
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 
 // Utils
-import { fetchPlaylist, mergePlaylist } from '../../actions'
+import { fetchPlaylist, fetchAlbum, mergePlaylist } from "../../actions"
 
 // Components
-import Playlist from '../../components/Stream/Playlist/Playlist'
+import Playlist from "../../components/Stream/Playlist/Playlist"
 
 const mapStateToProps = (state) => {
   return {
@@ -17,14 +17,20 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   fetchPlaylist: (id) => dispatch(fetchPlaylist(id)),
+  fetchAlbum: (id) => dispatch(fetchAlbum(id)),
   mergePlaylist: (playlist) => dispatch(mergePlaylist(playlist)),
 })
 
 class PlaylistPage extends Component {
   componentDidMount() {
-    const albumID = this.props.match.params.id
+    const { id } = this.props.match.params
 
-    this.props.fetchPlaylist(albumID)
+    // Albums reuse this page, they're rendered like a playlist
+    if (this.props.isAlbum) {
+      this.props.fetchAlbum(id)
+    } else {
+      this.props.fetchPlaylist(id)
+    }
   }
 
   componentWillUnmount() {
@@ -35,12 +41,18 @@ class PlaylistPage extends Component {
   render() {
     const { playlist } = this.props
 
-    return <main role="main">{playlist && <Playlist />}</main>
+    // The playlist is reset to an empty object when leaving the page, so check for its id
+    return (
+      <main className="page-wrapper" role="main">
+        {playlist && playlist.id && <Playlist />}
+      </main>
+    )
   }
 }
 
 PlaylistPage.propTypes = {
   id: PropTypes.string,
+  isAlbum: PropTypes.bool,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlaylistPage)

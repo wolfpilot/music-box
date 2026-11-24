@@ -8,14 +8,25 @@ $default-border-radius: 4px;
 
 // Colours
 $colors: (
-  black: #000,
-  white: #fff,
+  pureBlack: #000,
+  pureWhite: #fff,
+  black: #1a1a1a,
+  white: #f3f3f3,
   l-grey: #f6f6f6,
   grey: #9c9c9c,
   turquoise: #1ed394,
 );
 
 // Fonts
+$font-family-base:
+  "Inter",
+  system-ui,
+  -apple-system,
+  "Segoe UI",
+  Roboto,
+  "Helvetica Neue",
+  Arial,
+  sans-serif;
 $font-family-monospaced:
   "Lucida Console", "Lucida Sans", Monaco, Verdana, monospace;
 

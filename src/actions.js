@@ -1,5 +1,5 @@
-import { mergeEntities } from './services/entities/actions'
-import { setSession, resetSession } from './services/session/actions'
+import { mergeEntities } from "./services/entities/actions"
+import { setSession, resetSession } from "./services/session/actions"
 import {
   loginUser,
   logoutUser,
@@ -8,19 +8,23 @@ import {
   fetchMe,
   fetchFeaturedPlaylists,
   fetchPlaylist,
-} from './services/user/actions'
+  fetchAlbum,
+} from "./services/user/actions"
 import {
   mergeFeaturedPlaylists,
   mergePlaylist,
-} from './services/stream/actions'
+} from "./services/stream/actions"
 import {
   setActiveTrack,
+  setQueue,
+  toggleRepeat,
+  toggleShuffle,
   setIsPlaying,
   playTrack,
   pauseTrack,
   playNextTrack,
   playPreviousTrack,
-} from './services/player/actions'
+} from "./services/player/actions"
 
 export {
   mergeEntities,
@@ -33,9 +37,13 @@ export {
   fetchMe,
   fetchFeaturedPlaylists,
   fetchPlaylist,
+  fetchAlbum,
   mergeFeaturedPlaylists,
   mergePlaylist,
   setActiveTrack,
+  setQueue,
+  toggleRepeat,
+  toggleShuffle,
   setIsPlaying,
   playTrack,
   pauseTrack,

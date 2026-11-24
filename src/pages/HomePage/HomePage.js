@@ -1,11 +1,11 @@
 // Libs
-import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import React from "react"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 // Components
-import Stream from '../../components/Stream/Stream'
-import Welcome from '../../components/Welcome/Welcome'
+import Stream from "../../components/Stream/Stream"
+import Welcome from "../../components/Welcome/Welcome"
 
 const mapStateToProps = (state) => {
   return {
@@ -14,7 +14,9 @@ const mapStateToProps = (state) => {
 }
 
 const HomePage = ({ session }) => (
-  <main role="main">{session.isLoggedIn ? <Stream /> : <Welcome />}</main>
+  <main className="page-wrapper page-wrapper--spaced" role="main">
+    {session.isLoggedIn ? <Stream /> : <Welcome />}
+  </main>
 )
 
 HomePage.propTypes = {

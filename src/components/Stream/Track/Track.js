@@ -1,11 +1,11 @@
 // Libs
-import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import React, { PureComponent } from "react"
+import { connect } from "react-redux"
+import PropTypes from "prop-types"
 
 // Utils
-import { playTrack } from '../../../actions'
-import { formatMilliseconds } from '../../../static/js/utils/mathHelpers'
+import { playTrack } from "../../../actions"
+import { formatMilliseconds } from "../../../static/js/utils/mathHelpers"
 
 const mapStateToProps = (state) => {
   return {
@@ -21,7 +21,7 @@ class Track extends PureComponent {
   togglePlayPause = () => {
     const { track } = this.props
 
-    if (!track.preview_url) {
+    if (!track.uri) {
       return
     }
 
@@ -29,14 +29,13 @@ class Track extends PureComponent {
   }
 
   getArtists() {
-    return this.props.track.artists.map((artist) => artist.name).join(', ')
+    return this.props.track.artists.map((artist) => artist.name).join(", ")
   }
 
   render() {
-    const { player, track } = this.props
+    const { player, track, index } = this.props
 
-    const { id, index, name, artists, artwork, duration_ms, preview_url } =
-      track
+    const { id, name, artists, artwork, duration_ms, uri } = track
 
     const isActive = player.isPlaying && player.activeTrackId === id
 
@@ -45,7 +44,7 @@ class Track extends PureComponent {
         className="track"
         role="button"
         onClick={this.togglePlayPause}
-        disabled={!preview_url}
+        disabled={!uri}
         data-is-active={isActive}
       >
         {index && <div className="track__index">{index}</div>}
@@ -72,14 +71,15 @@ class Track extends PureComponent {
 const { string, number, array, shape, object } = PropTypes
 
 Track.propTypes = {
+  // The track's position in the current album or playlist
+  index: number,
   track: shape({
     id: string.isRequired,
-    index: number.isRequired,
     name: string.isRequired,
     artists: array.isRequired,
     artwork: object.isRequired,
     duration_ms: number.isRequired,
-    preview_url: string,
+    uri: string,
   }),
 }
 

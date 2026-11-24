@@ -5,8 +5,8 @@
  */
 export const parseUrlParams = (url) => {
   return url
-    .split('&')
-    .map((pair) => pair.split('='))
+    .split("&")
+    .map((pair) => pair.split("="))
     .reduce((param, [key, value]) => {
       param[key] = value
 

@@ -4,6 +4,9 @@ $thumbRadius: 12px;
 .progress-bar {
   position: relative;
   flex: auto;
+  // Make the bar easy to click, the track itself is only a few pixels tall
+  height: 20px;
+  cursor: pointer;
   margin-right: 10px;
   margin-left: 10px;
 

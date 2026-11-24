@@ -1,1 +1,1 @@
-export const MERGE_ENTITIES = 'MERGE_ENTITIES'
+export const MERGE_ENTITIES = "MERGE_ENTITIES"

@@ -1,14 +1,14 @@
 // Libs
-import React, { Component, Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import React, { Component, Fragment } from "react"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
 
 // Components
-import Logo from '../Logo/Logo'
-import NotificationButton from './NotificationButton/NotificationButton'
-import ProfileButton from './ProfileButton/ProfileButton'
-import AuthButton from './AuthButton/AuthButton'
-import { loginUser, logoutUser } from '../../services/user/actions'
+import Logo from "../Logo/Logo"
+import NotificationButton from "./NotificationButton/NotificationButton"
+import ProfileButton from "./ProfileButton/ProfileButton"
+import AuthButton from "./AuthButton/AuthButton"
+import { loginUser, logoutUser } from "../../services/user/actions"
 
 const mapStateToProps = (state) => {
   return {

@@ -1,5 +1,5 @@
 // Utils
-import * as actionTypes from './actionTypes'
+import * as actionTypes from "./actionTypes"
 
 const initialState = {
   name: null,

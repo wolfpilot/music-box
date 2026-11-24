@@ -1,5 +1,5 @@
 // Libs
-import React from 'react'
+import React from "react"
 
 const Welcome = () => (
   <div className="welcome">
@@ -11,7 +11,7 @@ const Welcome = () => (
     </h2>
 
     <p className="welcome__copy">
-      Don't have an account yet?{' '}
+      Don't have an account yet?{" "}
       <a
         href="https://www.spotify.com/signup"
         target="_blank"
@@ -19,7 +19,7 @@ const Welcome = () => (
         className="hyperlink"
       >
         Sign up
-      </a>{' '}
+      </a>{" "}
       at Spotify.
     </p>
   </div>

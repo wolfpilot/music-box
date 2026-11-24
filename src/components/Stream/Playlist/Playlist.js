@@ -1,9 +1,9 @@
 // Libs
-import React from 'react'
-import { connect } from 'react-redux'
+import React from "react"
+import { connect } from "react-redux"
 
 // Components
-import Track from '../Track/Track'
+import Track from "../Track/Track"
 
 const mapStateToProps = (state) => {
   return {
@@ -19,12 +19,20 @@ const Playlist = ({ playlist, trackEntities }) => {
     <div className="playlist">
       <div className="playlist__header">
         <div className="playlist__header-image-wrapper">
-          {images.length && (
-            <img
-              src={images[0].url}
-              alt=""
-              className="playlist__header-image"
-            />
+          {images && images.length > 0 && (
+            <>
+              <img
+                src={images[0].url}
+                alt=""
+                className="playlist__header-backdrop-image"
+              />
+
+              <img
+                src={images[0].url}
+                alt=""
+                className="playlist__header-image"
+              />
+            </>
           )}
         </div>
 
@@ -35,9 +43,12 @@ const Playlist = ({ playlist, trackEntities }) => {
       </div>
 
       <ul className="playlist__track-list">
-        {tracks.items.map((id) => (
+        {tracks.items.map((id, position) => (
           <li key={id} className="playlist__track-list-item">
-            <Track track={trackEntities[id]} />
+            <Track
+              track={trackEntities[id]}
+              index={(tracks.offset || 0) + position + 1}
+            />
           </li>
         ))}
       </ul>
