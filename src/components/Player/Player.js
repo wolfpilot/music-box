@@ -20,6 +20,7 @@ import {
   pausePlayback,
   resumePlayback,
   setPlaybackVolume,
+  seekPlayback,
 } from "../../services/api/player/webPlayback"
 import {
   formatMilliseconds,
@@ -208,6 +209,26 @@ class Player extends Component {
     )
   }
 
+  // `fraction` is the position to seek to, from 0 (start) to 1 (end)
+  _onSeek = (fraction) => {
+    const { activeTrack } = this.state
+
+    // The track has to be loaded in the player first, so it needs to have started
+    if (!activeTrack || this._loadedUri !== activeTrack.uri) {
+      return
+    }
+
+    const position = Math.round(fraction * activeTrack.duration_ms)
+
+    seekPlayback(position)
+
+    // Update right away, the SDK only reports the new position a moment later
+    this._position = position
+    this._positionAt = Date.now()
+
+    this._updateProgress()
+  }
+
   _renderTimeline() {
     const { activeTrack, currentTime, trackLoadPercentage } = this.state
 
@@ -217,7 +238,7 @@ class Player extends Component {
           {formatMilliseconds(currentTime * 1000)}
         </div>
 
-        <ProgressBar percentage={trackLoadPercentage} />
+        <ProgressBar percentage={trackLoadPercentage} onSeek={this._onSeek} />
 
         <div className="player__total-time">
           {formatMilliseconds(activeTrack.duration_ms)}
