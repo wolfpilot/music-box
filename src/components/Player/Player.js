@@ -72,6 +72,7 @@ class Player extends Component {
   _positionAt = 0
   _paused = true
   _loadedUri = null
+  _pendingPosition = 0
 
   _getArtists(track) {
     return track.artists.map((artist) => artist.name).join(", ")
@@ -162,12 +163,16 @@ class Player extends Component {
       return
     }
 
+    // Set starting position to the user's selected progress
+    const startPosition = this._pendingPosition
+    this._pendingPosition = 0
+
     this._loadedUri = track.uri
-    this._position = 0
+    this._position = startPosition
     this._paused = false
     this._positionAt = Date.now()
 
-    playUri(track.uri).catch((error) => {
+    playUri(track.uri, startPosition).catch((error) => {
       this._loadedUri = null
 
       console.error(`Error starting playback. Reason: ${error}`)
@@ -213,14 +218,19 @@ class Player extends Component {
   _onSeek = (fraction) => {
     const { activeTrack } = this.state
 
-    // The track has to be loaded in the player first, so it needs to have started
-    if (!activeTrack || this._loadedUri !== activeTrack.uri) {
+    if (!activeTrack) {
       return
     }
 
     const position = Math.round(fraction * activeTrack.duration_ms)
 
-    seekPlayback(position)
+    // Load track without playing
+    if (this._loadedUri !== activeTrack.uri) {
+      this._pendingPosition = position
+      this._paused = true
+    } else {
+      seekPlayback(position)
+    }
 
     // Update right away, the SDK only reports the new position a moment later
     this._position = position
@@ -374,6 +384,11 @@ class Player extends Component {
       // Use Redux to manage the global store, however locally
       // it's easier to reference the track from the state.
       this.setState({ activeTrack, currentTime: 0, trackLoadPercentage: 0 })
+
+      // A different track always starts from the beginning
+      this._pendingPosition = 0
+      this._position = 0
+      this._paused = true
 
       if (isPlaying) {
         this._startPlayback(activeTrack)
