@@ -24,12 +24,16 @@ export const onPlayerStateChange = (callback) => {
  * @param {String} uri - The Spotify track URI
  * @returns {Promise}
  */
-export const playUri = (uri) => {
+export const playUri = (uri, positionMs = 0) => {
   if (!deviceId) {
     return Promise.reject(new Error("Web Playback device is not ready yet"))
   }
 
-  return spotifyAPI.play({ device_id: deviceId, uris: [uri] })
+  return spotifyAPI.play({
+    device_id: deviceId,
+    uris: [uri],
+    position_ms: positionMs,
+  })
 }
 
 export const pausePlayback = () => player && player.pause()

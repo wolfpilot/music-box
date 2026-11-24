@@ -20,6 +20,7 @@ import {
   pausePlayback,
   resumePlayback,
   setPlaybackVolume,
+  seekPlayback,
 } from "../../services/api/player/webPlayback"
 import {
   formatMilliseconds,
@@ -71,6 +72,7 @@ class Player extends Component {
   _positionAt = 0
   _paused = true
   _loadedUri = null
+  _pendingPosition = 0
 
   _getArtists(track) {
     return track.artists.map((artist) => artist.name).join(", ")
@@ -161,12 +163,16 @@ class Player extends Component {
       return
     }
 
+    // Set starting position to the user's selected progress
+    const startPosition = this._pendingPosition
+    this._pendingPosition = 0
+
     this._loadedUri = track.uri
-    this._position = 0
+    this._position = startPosition
     this._paused = false
     this._positionAt = Date.now()
 
-    playUri(track.uri).catch((error) => {
+    playUri(track.uri, startPosition).catch((error) => {
       this._loadedUri = null
 
       console.error(`Error starting playback. Reason: ${error}`)
@@ -208,6 +214,31 @@ class Player extends Component {
     )
   }
 
+  // `fraction` is the position to seek to, from 0 (start) to 1 (end)
+  _onSeek = (fraction) => {
+    const { activeTrack } = this.state
+
+    if (!activeTrack) {
+      return
+    }
+
+    const position = Math.round(fraction * activeTrack.duration_ms)
+
+    // Load track without playing
+    if (this._loadedUri !== activeTrack.uri) {
+      this._pendingPosition = position
+      this._paused = true
+    } else {
+      seekPlayback(position)
+    }
+
+    // Update right away, the SDK only reports the new position a moment later
+    this._position = position
+    this._positionAt = Date.now()
+
+    this._updateProgress()
+  }
+
   _renderTimeline() {
     const { activeTrack, currentTime, trackLoadPercentage } = this.state
 
@@ -217,7 +248,7 @@ class Player extends Component {
           {formatMilliseconds(currentTime * 1000)}
         </div>
 
-        <ProgressBar percentage={trackLoadPercentage} />
+        <ProgressBar percentage={trackLoadPercentage} onSeek={this._onSeek} />
 
         <div className="player__total-time">
           {formatMilliseconds(activeTrack.duration_ms)}
@@ -353,6 +384,11 @@ class Player extends Component {
       // Use Redux to manage the global store, however locally
       // it's easier to reference the track from the state.
       this.setState({ activeTrack, currentTime: 0, trackLoadPercentage: 0 })
+
+      // A different track always starts from the beginning
+      this._pendingPosition = 0
+      this._position = 0
+      this._paused = true
 
       if (isPlaying) {
         this._startPlayback(activeTrack)
