@@ -13,6 +13,7 @@ import {
   pauseTrack,
   playNextTrack,
   playPreviousTrack,
+  expireSession,
 } from "../../actions"
 import {
   onPlayerStateChange,
@@ -26,6 +27,8 @@ import {
   formatMilliseconds,
   numToDecimals,
 } from "../../static/js/utils/mathHelpers"
+
+import { isUnauthorizedError } from "../../static/js/utils/apiHelpers"
 
 // Components
 import ProgressBar from "./ProgressBar/ProgressBar"
@@ -53,6 +56,7 @@ const mapDispatchToProps = (dispatch) => ({
   setQueue: (queue, firstTrackId) => dispatch(setQueue(queue, firstTrackId)),
   toggleRepeat: () => dispatch(toggleRepeat()),
   toggleShuffle: () => dispatch(toggleShuffle()),
+  expireSession: () => dispatch(expireSession()),
   playTrack: (track) => dispatch(playTrack(track)),
   pauseTrack: () => dispatch(pauseTrack()),
   playNextTrack: (wrap) => dispatch(playNextTrack(wrap)),
@@ -174,6 +178,10 @@ class Player extends Component {
 
     playUri(track.uri, startPosition).catch((error) => {
       this._loadedUri = null
+
+      if (isUnauthorizedError(error)) {
+        this.props.expireSession()
+      }
 
       console.error(`Error starting playback. Reason: ${error}`)
     })

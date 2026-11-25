@@ -3,6 +3,7 @@ import { setSession, resetSession } from "./services/session/actions"
 import {
   loginUser,
   logoutUser,
+  expireSession,
   setUser,
   resetUser,
   fetchMe,
@@ -33,6 +34,7 @@ export {
   resetSession,
   loginUser,
   logoutUser,
+  expireSession,
   setUser,
   resetUser,
   fetchMe,

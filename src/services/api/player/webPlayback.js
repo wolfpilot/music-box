@@ -6,8 +6,16 @@ const PLAYER_NAME = "Music Box"
 let accessToken = null
 let player = null
 let deviceId = null
+let authErrorHandler = null
 
 const stateListeners = new Set()
+
+/**
+ * @param {Function} handler - Called when Spotify rejects the access token
+ */
+export const setAuthErrorHandler = (handler) => {
+  authErrorHandler = handler
+}
 
 /**
  * @param {Function} callback - Called with the SDK playback state on every change
@@ -81,6 +89,10 @@ const createPlayer = () => {
   ].forEach((type) => {
     player.addListener(type, ({ message }) => {
       console.error(`[Web Playback] ${type}:`, message)
+
+      if (type === "authentication_error" && authErrorHandler) {
+        authErrorHandler()
+      }
     })
   })
 
