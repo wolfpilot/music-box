@@ -6,8 +6,16 @@ const PLAYER_NAME = "Music Box"
 let accessToken = null
 let player = null
 let deviceId = null
+let authErrorHandler = null
 
 const stateListeners = new Set()
+
+/**
+ * @param {Function} handler - Called when Spotify rejects the access token
+ */
+export const setAuthErrorHandler = (handler) => {
+  authErrorHandler = handler
+}
 
 /**
  * @param {Function} callback - Called with the SDK playback state on every change
@@ -45,6 +53,54 @@ export const seekPlayback = (positionMs) => player && player.seek(positionMs)
 // Volume goes from 0 (muted) to 1 (full)
 export const setPlaybackVolume = (volume) => player && player.setVolume(volume)
 
+const createPlayer = () => {
+  // The user may have logged out while the SDK was still loading
+  if (!accessToken || player) {
+    return
+  }
+
+  player = new window.Spotify.Player({
+    name: PLAYER_NAME,
+    getOAuthToken: (callback) => callback(accessToken),
+    volume: 1,
+  })
+
+  player.addListener("ready", ({ device_id }) => {
+    deviceId = device_id
+
+    console.log("[Web Playback] Ready, device id:", device_id)
+  })
+
+  player.addListener("not_ready", ({ device_id }) => {
+    deviceId = null
+
+    console.warn("[Web Playback] Device went offline:", device_id)
+  })
+
+  player.addListener("player_state_changed", (state) => {
+    stateListeners.forEach((callback) => callback(state))
+  })
+
+  ;[
+    "initialization_error",
+    "authentication_error",
+    "account_error",
+    "playback_error",
+  ].forEach((type) => {
+    player.addListener(type, ({ message }) => {
+      console.error(`[Web Playback] ${type}:`, message)
+
+      if (type === "authentication_error" && authErrorHandler) {
+        authErrorHandler()
+      }
+    })
+  })
+
+  player.connect().then((success) => {
+    console.log("[Web Playback] Connected:", success)
+  })
+}
+
 /**
  * Load the Spotify Web Playback SDK and connect a player, so the browser
  * becomes a Spotify Connect device. Needs a Premium account and the
@@ -55,47 +111,21 @@ export const initWebPlayback = (token) => {
   // Always keep the latest token, the SDK asks for it whenever it needs one
   accessToken = token
 
-  if (!token || player || document.getElementById("spotify-sdk")) {
+  if (!token || player) {
     return
   }
 
-  window.onSpotifyWebPlaybackSDKReady = () => {
-    player = new window.Spotify.Player({
-      name: PLAYER_NAME,
-      getOAuthToken: (callback) => callback(accessToken),
-      volume: 1,
-    })
+  // The SDK script is only loaded once, so it's already there after a re-login
+  if (window.Spotify) {
+    createPlayer()
 
-    player.addListener("ready", ({ device_id }) => {
-      deviceId = device_id
+    return
+  }
 
-      console.log("[Web Playback] Ready, device id:", device_id)
-    })
+  window.onSpotifyWebPlaybackSDKReady = createPlayer
 
-    player.addListener("not_ready", ({ device_id }) => {
-      deviceId = null
-
-      console.warn("[Web Playback] Device went offline:", device_id)
-    })
-
-    player.addListener("player_state_changed", (state) => {
-      stateListeners.forEach((callback) => callback(state))
-    })
-
-    ;[
-      "initialization_error",
-      "authentication_error",
-      "account_error",
-      "playback_error",
-    ].forEach((type) => {
-      player.addListener(type, ({ message }) => {
-        console.error(`[Web Playback] ${type}:`, message)
-      })
-    })
-
-    player.connect().then((success) => {
-      console.log("[Web Playback] Connected:", success)
-    })
+  if (document.getElementById("spotify-sdk")) {
+    return
   }
 
   const script = document.createElement("script")
@@ -105,4 +135,18 @@ export const initWebPlayback = (token) => {
   script.async = true
 
   document.body.appendChild(script)
+}
+
+/**
+ * Disconnect the player, so it stops asking Spotify for access
+ */
+export const disconnectWebPlayback = () => {
+  accessToken = null
+  deviceId = null
+
+  if (player) {
+    player.disconnect()
+
+    player = null
+  }
 }

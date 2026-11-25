@@ -2,7 +2,13 @@
 import watch from "redux-watch"
 
 // Utils
-import { setSession, fetchMe, fetchFeaturedPlaylists } from "./actions"
+import {
+  setSession,
+  fetchMe,
+  fetchFeaturedPlaylists,
+  expireSession,
+} from "./actions"
+import { setAuthErrorHandler } from "./services/api/player/webPlayback"
 
 // Keep refs to the watchers so they can be unsubscribed when necessary
 let sessionWatcher
@@ -27,5 +33,8 @@ export const watcher = (store, selector, action) => {
 }
 
 export const createWatchers = (store) => {
+  // Log out when Spotify rejects the token while streaming
+  setAuthErrorHandler(() => store.dispatch(expireSession()))
+
   sessionWatcher = watcher(store, "session.accessToken", watchSession)
 }

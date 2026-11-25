@@ -9,10 +9,31 @@ import {
   mergeEntities,
   mergeFeaturedPlaylists,
   resetSession,
+  resetPlayer,
   setSession,
   mergePlaylist,
 } from "../../actions"
 import { featuredPlaylistSchema, trackSchema } from "../../schemas"
+import { history } from "../../history"
+import { isUnauthorizedError } from "../../static/js/utils/apiHelpers"
+
+// Log the user out and send them to the homepage, where they can log in again
+export const expireSession = () => (dispatch, getState) => {
+  // Several requests can fail at once, only the first one has to log out
+  if (!getState().session.isLoggedIn) {
+    return
+  }
+
+  dispatch(logoutUser())
+
+  history.push("/")
+}
+
+const handleRequestError = (dispatch, error) => {
+  if (isUnauthorizedError(error)) {
+    dispatch(expireSession())
+  }
+}
 
 export const fetchMe = () => (dispatch) => {
   spotifyAPI.getMe().then(
@@ -22,6 +43,8 @@ export const fetchMe = () => (dispatch) => {
       dispatch(setUser(display_name, images))
     },
     (error) => {
+      handleRequestError(dispatch, error)
+
       console.error(`Error retrieving user data. Reason: ${error}`)
     }
   )
@@ -34,11 +57,15 @@ export const fetchFeaturedPlaylists = () => (dispatch) => {
 
   Promise.all([
     spotifyAPI.getUserPlaylists({ limit: 12 }).catch((err) => {
+      handleRequestError(dispatch, err)
+
       console.error(err)
 
       return emptyList
     }),
     spotifyAPI.getMySavedAlbums({ limit: 50 }).catch((err) => {
+      handleRequestError(dispatch, err)
+
       console.error(err)
 
       return emptyList
@@ -78,6 +105,8 @@ export const fetchPlaylist = (id) => (dispatch) => {
       dispatch(mergePlaylist(normalized.result))
     })
     .catch((err) => {
+      handleRequestError(dispatch, err)
+
       console.error(err)
     })
 }
@@ -108,6 +137,8 @@ export const fetchAlbum = (id) => (dispatch) => {
       dispatch(mergePlaylist(normalized.result))
     })
     .catch((err) => {
+      handleRequestError(dispatch, err)
+
       console.error(err)
     })
 }
@@ -127,6 +158,7 @@ export const loginUser = () => (dispatch) => {
 export const logoutUser = () => (dispatch) => {
   dispatch(resetSession())
   dispatch(resetUser())
+  dispatch(resetPlayer())
 }
 
 export const setUser = (display_name, images) => {

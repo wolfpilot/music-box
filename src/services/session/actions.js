@@ -1,7 +1,10 @@
 // Utils
 import * as actionTypes from "./actionTypes"
 import { spotifyAPI } from "../api/player/player"
-import { initWebPlayback } from "../api/player/webPlayback"
+import {
+  initWebPlayback,
+  disconnectWebPlayback,
+} from "../api/player/webPlayback"
 
 export const setSession = (accessToken) => {
   spotifyAPI.setAccessToken(accessToken)
@@ -15,6 +18,7 @@ export const setSession = (accessToken) => {
 
 export const resetSession = () => {
   spotifyAPI.setAccessToken(null)
+  disconnectWebPlayback()
 
   return {
     type: actionTypes.SESSION_RESET,
