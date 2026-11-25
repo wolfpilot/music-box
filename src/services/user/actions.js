@@ -9,6 +9,7 @@ import {
   mergeEntities,
   mergeFeaturedPlaylists,
   resetSession,
+  resetPlayer,
   setSession,
   mergePlaylist,
 } from "../../actions"
@@ -127,6 +128,7 @@ export const loginUser = () => (dispatch) => {
 export const logoutUser = () => (dispatch) => {
   dispatch(resetSession())
   dispatch(resetUser())
+  dispatch(resetPlayer())
 }
 
 export const setUser = (display_name, images) => {

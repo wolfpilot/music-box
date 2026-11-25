@@ -385,6 +385,11 @@ class Player extends Component {
       // it's easier to reference the track from the state.
       this.setState({ activeTrack, currentTime: 0, trackLoadPercentage: 0 })
 
+      // The player was reset (e.g. on logout), so nothing is loaded anymore
+      if (!activeTrackId) {
+        this._loadedUri = null
+      }
+
       // A different track always starts from the beginning
       this._pendingPosition = 0
       this._position = 0

@@ -85,6 +85,12 @@ export function toggleRepeat() {
   }
 }
 
+export function resetPlayer() {
+  return {
+    type: actionTypes.RESET_PLAYER,
+  }
+}
+
 export function setIsPlaying(isPlaying) {
   return {
     type: actionTypes.SET_IS_PLAYING,

@@ -41,6 +41,8 @@ export default function (state = initialState, action) {
       return toggleRepeat(state)
     case actionTypes.SET_SHUFFLE:
       return setShuffle(state, action.isShuffling, action.shuffledQueue)
+    case actionTypes.RESET_PLAYER:
+      return initialState
     default:
       return state
   }
