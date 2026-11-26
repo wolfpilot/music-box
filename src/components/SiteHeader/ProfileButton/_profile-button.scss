@@ -23,7 +23,7 @@ $iconRadius: 28px;
     background-color: color(black);
 
     .svg {
-      width: $iconRadius / 2;
+      width: $iconRadius * 0.5;
       height: auto;
       fill: color(white);
     }
