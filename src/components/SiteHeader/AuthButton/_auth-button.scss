@@ -6,7 +6,7 @@ $btnHeight: rem(36px);
   outline: none;
   background: none;
   border: 1px solid color(turquoise);
-  border-radius: $btnHeight / 2;
+  border-radius: $btnHeight * 0.5;
   @include fontSize(12px);
   transition:
     background-color 0.15s ease-in-out,

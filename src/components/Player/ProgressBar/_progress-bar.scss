@@ -36,7 +36,7 @@ $thumbRadius: 12px;
   }
 
   &__thumb {
-    right: -$thumbRadius / 2;
+    right: -$thumbRadius * 0.5;
     width: $thumbRadius;
     height: $thumbRadius;
     border-radius: 50%;
@@ -48,8 +48,8 @@ $thumbRadius: 12px;
       position: absolute;
       top: 50%;
       left: 50%;
-      width: $thumbRadius / 2;
-      height: $thumbRadius / 2;
+      width: $thumbRadius * 0.5;
+      height: $thumbRadius * 0.5;
       transform: translate(-50%, -50%);
       border-radius: 50%;
       background-color: color(turquoise);
