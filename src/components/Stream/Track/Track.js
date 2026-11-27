@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 
 // Utils
-import { playTrack } from "../../../actions"
+import { playTrack, pauseTrack } from "../../../actions"
 import { formatMilliseconds } from "../../../static/js/utils/mathHelpers"
 
 const mapStateToProps = (state) => {
@@ -15,13 +15,22 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   playTrack: (activeTrackId) => dispatch(playTrack(activeTrackId)),
+  pauseTrack: () => dispatch(pauseTrack()),
 })
 
 class Track extends PureComponent {
   togglePlayPause = () => {
-    const { track } = this.props
+    const { track, player } = this.props
 
     if (!track.uri) {
+      return
+    }
+
+    // Clicking the track that's playing pauses it. Clicking it again, or any
+    // other track, starts (or resumes) playing.
+    if (player.isPlaying && player.activeTrackId === track.id) {
+      this.props.pauseTrack()
+
       return
     }
 
