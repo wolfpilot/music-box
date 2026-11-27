@@ -1,4 +1,8 @@
 .stream {
+  &__section + &__section {
+    margin-top: 40px;
+  }
+
   &__featured-playlists {
     display: grid;
     grid-gap: 15px;
