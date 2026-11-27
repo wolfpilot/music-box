@@ -46,7 +46,9 @@ Logging in uses Spotify's Authorization Code flow with PKCE, in a popup. There i
 - Play, pause, previous, next, shuffle, repeat and mute
 - Seek by clicking and dragging on the progress bar
 
-## Demo
+## [Demo](https://wolfpilot-music-box.vercel.app/)
+
+See it in action here - [https://wolfpilot-music-box.vercel.app/](https://wolfpilot-music-box.vercel.app/)
 
 > **Authentication flow**
 >
