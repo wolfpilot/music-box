@@ -14,6 +14,7 @@ A small Spotify player built with React + Redux based on the now deprecated Face
 
 - [How it works](#how-it-works)
 - [Features](#features)
+- [Demo](#demo)
 - [Getting started](#getting-started)
   - [Requirements](#requirements)
   - [Spotify Setup Guide](#spotify-setup-guide)
@@ -39,9 +40,25 @@ Logging in uses Spotify's Authorization Code flow with PKCE, in a popup. There i
 
 ## Features
 
-- Homepage shows saved playlists, albums and liked songs
-- Play, pause, previous, next, shuffle, repeat (single track) and mute
-- Seeking by clicking on the progress bar
+- Auth log in and log out
+- Redirect on error 401
+- User saved playlists, albums, liked songs
+- Play, pause, previous, next, shuffle, repeat and mute
+- Seek by clicking and dragging on the progress bar
+
+## Demo
+
+> **Authentication flow**
+>
+> Log in using your Spotify account
+
+https://github.com/user-attachments/assets/5ed22e3b-5178-47cb-a0c7-98fba95ed024
+
+> **Controls**
+>
+> Play, pause, next/prev track, shuffle and repeat
+
+https://github.com/user-attachments/assets/1863d97b-3ca5-4ef1-81a9-b0d81a1ecfa9
 
 ## Getting started
 
