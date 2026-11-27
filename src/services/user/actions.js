@@ -20,13 +20,15 @@ import { isUnauthorizedError } from "../../static/js/utils/apiHelpers"
 // Log the user out and send them to the homepage, where they can log in again
 export const expireSession = () => (dispatch, getState) => {
   // Several requests can fail at once, only the first one has to log out
-  if (!getState().session.isLoggedIn) {
-    return
+  if (getState().session.isLoggedIn) {
+    dispatch(logoutUser())
   }
 
-  dispatch(logoutUser())
-
-  history.push("/")
+  // Also redirect when the session was already gone, like when a page is
+  // opened directly without being logged in
+  if (history.location.pathname !== "/") {
+    history.push("/")
+  }
 }
 
 const handleRequestError = (dispatch, error) => {
