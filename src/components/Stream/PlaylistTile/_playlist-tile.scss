@@ -29,6 +29,21 @@
     margin-bottom: 8px;
   }
 
+  &__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    color: color(white);
+    background: linear-gradient(135deg, #77968b, #44cb9c, #77968b);
+    border-radius: $default-border-radius;
+  }
+
+  &__placeholder-icon {
+    width: 40%;
+    height: 40%;
+  }
+
   &__image {
     max-width: 100%;
     border-radius: $default-border-radius;

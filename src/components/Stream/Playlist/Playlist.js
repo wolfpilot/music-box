@@ -18,8 +18,8 @@ const Playlist = ({ playlist, trackEntities }) => {
   return (
     <div className="playlist">
       <div className="playlist__header">
-        <div className="playlist__header-image-wrapper">
-          {images && images.length > 0 && (
+        {images && images.length > 0 && (
+          <div className="playlist__header-image-wrapper">
             <>
               <img
                 src={images[0].url}
@@ -33,8 +33,8 @@ const Playlist = ({ playlist, trackEntities }) => {
                 className="playlist__header-image"
               />
             </>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="playlist__header-content-wrapper">
           <h1 className="title">{name}</h1>

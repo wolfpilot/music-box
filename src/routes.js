@@ -20,6 +20,10 @@ const routes = (
       <Route path="/authorize" component={AuthorizePage} />
       <Route path="/playlist/:id" component={PlaylistPage} />
       <Route
+        path="/collection/tracks"
+        render={(props) => <PlaylistPage {...props} isLikedSongs />}
+      />
+      <Route
         path="/album/:id"
         render={(props) => <PlaylistPage {...props} isAlbum />}
       />

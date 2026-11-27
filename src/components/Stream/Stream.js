@@ -26,6 +26,23 @@ const Section = ({ title, ids, entities }) => (
   </section>
 )
 
+const likedSongsTile = {
+  id: "liked-songs",
+  name: "Liked Songs",
+  type: "collection",
+}
+
+const LikedSongs = () => (
+  <section className="stream__section">
+    <h2 className="stream__heading">Liked Songs</h2>
+    <ul className="stream__featured-playlists">
+      <li className="stream__playlist-item">
+        <PlaylistTile playlist={likedSongsTile} />
+      </li>
+    </ul>
+  </section>
+)
+
 const Stream = ({ featuredPlaylists, featuredPlaylistEntities }) => {
   const ids = (featuredPlaylists && featuredPlaylists.items) || []
 
@@ -38,6 +55,7 @@ const Stream = ({ featuredPlaylists, featuredPlaylistEntities }) => {
 
   return (
     <div className="stream">
+      <LikedSongs />
       {playlistIds.length > 0 && (
         <Section
           title="Playlists"
