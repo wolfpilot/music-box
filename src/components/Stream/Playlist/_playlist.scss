@@ -33,6 +33,12 @@
     }
   }
 
+  &__header-content-wrapper {
+    &:first-child {
+      margin-top: 80px;
+    }
+  }
+
   &__track-list {
     list-style: none;
     margin: 0;

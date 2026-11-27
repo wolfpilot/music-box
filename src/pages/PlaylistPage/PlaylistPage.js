@@ -4,7 +4,12 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 
 // Utils
-import { fetchPlaylist, fetchAlbum, mergePlaylist } from "../../actions"
+import {
+  fetchPlaylist,
+  fetchAlbum,
+  fetchLikedSongs,
+  mergePlaylist,
+} from "../../actions"
 
 // Components
 import Playlist from "../../components/Stream/Playlist/Playlist"
@@ -18,6 +23,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   fetchPlaylist: (id) => dispatch(fetchPlaylist(id)),
   fetchAlbum: (id) => dispatch(fetchAlbum(id)),
+  fetchLikedSongs: () => dispatch(fetchLikedSongs()),
   mergePlaylist: (playlist) => dispatch(mergePlaylist(playlist)),
 })
 
@@ -25,8 +31,10 @@ class PlaylistPage extends Component {
   componentDidMount() {
     const { id } = this.props.match.params
 
-    // Albums reuse this page, they're rendered like a playlist
-    if (this.props.isAlbum) {
+    // Albums and Liked Songs reuse this page, they're rendered like a playlist
+    if (this.props.isLikedSongs) {
+      this.props.fetchLikedSongs()
+    } else if (this.props.isAlbum) {
       this.props.fetchAlbum(id)
     } else {
       this.props.fetchPlaylist(id)
@@ -53,6 +61,7 @@ class PlaylistPage extends Component {
 PlaylistPage.propTypes = {
   id: PropTypes.string,
   isAlbum: PropTypes.bool,
+  isLikedSongs: PropTypes.bool,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlaylistPage)

@@ -8,6 +8,7 @@ import {
   resetUser,
   fetchMe,
   fetchFeaturedPlaylists,
+  fetchLikedSongs,
   fetchPlaylist,
   fetchAlbum,
 } from "./services/user/actions"
@@ -39,6 +40,7 @@ export {
   resetUser,
   fetchMe,
   fetchFeaturedPlaylists,
+  fetchLikedSongs,
   fetchPlaylist,
   fetchAlbum,
   mergeFeaturedPlaylists,

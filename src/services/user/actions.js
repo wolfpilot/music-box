@@ -85,6 +85,34 @@ export const fetchFeaturedPlaylists = () => (dispatch) => {
   })
 }
 
+// Spotify doesn't treat Liked Songs as a playlist, they're the saved tracks.
+// Shape them like a playlist, so the playlist page can render them.
+export const fetchLikedSongs = () => (dispatch) => {
+  spotifyAPI
+    .getMySavedTracks({ limit: 25 })
+    .then(({ items, total }) => {
+      // Skip tracks Spotify can't give us details for, like removed local files
+      const validItems = items.filter(
+        ({ track }) => track && track.album && track.album.images.length
+      )
+      const data = {
+        id: "liked-songs",
+        name: "Liked Songs",
+        description: `Your ${validItems.length} latest of ${total} liked songs`,
+        tracks: { offset: 0, items: validItems },
+      }
+      const normalized = normalize(data, trackSchema)
+
+      dispatch(mergeEntities(normalized.entities))
+      dispatch(mergePlaylist(normalized.result))
+    })
+    .catch((err) => {
+      handleRequestError(dispatch, err)
+
+      console.error(err)
+    })
+}
+
 export const fetchPlaylist = (id) => (dispatch) => {
   const fields = [
     "description",

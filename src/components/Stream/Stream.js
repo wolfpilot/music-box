@@ -13,24 +13,66 @@ const mapStateToProps = (state) => {
   }
 }
 
-const Stream = ({ featuredPlaylists, featuredPlaylistEntities }) => (
-  <div className="stream">
-    <h1 className="stream__heading">Stream</h1>
-    {featuredPlaylists && (
-      <ul className="stream__featured-playlists">
-        {featuredPlaylists.items &&
-          featuredPlaylists.items.length > 0 &&
-          featuredPlaylists.items.map((id) => {
-            return (
-              <li className="stream__playlist-item" key={id}>
-                <PlaylistTile playlist={featuredPlaylistEntities[id]} />
-              </li>
-            )
-          })}
-      </ul>
-    )}
-  </div>
+const Section = ({ title, ids, entities }) => (
+  <section className="stream__section">
+    <h2 className="stream__heading">{title}</h2>
+    <ul className="stream__featured-playlists">
+      {ids.map((id) => (
+        <li className="stream__playlist-item" key={id}>
+          <PlaylistTile playlist={entities[id]} />
+        </li>
+      ))}
+    </ul>
+  </section>
 )
+
+const likedSongsTile = {
+  id: "liked-songs",
+  name: "Liked Songs",
+  type: "collection",
+}
+
+const LikedSongs = () => (
+  <section className="stream__section">
+    <h2 className="stream__heading">Liked Songs</h2>
+    <ul className="stream__featured-playlists">
+      <li className="stream__playlist-item">
+        <PlaylistTile playlist={likedSongsTile} />
+      </li>
+    </ul>
+  </section>
+)
+
+const Stream = ({ featuredPlaylists, featuredPlaylistEntities }) => {
+  const ids = (featuredPlaylists && featuredPlaylists.items) || []
+
+  const isAlbum = (id) =>
+    featuredPlaylistEntities[id] &&
+    featuredPlaylistEntities[id].type === "album"
+
+  const playlistIds = ids.filter((id) => !isAlbum(id))
+  const albumIds = ids.filter(isAlbum)
+
+  return (
+    <div className="stream">
+      <LikedSongs />
+      {playlistIds.length > 0 && (
+        <Section
+          title="Playlists"
+          ids={playlistIds}
+          entities={featuredPlaylistEntities}
+        />
+      )}
+      {albumIds.length > 0 && (
+        <Section
+          title="Albums"
+          ids={albumIds}
+          entities={featuredPlaylistEntities}
+        />
+      )}
+    </div>
+  )
+}
 
 Stream.propTypes = {
   featuredPlaylists: PropTypes.object,
