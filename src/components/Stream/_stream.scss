@@ -22,5 +22,9 @@
     @include mq($mq-tab--lrg) {
       grid-template-columns: repeat(6, minmax(120px, 1fr));
     }
+
+    @include mq($mq-desk--lrg) {
+      grid-template-columns: repeat(8, minmax(120px, 1fr));
+    }
   }
 }

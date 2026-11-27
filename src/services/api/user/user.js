@@ -2,6 +2,8 @@
 import * as USER from "./constants"
 import * as API from "../constants"
 
+const CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID
+
 /**
  * @returns {String} - The modal params
  */
@@ -64,7 +66,7 @@ const _getCodeChallenge = (verifier) => {
  */
 const _getLoginURL = (state, codeChallenge) => {
   return (
-    `https://accounts.spotify.com/authorize?client_id=${API.CLIENT_ID}` +
+    `https://accounts.spotify.com/authorize?client_id=${CLIENT_ID}` +
     `&redirect_uri=${encodeURIComponent(API.REDIRECT_URI)}` +
     `&scope=${encodeURIComponent(API.SCOPES.join(" "))}` +
     `&show_dialog=true` +
@@ -82,7 +84,7 @@ const _getLoginURL = (state, codeChallenge) => {
  */
 const _exchangeCode = (code, verifier) => {
   const body = new URLSearchParams({
-    client_id: API.CLIENT_ID,
+    client_id: CLIENT_ID,
     grant_type: "authorization_code",
     code,
     redirect_uri: API.REDIRECT_URI,
