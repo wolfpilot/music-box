@@ -77,6 +77,8 @@ class Player extends Component {
   _paused = true
   _loadedUri = null
   _pendingPosition = 0
+  // The track whose ending was already handled, see _onPlayerStateChange
+  _endedUri = null
 
   _getArtists(track) {
     return track.artists.map((artist) => artist.name).join(", ")
@@ -122,7 +124,20 @@ class Player extends Component {
       position === 0 &&
       previous_tracks.some((track) => track.id === current_track.id)
 
+    // The SDK reports the same ending several times in a row. Handling each
+    // one would skip ahead, so only act on the first and wait until the
+    // track plays again (or another one loads) before listening for the next.
+    if (!hasEnded && (!paused || current_track.uri !== this._endedUri)) {
+      this._endedUri = null
+    }
+
+    if (hasEnded && this._endedUri === current_track.uri) {
+      return
+    }
+
     if (hasEnded && this.props.player.isPlaying) {
+      this._endedUri = current_track.uri
+
       // Repeat the active track instead of moving on to the next one
       if (this.props.player.isRepeating && this.state.activeTrack) {
         this._loadedUri = null
